@@ -66,11 +66,9 @@
     .bg-mid { background: var(--bg-mid); }
     .eyebrow { display: inline-block; font-family: var(--f-sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
     .display { font-family: var(--f-serif); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
-    .display-xl  { font-size: clamp(3.2rem, 7vw, 6.5rem); }
     .display-lg  { font-size: clamp(2.4rem, 5vw, 4.2rem); }
-    .display em  { font-style: italic; color: var(--accent); }
 
-    /* HERO — unified light background throughout */
+    /* HERO — unified light background */
     .hero {
       background: var(--bg);
       padding: 0;
@@ -93,7 +91,23 @@
       flex-direction: column;
       justify-content: center;
     }
-    .hero-headline { max-width: 16ch; }
+
+    /* Headline: two lines, mixed upright/italic */
+    .hero-line1,
+    .hero-line2 {
+      font-family: var(--f-serif);
+      font-size: clamp(3.2rem, 7vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      font-style: normal;
+      color: var(--ink);
+    }
+    /* Italic teal spans: Eye Care, and Clarity. */
+    .hero-line1 em,
+    .hero-line2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
 
     /* HERO PHOTO */
     .hero-photo-wrap { position: relative; }
@@ -115,10 +129,9 @@
       text-align: center;
     }
 
-    /* Intro band: same light bg, divided by a subtle rule */
+    /* Intro band: same light bg, NO top border */
     .hero-intro-band {
-      padding: clamp(2.5rem, 5vw, 4rem) 0;
-      border-top: 1px solid var(--rule);
+      padding-bottom: clamp(3rem, 6vw, 5rem);
     }
     .hero-intro-band p {
       font-size: 1.05rem;
@@ -239,10 +252,15 @@
   <div class="hero-top">
     <div class="wrap">
       <div class="hero-grid">
+
         <div class="hero-left">
           <span class="eyebrow reveal">Fellowship-Trained Ophthalmologist</span>
-          <h1 class="display display-xl hero-headline reveal reveal-delay-1">Thoughtful eye care,<br><em>centered on clarity.</em></h1>
+          <h1>
+            <div class="hero-line1 reveal reveal-delay-1">Thoughtful <em>Eye Care,</em></div>
+            <div class="hero-line2 reveal reveal-delay-1">Centered on <em>Clarity.</em></div>
+          </h1>
         </div>
+
         <div class="hero-photo-wrap reveal reveal-delay-2">
           <img
             src="Bhargava-Siddharth-Photo.jpg"
@@ -254,11 +272,12 @@
           />
           <p class="hero-photo-caption">Dr. Siddharth Bhargava, MD<br>Cataracts &amp; Glaucoma &middot; Southern California</p>
         </div>
+
       </div>
     </div>
   </div>
 
-  <!-- Intro band: same light bg, subtle rule above -->
+  <!-- Intro band: same light bg, no dividing line -->
   <div class="hero-intro-band">
     <div class="wrap">
       <p class="reveal">I specialize in glaucoma, cataract surgery, premium intraocular lens counseling, and complex anterior segment care. My practice is built on a simple idea: patients who understand their condition make better decisions and have better outcomes.</p>
