@@ -70,12 +70,15 @@
     .display-lg  { font-size: clamp(2.4rem, 5vw, 4.2rem); }
     .display em  { font-style: italic; color: var(--accent); }
 
-    /* HERO — dark top panel */
-    .hero { padding: 0; border-bottom: 1px solid var(--rule); }
+    /* HERO — unified light background throughout */
+    .hero {
+      background: var(--bg);
+      padding: 0;
+      border-bottom: 1px solid var(--rule);
+    }
 
-    /* Top panel: dark background, headline + photo */
+    /* Top panel: headline + photo */
     .hero-top {
-      background: var(--bg-dark);
       padding-top: calc(var(--nav-h) + clamp(3rem, 6vw, 5rem));
       padding-bottom: clamp(3rem, 6vw, 5rem);
     }
@@ -112,9 +115,8 @@
       text-align: center;
     }
 
-    /* Bottom intro band: light background, full width */
+    /* Intro band: same light bg, divided by a subtle rule */
     .hero-intro-band {
-      background: var(--bg);
       padding: clamp(2.5rem, 5vw, 4rem) 0;
       border-top: 1px solid var(--rule);
     }
@@ -230,10 +232,10 @@
   <a href="#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
-<!-- HERO -->
+<!-- HERO: unified light bg throughout -->
 <section class="hero" id="home">
 
-  <!-- Dark top panel: headline left, photo right -->
+  <!-- Top panel: headline left, photo right -->
   <div class="hero-top">
     <div class="wrap">
       <div class="hero-grid">
@@ -256,7 +258,7 @@
     </div>
   </div>
 
-  <!-- Light intro band: full width below -->
+  <!-- Intro band: same light bg, subtle rule above -->
   <div class="hero-intro-band">
     <div class="wrap">
       <p class="reveal">I specialize in glaucoma, cataract surgery, premium intraocular lens counseling, and complex anterior segment care. My practice is built on a simple idea: patients who understand their condition make better decisions and have better outcomes.</p>
@@ -265,6 +267,7 @@
 
 </section>
 
+<!-- ABOUT: darker bg starts here -->
 <section id="about" class="bg-mid">
   <div class="wrap">
     <div class="about-cols">
