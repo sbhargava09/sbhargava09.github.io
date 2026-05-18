@@ -2,677 +2,187 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dr. Siddharth Bhargava, MD — Ophthalmology & Glaucoma</title>
+  <title>Dr. Siddharth Bhargava, MD — Cataracts &amp; Glaucoma</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Dr. Siddharth Bhargava is a fellowship-trained ophthalmologist specializing in glaucoma, cataracts, premium IOL counseling, and complex anterior segment care." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    /* ─── Tokens ─── */
     :root {
-      --cream:        #f5f0e8;
-      --cream-mid:    #ece7dc;
-      --cream-dark:   #e0d9cc;
-      --ink:          #1a1714;
-      --ink-mid:      #4a4540;
-      --ink-light:    #8a837a;
-      --rule:         rgba(26,23,20,0.14);
-      --accent:       #2b4a3a;
-      --accent-warm:  #7a5c3a;
-
+      --bg:           #f0f4f5;
+      --bg-mid:       #e4edf0;
+      --bg-dark:      #d4e3e8;
+      --ink:          #0d1f2d;
+      --ink-mid:      #3a5060;
+      --ink-light:    #7a9aaa;
+      --rule:         rgba(13,31,45,0.13);
+      --accent:       #0a7e8c;
+      --accent-dark:  #065f6b;
+      --accent-light: #e0f2f4;
+      --blue:         #1a4a6e;
       --f-serif: 'Cormorant Garamond', Georgia, serif;
       --f-sans:  'DM Sans', system-ui, sans-serif;
-
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-
       --nav-h: 68px;
     }
-
-    /* ─── Reset ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); -webkit-font-smoothing: antialiased; }
-    body { background: var(--cream); color: var(--ink); font-family: var(--f-sans); font-size: 1rem; line-height: 1.65; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 1rem; line-height: 1.65; }
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
     ul, ol { list-style: none; }
     button { cursor: pointer; background: none; border: none; font: inherit; }
-    ::selection { background: rgba(43,74,58,0.15); }
+    ::selection { background: rgba(10,126,140,0.18); }
 
-    /* ─── Scroll-reveal ─── */
     .reveal {
       opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+      transform: translateY(60px);
+      transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+    .reveal-delay-4 { transition-delay: 0.6s; }
+    .reveal-delay-5 { transition-delay: 0.75s; }
+    .section-reveal {
+      opacity: 0;
+      transform: translateY(80px);
+      transition: opacity 1.1s var(--ease-out), transform 1.1s var(--ease-out);
     }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-    .reveal-delay-5 { transition-delay: 0.5s; }
-    .reveal-delay-6 { transition-delay: 0.6s; }
+    .section-reveal.visible { opacity: 1; transform: translateY(0); }
     @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; transition: none; }
+      .reveal, .section-reveal { opacity: 1; transform: none; transition: none; }
     }
 
-    /* ─── Nav ─── */
     .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       height: var(--nav-h);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 0 clamp(1.5rem, 5vw, 4rem);
-      background: var(--cream);
+      background: var(--bg);
       border-bottom: 1px solid transparent;
       transition: border-color 0.3s, background 0.3s;
     }
-    .nav.scrolled {
-      border-color: var(--rule);
-      background: rgba(245,240,232,0.96);
-      backdrop-filter: blur(10px);
-    }
-
-    .nav-logo {
-      font-family: var(--f-serif);
-      font-size: 1.15rem;
-      font-weight: 400;
-      letter-spacing: 0.01em;
-      display: flex;
-      flex-direction: column;
-      line-height: 1.2;
-    }
-    .nav-logo span {
-      font-family: var(--f-sans);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-top: 1px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2.25rem;
-      font-size: 0.82rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .nav-links a {
-      color: var(--ink-mid);
-      position: relative;
-      transition: color 0.2s;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0;
-      width: 0; height: 1px;
-      background: var(--ink);
-      transition: width 0.25s var(--ease-out);
-    }
-    .nav-links a:hover { color: var(--ink); }
+    .nav.scrolled { border-color: var(--rule); background: rgba(240,244,245,0.96); backdrop-filter: blur(10px); }
+    .nav-logo { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 400; display: flex; flex-direction: column; line-height: 1.2; }
+    .nav-logo span { font-family: var(--f-sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-top: 1px; }
+    .nav-links { display: flex; align-items: center; gap: 2.25rem; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .nav-links a { color: var(--ink-mid); position: relative; transition: color 0.2s; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.25s var(--ease-out); }
+    .nav-links a:hover { color: var(--accent); }
     .nav-links a:hover::after { width: 100%; }
-
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      padding: 4px;
-    }
-    .nav-hamburger span {
-      display: block;
-      width: 22px; height: 1px;
-      background: var(--ink);
-      transition: transform 0.3s, opacity 0.3s;
-    }
-
-    /* Mobile drawer */
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 99;
-      background: var(--cream);
-      padding: calc(var(--nav-h) + 2rem) 2rem 2rem;
-      flex-direction: column;
-      gap: 2rem;
-    }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--ink); }
+    .mobile-nav { display: none; position: fixed; inset: 0; z-index: 99; background: var(--bg); padding: calc(var(--nav-h) + 2rem) 2rem 2rem; flex-direction: column; gap: 2rem; }
     .mobile-nav.open { display: flex; }
-    .mobile-nav a {
-      font-family: var(--f-serif);
-      font-size: 2.2rem;
-      font-weight: 300;
-      color: var(--ink);
-      border-bottom: 1px solid var(--rule);
-      padding-bottom: 1rem;
-    }
+    .mobile-nav a { font-family: var(--f-serif); font-size: 2.2rem; font-weight: 300; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; }
 
-    /* ─── Layout helpers ─── */
-    .wrap {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 clamp(1.5rem, 5vw, 4rem);
-    }
-    .rule { width: 100%; height: 1px; background: var(--rule); }
-
-    /* ─── Section spacing ─── */
+    .wrap { max-width: 1140px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); }
     section { padding: clamp(5rem, 10vw, 9rem) 0; }
-
-    /* ─── Eyebrow label ─── */
-    .eyebrow {
-      display: inline-block;
-      font-family: var(--f-sans);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1.5rem;
-    }
-
-    /* ─── Display type ─── */
-    .display {
-      font-family: var(--f-serif);
-      font-weight: 300;
-      line-height: 1.1;
-      letter-spacing: -0.01em;
-    }
+    .bg-mid { background: var(--bg-mid); }
+    .eyebrow { display: inline-block; font-family: var(--f-sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+    .display { font-family: var(--f-serif); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
     .display-xl  { font-size: clamp(3.2rem, 7vw, 6.5rem); }
     .display-lg  { font-size: clamp(2.4rem, 5vw, 4.2rem); }
-    .display-md  { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
-    .display-sm  { font-size: clamp(1.3rem, 2.5vw, 1.9rem); }
-    .display em  { font-style: italic; }
+    .display em  { font-style: italic; color: var(--accent); }
 
-    /* ─── Body copy ─── */
-    .body-lg  { font-size: 1.1rem; line-height: 1.75; color: var(--ink-mid); }
-    .body-sm  { font-size: 0.9rem; line-height: 1.7;  color: var(--ink-mid); }
-    .body-xs  { font-size: 0.8rem; color: var(--ink-light); }
-
-    /* ─── HERO ─── */
-    .hero {
-      padding-top: calc(var(--nav-h) + clamp(4rem, 8vw, 7rem));
-      padding-bottom: 0;
-    }
-    .hero-wrap { position: relative; }
-
-    .hero-top {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--rule);
-      margin-bottom: 3.5rem;
-    }
-    .hero-meta {
-      text-align: right;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      line-height: 1.9;
-    }
-
-    .hero-headline {
-      max-width: 16ch;
-      margin-bottom: 0;
-    }
-
-    .hero-body-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(2rem, 5vw, 5rem);
-      align-items: start;
-      padding-bottom: clamp(4rem, 8vw, 7rem);
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .hero-intro { max-width: 48ch; }
-    .hero-intro p {
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: var(--ink-mid);
-      margin-bottom: 2rem;
-    }
-
-    .hero-pillars {
-      padding-top: 0.5rem;
-    }
-    .hero-pillar {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1.1rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
+    .hero { padding-top: calc(var(--nav-h) + clamp(4rem, 8vw, 7rem)); padding-bottom: 0; }
+    .hero-top { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--rule); margin-bottom: 3.5rem; }
+    .hero-meta { text-align: right; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); line-height: 1.9; }
+    .hero-headline { max-width: 16ch; }
+    .hero-body-row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; padding-bottom: clamp(4rem, 8vw, 7rem); border-bottom: 1px solid var(--rule); }
+    .hero-intro p { font-size: 1.05rem; line-height: 1.75; color: var(--ink-mid); margin-bottom: 2rem; }
+    .hero-pillar { display: flex; align-items: flex-start; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--rule); }
     .hero-pillar:first-child { border-top: 1px solid var(--rule); }
-    .hero-pillar-num {
-      font-family: var(--f-serif);
-      font-size: 0.85rem;
-      color: var(--ink-light);
-      min-width: 1.5rem;
-      margin-top: 0.1rem;
-    }
-    .hero-pillar-text {
-      font-size: 0.92rem;
-      color: var(--ink-mid);
-      line-height: 1.55;
-    }
+    .hero-pillar-num { font-family: var(--f-serif); font-size: 0.85rem; color: var(--accent); min-width: 1.5rem; margin-top: 0.1rem; }
+    .hero-pillar-text { font-size: 0.92rem; color: var(--ink-mid); line-height: 1.55; }
 
-    /* ─── ABOUT ─── */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(3rem, 6vw, 7rem);
-      align-items: start;
-    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 6vw, 7rem); align-items: start; }
     .about-sticky { position: sticky; top: calc(var(--nav-h) + 2rem); }
-
-    .about-quote {
-      font-family: var(--f-serif);
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 300;
-      font-style: italic;
-      line-height: 1.4;
-      color: var(--ink);
-      margin: 2.5rem 0;
-      padding-left: 1.5rem;
-      border-left: 1px solid var(--accent);
-    }
-
-    .about-body p {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--ink-mid);
-      margin-bottom: 1.25rem;
-      max-width: 56ch;
-    }
-
-    .cred-list {
-      margin-top: 2.5rem;
-      display: flex;
-      flex-direction: column;
-    }
-    .cred-row {
-      display: flex;
-      align-items: baseline;
-      gap: 1rem;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
+    .photo-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; border: 1px solid var(--rule); }
+    .about-quote { font-family: var(--f-serif); font-size: clamp(1.5rem, 2.8vw, 2rem); font-weight: 300; font-style: italic; line-height: 1.4; color: var(--ink); margin: 2.5rem 0; padding-left: 1.5rem; border-left: 2px solid var(--accent); }
+    .about-body p { font-size: 1rem; line-height: 1.8; color: var(--ink-mid); margin-bottom: 1.25rem; max-width: 56ch; }
+    .cred-list { margin-top: 2.5rem; }
+    .cred-row { display: flex; align-items: baseline; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--rule); }
     .cred-row:first-child { border-top: 1px solid var(--rule); }
-    .cred-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      min-width: 90px;
-    }
-    .cred-value {
-      font-size: 0.92rem;
-      color: var(--ink);
-    }
+    .cred-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); min-width: 90px; }
+    .cred-value { font-size: 0.92rem; color: var(--ink); }
 
-    /* Photo placeholder */
-    .photo-frame {
-      aspect-ratio: 3/4;
-      background: var(--cream-mid);
-      border: 1px solid var(--rule);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      color: var(--ink-light);
-      font-size: 0.8rem;
-      letter-spacing: 0.06em;
-      text-align: center;
-      padding: 2rem;
-    }
-    .photo-frame svg { opacity: 0.25; }
-
-    /* ─── EXPERTISE ─── */
-    .expertise-intro {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(2rem, 5vw, 6rem);
-      align-items: end;
-      margin-bottom: 4rem;
-      padding-bottom: 4rem;
-      border-bottom: 1px solid var(--rule);
-    }
-    .expertise-intro p {
-      font-size: 1rem;
-      color: var(--ink-mid);
-      line-height: 1.75;
-      max-width: 44ch;
-    }
-
+    .expertise-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 6rem); align-items: end; margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--rule); }
+    .expertise-intro p { font-size: 1rem; color: var(--ink-mid); line-height: 1.75; max-width: 44ch; }
     .expertise-list { display: flex; flex-direction: column; }
-    .expertise-item {
-      display: grid;
-      grid-template-columns: 80px 1fr auto;
-      gap: 2rem;
-      align-items: start;
-      padding: 2.5rem 0;
-      border-bottom: 1px solid var(--rule);
-      transition: background 0.2s;
-      cursor: default;
-    }
+    .expertise-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 2rem; align-items: start; padding: 2.5rem 0; border-bottom: 1px solid var(--rule); cursor: default; }
     .expertise-item:first-child { border-top: 1px solid var(--rule); }
     .expertise-item:hover .expertise-title { color: var(--accent); }
+    .expertise-num { font-family: var(--f-serif); font-size: 0.85rem; color: var(--ink-light); padding-top: 0.2rem; }
+    .expertise-title { font-family: var(--f-serif); font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 300; line-height: 1.25; margin-bottom: 0.75rem; transition: color 0.25s; }
+    .expertise-desc { font-size: 0.9rem; color: var(--ink-mid); line-height: 1.7; max-width: 52ch; }
+    .expertise-tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 0.3rem 0.75rem; white-space: nowrap; align-self: start; margin-top: 0.3rem; }
 
-    .expertise-num {
-      font-family: var(--f-serif);
-      font-size: 0.85rem;
-      color: var(--ink-light);
-      padding-top: 0.2rem;
-    }
-    .expertise-title {
-      font-family: var(--f-serif);
-      font-size: clamp(1.3rem, 2vw, 1.7rem);
-      font-weight: 300;
-      line-height: 1.25;
-      margin-bottom: 0.75rem;
-      transition: color 0.25s;
-    }
-    .expertise-desc {
-      font-size: 0.9rem;
-      color: var(--ink-mid);
-      line-height: 1.7;
-      max-width: 52ch;
-    }
-    .expertise-tag {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      border: 1px solid var(--rule);
-      padding: 0.3rem 0.75rem;
-      white-space: nowrap;
-      align-self: start;
-      margin-top: 0.3rem;
-    }
-
-    /* ─── EDUCATION ─── */
-    .edu-intro {
-      max-width: 56ch;
-      margin-bottom: 4rem;
-    }
-    .edu-intro p { font-size: 1rem; color: var(--ink-mid); line-height: 1.75; }
-
-    .edu-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--rule);
-      border-left: 1px solid var(--rule);
-    }
-    .edu-card {
-      padding: 2rem 1.75rem;
-      border-right: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-      transition: background 0.2s;
-    }
-    .edu-card:hover { background: var(--cream-mid); }
-    .edu-card-num {
-      font-family: var(--f-serif);
-      font-size: 2.5rem;
-      font-weight: 300;
-      color: var(--cream-dark);
-      line-height: 1;
-      margin-bottom: 0.75rem;
-    }
-    .edu-card h3 {
-      font-family: var(--f-serif);
-      font-size: 1.25rem;
-      font-weight: 400;
-      margin-bottom: 1rem;
-      color: var(--ink);
-    }
-    .edu-card ul { display: flex; flex-direction: column; gap: 0.55rem; }
-    .edu-card li {
-      font-size: 0.85rem;
-      color: var(--ink-mid);
-      padding-left: 1rem;
-      position: relative;
-    }
-    .edu-card li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--ink-light);
-      font-size: 0.75rem;
-    }
-
-    /* ─── FAQ ─── */
     .faq-list { display: flex; flex-direction: column; }
-    .faq-item {
-      border-bottom: 1px solid var(--rule);
-    }
+    .faq-item { border-bottom: 1px solid var(--rule); }
     .faq-item:first-child { border-top: 1px solid var(--rule); }
-    .faq-btn {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      padding: 1.6rem 0;
-      text-align: left;
-      font-family: var(--f-serif);
-      font-size: clamp(1.05rem, 2vw, 1.35rem);
-      font-weight: 300;
-      color: var(--ink);
-      cursor: pointer;
-      transition: color 0.2s;
-    }
+    .faq-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 1.6rem 0; text-align: left; font-family: var(--f-serif); font-size: clamp(1.05rem, 2vw, 1.35rem); font-weight: 300; color: var(--ink); cursor: pointer; transition: color 0.2s; }
     .faq-btn:hover { color: var(--accent); }
-    .faq-icon {
-      width: 20px; height: 20px;
-      flex-shrink: 0;
-      position: relative;
-    }
-    .faq-icon::before, .faq-icon::after {
-      content: '';
-      position: absolute;
-      background: currentColor;
-      transition: transform 0.3s var(--ease-out), opacity 0.3s;
-    }
+    .faq-icon { width: 20px; height: 20px; flex-shrink: 0; position: relative; color: var(--accent); }
+    .faq-icon::before, .faq-icon::after { content: ''; position: absolute; background: currentColor; transition: transform 0.3s var(--ease-out), opacity 0.3s; }
     .faq-icon::before { top: 50%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); }
     .faq-icon::after  { top: 0; left: 50%; width: 1px; height: 100%; transform: translateX(-50%); }
     .faq-item.open .faq-icon::after { opacity: 0; transform: translateX(-50%) rotate(90deg); }
-    .faq-answer {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows 0.4s var(--ease-out);
-    }
+    .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s var(--ease-out); }
     .faq-item.open .faq-answer { grid-template-rows: 1fr; }
-    .faq-answer-inner {
-      overflow: hidden;
-    }
-    .faq-answer-inner p {
-      font-size: 0.95rem;
-      color: var(--ink-mid);
-      line-height: 1.75;
-      padding-bottom: 1.75rem;
-      max-width: 68ch;
-    }
+    .faq-answer-inner { overflow: hidden; }
+    .faq-answer-inner p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.75; padding-bottom: 1.75rem; max-width: 68ch; }
 
-    /* ─── CONTACT ─── */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(3rem, 6vw, 7rem);
-      align-items: start;
-    }
-    .contact-info h2 { margin-bottom: 1.5rem; }
-    .contact-info p {
-      font-size: 0.95rem;
-      color: var(--ink-mid);
-      line-height: 1.75;
-      margin-bottom: 2rem;
-    }
-    .contact-note {
-      font-size: 0.8rem;
-      color: var(--ink-light);
-      line-height: 1.6;
-      padding: 1.25rem;
-      border: 1px solid var(--rule);
-      background: var(--cream-mid);
-    }
-
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 6vw, 7rem); align-items: start; }
+    .contact-info p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 2rem; }
+    .contact-note { font-size: 0.8rem; color: var(--ink-mid); line-height: 1.6; padding: 1.25rem; border: 1px solid var(--accent); background: var(--accent-light); }
     .form-field { margin-bottom: 1.5rem; }
-    .form-field label {
-      display: block;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 0.5rem;
-    }
-    .form-field input,
-    .form-field textarea {
-      width: 100%;
-      padding: 0.75rem 0;
-      font-family: var(--f-sans);
-      font-size: 1rem;
-      color: var(--ink);
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid var(--rule);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-field input:focus,
-    .form-field textarea:focus { border-color: var(--ink); }
+    .form-field label { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .form-field input, .form-field textarea { width: 100%; padding: 0.75rem 0; font-family: var(--f-sans); font-size: 1rem; color: var(--ink); background: transparent; border: none; border-bottom: 1px solid var(--rule); outline: none; transition: border-color 0.2s; }
+    .form-field input:focus, .form-field textarea:focus { border-color: var(--accent); }
     .form-field textarea { min-height: 120px; resize: vertical; }
+    .btn-submit { display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; transition: color 0.2s, border-color 0.2s; }
+    .btn-submit:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
+    .form-msg { margin-top: 1rem; font-size: 0.85rem; color: var(--accent); display: none; }
 
-    .btn-submit {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink);
-      border-bottom: 1px solid var(--ink);
-      padding-bottom: 2px;
-      cursor: pointer;
-      background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .btn-submit:hover { color: var(--accent); border-color: var(--accent); }
-    .btn-submit-arrow { font-size: 1rem; }
-    .form-msg {
-      margin-top: 1rem;
-      font-size: 0.85rem;
-      color: var(--accent);
-      display: none;
-    }
+    .disclaimer { padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-light); line-height: 1.65; }
+    footer { padding: 3rem 0; border-top: 1px solid var(--rule); }
+    .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    .footer-name { font-family: var(--f-serif); font-size: 1.4rem; font-weight: 300; margin-bottom: 0.25rem; }
+    .footer-sub { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+    .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mid); }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 0.75rem; color: var(--ink-light); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
-    /* ─── DISCLAIMER ─── */
-    .disclaimer {
-      padding: 2rem 0;
-      border-top: 1px solid var(--rule);
-      font-size: 0.78rem;
-      color: var(--ink-light);
-      line-height: 1.65;
-    }
-
-    /* ─── FOOTER ─── */
-    footer {
-      padding: 3rem 0;
-      border-top: 1px solid var(--rule);
-    }
-    .footer-inner {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-    .footer-name {
-      font-family: var(--f-serif);
-      font-size: 1.4rem;
-      font-weight: 300;
-      margin-bottom: 0.25rem;
-    }
-    .footer-sub {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-    }
-    .footer-links {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-mid);
-    }
-    .footer-links a:hover { color: var(--ink); }
-    .footer-copy {
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--rule);
-      font-size: 0.75rem;
-      color: var(--ink-light);
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    /* ─── Alt section bg ─── */
-    .bg-mid { background: var(--cream-mid); }
-
-    /* ─── Responsive ─── */
     @media (max-width: 900px) {
-      .hero-top { grid-template-columns: 1fr; }
-      .hero-meta { text-align: left; }
+      .hero-top { grid-template-columns: 1fr; } .hero-meta { text-align: left; }
       .hero-body-row { grid-template-columns: 1fr; }
-      .about-grid { grid-template-columns: 1fr; }
-      .about-sticky { position: static; }
+      .about-grid { grid-template-columns: 1fr; } .about-sticky { position: static; }
       .expertise-intro { grid-template-columns: 1fr; }
-      .expertise-item { grid-template-columns: 50px 1fr; }
-      .expertise-tag { display: none; }
-      .edu-grid { grid-template-columns: 1fr 1fr; }
+      .expertise-item { grid-template-columns: 50px 1fr; } .expertise-tag { display: none; }
       .contact-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
-      .edu-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; } .nav-hamburger { display: flex; }
       .expertise-item { grid-template-columns: 40px 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
 <header class="nav" id="siteNav">
   <a href="#home" class="nav-logo">
     Dr. Siddharth Bhargava
-    <span>Ophthalmology &amp; Glaucoma</span>
+    <span>Cataracts &amp; Glaucoma</span>
   </a>
   <nav class="nav-links" aria-label="Main navigation">
     <a href="#home">Home</a>
     <a href="#about">About</a>
     <a href="#expertise">Expertise</a>
-    <a href="#education">Education</a>
+    <a href="education.html">Patient Education</a>
     <a href="#faq">FAQs</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -685,412 +195,167 @@
   <a href="#home" onclick="closeMobileNav()">Home</a>
   <a href="#about" onclick="closeMobileNav()">About</a>
   <a href="#expertise" onclick="closeMobileNav()">Expertise</a>
-  <a href="#education" onclick="closeMobileNav()">Education</a>
+  <a href="education.html" onclick="closeMobileNav()">Patient Education</a>
   <a href="#faq" onclick="closeMobileNav()">FAQs</a>
   <a href="#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
-<!-- ═══ HERO ═══ -->
 <section class="hero" id="home">
-  <div class="wrap hero-wrap">
-
-    <!-- Top rule row -->
+  <div class="wrap">
     <div class="hero-top reveal">
-      <h1 class="display display-xl hero-headline">
-        Thoughtful eye care,<br><em>centered on clarity.</em>
-      </h1>
-      <div class="hero-meta">
-        Fellowship-Trained Ophthalmologist<br>
-        Glaucoma &amp; Anterior Segment<br>
-        Southern California
-      </div>
+      <h1 class="display display-xl hero-headline">Thoughtful eye care,<br><em>centered on clarity.</em></h1>
+      <div class="hero-meta">Fellowship-Trained Ophthalmologist<br>Cataracts &amp; Glaucoma<br>Southern California</div>
     </div>
-
-    <!-- Body row -->
     <div class="hero-body-row">
       <div class="hero-intro reveal reveal-delay-1">
-        <p>
-          I specialize in glaucoma, cataract surgery, premium intraocular lens counseling,
-          and complex anterior segment care. My practice is built on a simple idea:
-          patients who understand their condition make better decisions and have better outcomes.
-        </p>
-        <p>
-          I trained at Albany Medical College, completed my residency at Eastern Virginia
-          Medical School, and finished a glaucoma fellowship at Washington University in St. Louis.
-        </p>
+        <p>I specialize in glaucoma, cataract surgery, premium intraocular lens counseling, and complex anterior segment care. My practice is built on a simple idea: patients who understand their condition make better decisions and have better outcomes.</p>
+        <p>I trained at Albany Medical College, completed my residency at Eastern Virginia Medical School, and finished a glaucoma fellowship at Washington University in St. Louis.</p>
       </div>
-      <div class="hero-pillars reveal reveal-delay-2">
-        <div class="hero-pillar">
-          <span class="hero-pillar-num">01</span>
-          <span class="hero-pillar-text">Fellowship-trained in glaucoma and advanced anterior segment care at Washington University in St. Louis.</span>
-        </div>
-        <div class="hero-pillar">
-          <span class="hero-pillar-num">02</span>
-          <span class="hero-pillar-text">Committed to clear explanations and shared decision-making at every appointment.</span>
-        </div>
-        <div class="hero-pillar">
-          <span class="hero-pillar-num">03</span>
-          <span class="hero-pillar-text">Modern surgical and medical treatments individualized to each patient&rsquo;s needs and visual goals.</span>
-        </div>
+      <div class="reveal reveal-delay-2">
+        <div class="hero-pillar"><span class="hero-pillar-num">01</span><span class="hero-pillar-text">Fellowship-trained in glaucoma and advanced anterior segment care at Washington University in St. Louis.</span></div>
+        <div class="hero-pillar"><span class="hero-pillar-num">02</span><span class="hero-pillar-text">Committed to clear explanations and shared decision-making at every appointment.</span></div>
+        <div class="hero-pillar"><span class="hero-pillar-num">03</span><span class="hero-pillar-text">Modern surgical and medical treatments individualized to each patient&rsquo;s needs and visual goals.</span></div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ═══ ABOUT ═══ -->
 <section id="about" class="bg-mid">
   <div class="wrap">
     <div class="about-grid">
-
-      <!-- Sticky left: photo + credentials -->
       <div class="about-sticky">
-        <div class="photo-frame reveal">
-          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" aria-hidden="true">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-          </svg>
-          Add your professional headshot
-        </div>
+        <img src="Bhargava-Siddharth-Photo.jpg" alt="Dr. Siddharth Bhargava, MD" class="photo-img reveal" width="480" height="640" loading="lazy" />
         <div class="cred-list reveal reveal-delay-2">
-          <div class="cred-row">
-            <span class="cred-label">MD</span>
-            <span class="cred-value">Albany Medical College</span>
-          </div>
-          <div class="cred-row">
-            <span class="cred-label">Residency</span>
-            <span class="cred-value">Eastern Virginia Medical School</span>
-          </div>
-          <div class="cred-row">
-            <span class="cred-label">Fellowship</span>
-            <span class="cred-value">Washington University in St. Louis</span>
-          </div>
-          <div class="cred-row">
-            <span class="cred-label">Societies</span>
-            <span class="cred-value">American Glaucoma Society &middot; ASCRS</span>
-          </div>
-          <div class="cred-row">
-            <span class="cred-label">Languages</span>
-            <span class="cred-value">English &middot; Hindi &middot; Urdu</span>
-          </div>
+          <div class="cred-row"><span class="cred-label">MD</span><span class="cred-value">Albany Medical College</span></div>
+          <div class="cred-row"><span class="cred-label">Residency</span><span class="cred-value">Eastern Virginia Medical School</span></div>
+          <div class="cred-row"><span class="cred-label">Fellowship</span><span class="cred-value">Washington University in St. Louis</span></div>
+          <div class="cred-row"><span class="cred-label">Societies</span><span class="cred-value">American Glaucoma Society &middot; ASCRS</span></div>
+          <div class="cred-row"><span class="cred-label">Languages</span><span class="cred-value">English &middot; Hindi &middot; Urdu</span></div>
         </div>
       </div>
-
-      <!-- Right: bio -->
       <div class="about-body">
         <span class="eyebrow reveal">About</span>
-        <h2 class="display display-lg reveal reveal-delay-1" style="margin-bottom:0;">A physician who believes patients deserve clarity.</h2>
-
-        <blockquote class="about-quote reveal reveal-delay-2">
-          &ldquo;I want every patient to leave their appointment better informed about their eyes than when they arrived.&rdquo;
-        </blockquote>
-
+        <h2 class="display display-lg reveal reveal-delay-1">A physician who believes patients deserve clarity.</h2>
+        <blockquote class="about-quote reveal reveal-delay-2">&ldquo;I want every patient to leave their appointment better informed about their eyes than when they arrived.&rdquo;</blockquote>
         <div class="reveal reveal-delay-3">
-          <p>
-            Dr. Siddharth Bhargava is a fellowship-trained ophthalmologist with specialized expertise in
-            glaucoma management, cataract surgery, premium intraocular lens counseling, and complex
-            anterior segment care.
-          </p>
-          <p>
-            He completed his medical degree at Albany Medical College and his ophthalmology residency
-            at Eastern Virginia Medical School, followed by a glaucoma fellowship at Washington
-            University in St. Louis — where he focused on medical and surgical glaucoma, micro-invasive
-            glaucoma surgery (MIGS), and the intersection of glaucoma and lens-based surgery.
-          </p>
-          <p>
-            His approach to care is built on patient education: helping people understand not just
-            what treatment is recommended, but why — and what to expect at every step.
-            Dr. Bhargava speaks English, Hindi, and Urdu and welcomes patients from diverse backgrounds.
-          </p>
+          <p>Dr. Siddharth Bhargava is a fellowship-trained ophthalmologist with specialized expertise in glaucoma management, cataract surgery, premium intraocular lens counseling, and complex anterior segment care.</p>
+          <p>He completed his medical degree at Albany Medical College and his ophthalmology residency at Eastern Virginia Medical School, followed by a glaucoma fellowship at Washington University in St. Louis &mdash; where he focused on medical and surgical glaucoma, micro-invasive glaucoma surgery (MIGS), and the intersection of glaucoma and lens-based surgery.</p>
+          <p>His approach to care is built on patient education: helping people understand not just what treatment is recommended, but why &mdash; and what to expect at every step. Dr. Bhargava speaks English, Hindi, and Urdu and welcomes patients from diverse backgrounds.</p>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ═══ EXPERTISE ═══ -->
 <section id="expertise">
   <div class="wrap">
-
     <div class="expertise-intro">
       <div>
-        <span class="eyebrow reveal">Clinical expertise</span>
-        <h2 class="display display-lg reveal reveal-delay-1">Areas of focus</h2>
+        <span class="eyebrow reveal">Clinical Expertise</span>
+        <h2 class="display display-lg reveal reveal-delay-1">Areas of Focus</h2>
       </div>
-      <p class="reveal reveal-delay-2">
-        From routine comprehensive care to complex glaucoma surgery and premium cataract
-        counseling — every patient receives thoughtful, individualized treatment.
-      </p>
+      <p class="reveal reveal-delay-2">From routine comprehensive care to complex glaucoma surgery and premium cataract counseling &mdash; every patient receives thoughtful, individualized treatment.</p>
     </div>
-
     <div class="expertise-list">
-      <div class="expertise-item reveal">
+      <div class="expertise-item section-reveal">
         <span class="expertise-num">01</span>
-        <div>
-          <div class="expertise-title">Comprehensive ophthalmology</div>
-          <p class="expertise-desc">Evaluation and ongoing care for a wide range of eye conditions, from routine annual exams to complex medical eye disease and long-term monitoring.</p>
-        </div>
+        <div><div class="expertise-title">Comprehensive Ophthalmology</div><p class="expertise-desc">Evaluation and ongoing care for a wide range of eye conditions, from routine annual exams to complex medical eye disease and long-term monitoring.</p></div>
         <span class="expertise-tag">General</span>
       </div>
-      <div class="expertise-item reveal reveal-delay-1">
+      <div class="expertise-item section-reveal">
         <span class="expertise-num">02</span>
-        <div>
-          <div class="expertise-title">Glaucoma care</div>
-          <p class="expertise-desc">Diagnosis, monitoring, and treatment of glaucoma — including medications, laser procedures, micro-invasive glaucoma surgery (MIGS), and conventional glaucoma surgery when appropriate.</p>
-        </div>
+        <div><div class="expertise-title">Glaucoma Care</div><p class="expertise-desc">Diagnosis, monitoring, and treatment of glaucoma &mdash; including medications, laser procedures, micro-invasive glaucoma surgery (MIGS), and conventional glaucoma surgery when appropriate.</p></div>
         <span class="expertise-tag">Surgical</span>
       </div>
-      <div class="expertise-item reveal reveal-delay-2">
+      <div class="expertise-item section-reveal">
         <span class="expertise-num">03</span>
-        <div>
-          <div class="expertise-title">Cataract surgery</div>
-          <p class="expertise-desc">Comprehensive evaluation and counseling on cataract surgery timing, what to expect from the procedure, and coordination with glaucoma care when both conditions are present.</p>
-        </div>
+        <div><div class="expertise-title">Cataract Surgery</div><p class="expertise-desc">Comprehensive evaluation and counseling on cataract surgery timing, what to expect from the procedure, and coordination with glaucoma care when both conditions are present.</p></div>
         <span class="expertise-tag">Surgical</span>
       </div>
-      <div class="expertise-item reveal reveal-delay-3">
+      <div class="expertise-item section-reveal">
         <span class="expertise-num">04</span>
-        <div>
-          <div class="expertise-title">Premium IOL counseling</div>
-          <p class="expertise-desc">In-depth discussions of intraocular lens options based on each patient's lifestyle, visual priorities, and eye health — with an honest review of tradeoffs and realistic expectations.</p>
-        </div>
+        <div><div class="expertise-title">Premium IOL Counseling</div><p class="expertise-desc">In-depth discussions of intraocular lens options based on each patient&rsquo;s lifestyle, visual priorities, and eye health &mdash; with an honest review of tradeoffs and realistic expectations.</p></div>
         <span class="expertise-tag">Counseling</span>
       </div>
-      <div class="expertise-item reveal reveal-delay-4">
+      <div class="expertise-item section-reveal">
         <span class="expertise-num">05</span>
-        <div>
-          <div class="expertise-title">Complex anterior segment care</div>
-          <p class="expertise-desc">Management of advanced anterior segment conditions, combined glaucoma and cataract procedures, and lens-related surgical problem solving requiring specialized expertise.</p>
-        </div>
+        <div><div class="expertise-title">Complex Anterior Segment Care</div><p class="expertise-desc">Management of advanced anterior segment conditions, combined glaucoma and cataract procedures, and lens-related surgical problem solving requiring specialized expertise.</p></div>
         <span class="expertise-tag">Surgical</span>
       </div>
-      <div class="expertise-item reveal reveal-delay-5">
+      <div class="expertise-item section-reveal">
         <span class="expertise-num">06</span>
-        <div>
-          <div class="expertise-title">Collaborative &amp; coordinated care</div>
-          <p class="expertise-desc">Close coordination with optometrists, primary care providers, and specialists to support patients with complex ocular or medical histories.</p>
-        </div>
+        <div><div class="expertise-title">Collaborative &amp; Coordinated Care</div><p class="expertise-desc">Close coordination with optometrists, primary care providers, and specialists to support patients with complex ocular or medical histories.</p></div>
         <span class="expertise-tag">Coordination</span>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ═══ EDUCATION ═══ -->
-<section id="education" class="bg-mid">
+<section id="faq" class="bg-mid">
   <div class="wrap">
-    <div class="edu-intro">
-      <span class="eyebrow reveal">Patient education</span>
-      <h2 class="display display-lg reveal reveal-delay-1">Understanding your eyes</h2>
-      <p class="reveal reveal-delay-2">
-        This section helps patients and families review key concepts after a visit.
-        It supports — but does not replace — a full ophthalmic examination.
-      </p>
-    </div>
-
-    <div class="edu-grid">
-      <div class="edu-card reveal">
-        <div class="edu-card-num">01</div>
-        <h3>Glaucoma</h3>
-        <ul>
-          <li>What glaucoma is and how it affects the optic nerve</li>
-          <li>Why repeat visual field and OCT testing matters</li>
-          <li>How pressure, blood flow, and other factors play a role</li>
-          <li>Treatment options: drops, laser, MIGS, and surgery</li>
-          <li>How to use eye drops correctly and why adherence matters</li>
-        </ul>
-      </div>
-      <div class="edu-card reveal reveal-delay-1">
-        <div class="edu-card-num">02</div>
-        <h3>Cataracts</h3>
-        <ul>
-          <li>What a cataract is and why vision changes over time</li>
-          <li>Common symptoms and effects on daily activities</li>
-          <li>How we decide when surgery may be appropriate</li>
-          <li>What surgery involves and typical recovery timelines</li>
-          <li>How glaucoma influences surgical planning</li>
-        </ul>
-      </div>
-      <div class="edu-card reveal reveal-delay-2">
-        <div class="edu-card-num">03</div>
-        <h3>Lens options</h3>
-        <ul>
-          <li>Monofocal vs. premium intraocular lens differences</li>
-          <li>How lifestyle and visual goals shape selection</li>
-          <li>Distance, near, and multifocal lens considerations</li>
-          <li>Addressing astigmatism with toric lenses</li>
-          <li>Why realistic expectations matter most</li>
-        </ul>
-      </div>
-      <div class="edu-card reveal reveal-delay-1">
-        <div class="edu-card-num">04</div>
-        <h3>Common tests</h3>
-        <ul>
-          <li>OCT of the optic nerve and macula</li>
-          <li>Visual field testing to map peripheral vision</li>
-          <li>Biometry for cataract surgery planning</li>
-          <li>Corneal topography and pachymetry</li>
-          <li>Gonioscopy for angle evaluation</li>
-        </ul>
-      </div>
-      <div class="edu-card reveal reveal-delay-2">
-        <div class="edu-card-num">05</div>
-        <h3>Eye drops &amp; medications</h3>
-        <ul>
-          <li>Tips for accurate, comfortable drop instillation</li>
-          <li>Spacing drops when using multiple medications</li>
-          <li>What to do if a dose is missed</li>
-          <li>When to call the office about side effects</li>
-        </ul>
-      </div>
-      <div class="edu-card reveal reveal-delay-3">
-        <div class="edu-card-num">06</div>
-        <h3>Preparing for surgery</h3>
-        <ul>
-          <li>What to expect before, during, and after surgery</li>
-          <li>Planning for time off, driving, and home support</li>
-          <li>Common postoperative precautions</li>
-          <li>Expected symptoms vs. when to call</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ FAQ ═══ -->
-<section id="faq">
-  <div class="wrap">
-    <span class="eyebrow reveal">Frequently asked questions</span>
-    <h2 class="display display-lg reveal reveal-delay-1" style="margin-bottom: 3rem;">Questions patients often ask</h2>
-
+    <span class="eyebrow reveal">Frequently Asked Questions</span>
+    <h2 class="display display-lg reveal reveal-delay-1" style="margin-bottom:3rem;">Questions patients often ask</h2>
     <div class="faq-list reveal reveal-delay-2">
-
       <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">
-          What should I expect at my first visit?
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer"><div class="faq-answer-inner">
-          <p>A first visit typically includes a thorough history, vision testing, intraocular pressure measurements, slit-lamp examination, and imaging or visual field testing when indicated. The goal is to understand your eye health fully and discuss a clear, reasoned plan together.</p>
-        </div></div>
+        <button class="faq-btn" onclick="toggleFaq(this)">What should I expect at my first visit?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p>A first visit typically includes a thorough history, vision testing, intraocular pressure measurements, slit-lamp examination, and imaging or visual field testing when indicated. The goal is to understand your eye health fully and discuss a clear, reasoned plan together.</p></div></div>
       </div>
-
       <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">
-          How do you decide when cataract surgery is appropriate?
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer"><div class="faq-answer-inner">
-          <p>Timing depends on how your cataract is affecting daily activities — reading, driving, glare at night — along with your exam findings and any other eye conditions. We will review potential benefits, risks, and alternatives before making any plan together.</p>
-        </div></div>
+        <button class="faq-btn" onclick="toggleFaq(this)">How do you decide when cataract surgery is appropriate?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p>Timing depends on how your cataract is affecting daily activities &mdash; reading, driving, glare at night &mdash; along with your exam findings and any other eye conditions. We will review potential benefits, risks, and alternatives before making any plan together.</p></div></div>
       </div>
-
       <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">
-          Why do I need repeat glaucoma tests if my vision feels the same?
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer"><div class="faq-answer-inner">
-          <p>Glaucoma is a long-term condition that can progress silently before affecting central vision. Repeating visual field tests, OCT scans, and pressure checks helps us determine whether the disease is stable or changing — and whether treatment needs to be adjusted.</p>
-        </div></div>
+        <button class="faq-btn" onclick="toggleFaq(this)">Why do I need repeat glaucoma tests if my vision feels the same?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p>Glaucoma is a long-term condition that can progress silently before affecting central vision. Repeating visual field tests, OCT scans, and pressure checks helps us determine whether the disease is stable or changing &mdash; and whether treatment needs to be adjusted.</p></div></div>
       </div>
-
       <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">
-          What is the difference between MIGS and traditional glaucoma surgery?
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer"><div class="faq-answer-inner">
-          <p>Micro-invasive glaucoma surgery (MIGS) uses smaller incisions and typically has a faster recovery and a more favorable safety profile than traditional procedures such as trabeculectomy or tube shunts. MIGS is often performed alongside cataract surgery. The right approach depends on the severity of your glaucoma and individual factors.</p>
-        </div></div>
+        <button class="faq-btn" onclick="toggleFaq(this)">What is the difference between MIGS and traditional glaucoma surgery?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p>Micro-invasive glaucoma surgery (MIGS) uses smaller incisions and typically has a faster recovery and a more favorable safety profile than traditional procedures such as trabeculectomy or tube shunts. MIGS is often performed alongside cataract surgery. The right approach depends on the severity of your glaucoma and individual factors.</p></div></div>
       </div>
-
       <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">
-          Do you see patients in languages other than English?
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer"><div class="faq-answer-inner">
-          <p>Yes. Dr. Bhargava speaks English, Hindi, and Urdu and welcomes patients from diverse linguistic and cultural backgrounds.</p>
-        </div></div>
+        <button class="faq-btn" onclick="toggleFaq(this)">Do you see patients in languages other than English?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p>Yes. Dr. Bhargava speaks English, Hindi, and Urdu and welcomes patients from diverse linguistic and cultural backgrounds.</p></div></div>
       </div>
-
       <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">
-          Can this website replace an eye examination?
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer"><div class="faq-answer-inner">
-          <p>No. The information on this website is for general education only and cannot diagnose conditions, replace an in-person evaluation, or provide personalized treatment recommendations.</p>
-        </div></div>
+        <button class="faq-btn" onclick="toggleFaq(this)">Can this website replace an eye examination?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p>No. The information on this website is for general education only and cannot diagnose conditions, replace an in-person evaluation, or provide personalized treatment recommendations.</p></div></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ═══ CONTACT ═══ -->
-<section id="contact" class="bg-mid">
+<section id="contact">
   <div class="wrap">
     <div class="contact-grid">
       <div class="contact-info">
         <span class="eyebrow reveal">Contact</span>
         <h2 class="display display-lg reveal reveal-delay-1">Get in touch</h2>
-        <p class="reveal reveal-delay-2">
-          This form is for general professional inquiries only.
-          Please do not use it for urgent medical questions or emergencies.
-        </p>
-        <div class="contact-note reveal reveal-delay-3">
-          If you are experiencing a sudden change in vision, eye pain, or any acute ocular symptoms,
-          please contact an emergency eye care provider or go to your nearest emergency department.
-        </div>
+        <p class="reveal reveal-delay-2">This form is for general professional inquiries only. Please do not use it for urgent medical questions or emergencies.</p>
+        <div class="contact-note reveal reveal-delay-3">If you are experiencing a sudden change in vision, eye pain, or any acute ocular symptoms, please contact an emergency eye care provider or go to your nearest emergency department.</div>
       </div>
       <form class="reveal reveal-delay-2" onsubmit="submitForm(event)">
-        <div class="form-field">
-          <label for="fname">Name</label>
-          <input id="fname" type="text" name="name" placeholder="Your full name" required />
-        </div>
-        <div class="form-field">
-          <label for="femail">Email</label>
-          <input id="femail" type="email" name="email" placeholder="you@example.com" required />
-        </div>
-        <div class="form-field">
-          <label for="fmsg">Message</label>
-          <textarea id="fmsg" name="message" placeholder="Your question or message" required></textarea>
-        </div>
-        <button type="submit" class="btn-submit">
-          Send message <span class="btn-submit-arrow">&rarr;</span>
-        </button>
-        <p class="form-msg" id="formMsg">Thank you. This form is currently for demonstration — contact details will be updated as the site evolves.</p>
+        <div class="form-field"><label for="fname">Name</label><input id="fname" type="text" name="name" placeholder="Your full name" required /></div>
+        <div class="form-field"><label for="femail">Email</label><input id="femail" type="email" name="email" placeholder="you@example.com" required /></div>
+        <div class="form-field"><label for="fmsg">Message</label><textarea id="fmsg" name="message" placeholder="Your question or message" required></textarea></div>
+        <button type="submit" class="btn-submit">Send message <span>&rarr;</span></button>
+        <p class="form-msg" id="formMsg">Thank you &mdash; contact details will be updated as the site evolves.</p>
       </form>
     </div>
   </div>
 </section>
 
-<!-- ═══ DISCLAIMER ═══ -->
-<div class="disclaimer">
-  <div class="wrap">
-    <strong>Medical disclaimer:</strong> The educational information on this website is provided for general informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Use of this website does not by itself create a physician–patient relationship. Always seek the advice of your physician or qualified eye care provider with any questions about your eye health.
-  </div>
-</div>
+<div class="disclaimer"><div class="wrap"><strong>Medical disclaimer:</strong> The educational information on this website is provided for general informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Use of this website does not by itself create a physician&ndash;patient relationship. Always seek the advice of your physician or qualified eye care provider with any questions about your eye health.</div></div>
 
-<!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="wrap">
     <div class="footer-inner">
       <div>
         <div class="footer-name">Dr. Siddharth Bhargava</div>
-        <div class="footer-sub">Ophthalmology &middot; Glaucoma &middot; Cataracts &middot; Premium IOLs</div>
+        <div class="footer-sub">Cataracts &middot; Glaucoma &middot; Premium IOLs &middot; Southern California</div>
       </div>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#expertise">Expertise</a>
-        <a href="#education">Education</a>
-        <a href="#faq">FAQs</a>
-        <a href="#contact">Contact</a>
+      <nav class="footer-links">
+        <a href="#home">Home</a><a href="#about">About</a><a href="#expertise">Expertise</a>
+        <a href="education.html">Education</a><a href="#faq">FAQs</a><a href="#contact">Contact</a>
       </nav>
     </div>
     <div class="footer-copy">
@@ -1101,47 +366,17 @@
 </footer>
 
 <script>
-  // Year
   document.getElementById('yr').textContent = new Date().getFullYear();
-
-  // Scroll-reveal using IntersectionObserver
-  const reveals = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-  reveals.forEach(el => io.observe(el));
-
-  // Sticky nav
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+  document.querySelectorAll('.reveal, .section-reveal').forEach(el => io.observe(el));
   const nav = document.getElementById('siteNav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 20);
-  }, { passive: true });
-
-  // Mobile nav
-  function toggleMobileNav() {
-    document.getElementById('mobileNav').classList.toggle('open');
-  }
-  function closeMobileNav() {
-    document.getElementById('mobileNav').classList.remove('open');
-  }
-
-  // FAQ accordion
-  function toggleFaq(btn) {
-    btn.parentElement.classList.toggle('open');
-  }
-
-  // Contact form
-  function submitForm(e) {
-    e.preventDefault();
-    const msg = document.getElementById('formMsg');
-    msg.style.display = 'block';
-    e.target.reset();
-  }
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
+  function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+  function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); }
+  function toggleFaq(btn) { btn.parentElement.classList.toggle('open'); }
+  function submitForm(e) { e.preventDefault(); document.getElementById('formMsg').style.display = 'block'; e.target.reset(); }
 </script>
 </body>
 </html>
