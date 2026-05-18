@@ -68,7 +68,7 @@
     .display { font-family: var(--f-serif); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
     .display-lg  { font-size: clamp(2.4rem, 5vw, 4.2rem); }
 
-    /* HERO — unified light background */
+    /* HERO */
     .hero {
       background: var(--bg);
       padding: 0;
@@ -86,13 +86,37 @@
       gap: clamp(3rem, 6vw, 6rem);
       align-items: center;
     }
+
+    /* Hero-left: position relative so the eye SVG can sit behind the text */
     .hero-left {
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
-    /* Headline: two lines, mixed upright/italic */
+    /* Eye animation panel — sits behind text, no pointer events */
+    .hero-eye-bg {
+      position: absolute;
+      inset: -2rem -1rem;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+      opacity: 0.92;
+    }
+    .hero-eye-bg svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Text sits above the eye */
+    .hero-left > .eyebrow,
+    .hero-left > h1 {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Headline */
     .hero-line1,
     .hero-line2 {
       font-family: var(--f-serif);
@@ -102,7 +126,6 @@
       font-style: normal;
       color: var(--ink);
     }
-    /* Italic teal spans: Eye Care, and Clarity. */
     .hero-line1 em,
     .hero-line2 em {
       font-style: italic;
@@ -129,7 +152,7 @@
       text-align: center;
     }
 
-    /* Intro band: same light bg, NO top border */
+    /* Intro band */
     .hero-intro-band {
       padding-bottom: clamp(3rem, 6vw, 5rem);
     }
@@ -213,6 +236,7 @@
     @media (max-width: 640px) {
       .nav-links { display: none; } .nav-hamburger { display: flex; }
       .expertise-item { grid-template-columns: 40px 1fr; }
+      .hero-eye-bg { display: none; }
     }
   </style>
 </head>
@@ -245,15 +269,124 @@
   <a href="#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
-<!-- HERO: unified light bg throughout -->
 <section class="hero" id="home">
 
-  <!-- Top panel: headline left, photo right -->
   <div class="hero-top">
     <div class="wrap">
       <div class="hero-grid">
 
         <div class="hero-left">
+
+          <!-- ═══ EYE ANIMATION BACKGROUND PANEL ═══
+               Lives behind the headline text.
+               Clipped to almond shape, fully opaque white eyelid,
+               muted teal iris. Animates on scroll. -->
+          <div class="hero-eye-bg" aria-hidden="true">
+            <svg id="heroEyeSvg" viewBox="0 0 600 300" fill="none"
+                 preserveAspectRatio="xMidYMid meet"
+                 xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <clipPath id="almondClip">
+                  <path d="M 30 150 Q 300 22 570 150 Q 300 278 30 150 Z"/>
+                </clipPath>
+              </defs>
+
+              <g clip-path="url(#almondClip)">
+                <!-- bg -->  
+                <rect x="0" y="0" width="600" height="300" fill="#f0f4f5"/>
+
+                <!-- Iris fill — near-white teal wash -->
+                <circle cx="300" cy="150" r="80" fill="#daeaeb"/>
+
+                <!-- Iris rings -->
+                <circle cx="300" cy="150" r="80"
+                        stroke="#aecbcd" stroke-width="1.8" fill="none" opacity="0.5"/>
+                <circle cx="300" cy="150" r="56"
+                        stroke="#aecbcd" stroke-width="1" fill="none" opacity="0.3"/>
+
+                <!-- Iris spokes -->
+                <g stroke="#aecbcd" stroke-width="0.8" opacity="0.22">
+                  <line x1="300" y1="96"  x2="300" y2="70"/>
+                  <line x1="341" y1="111" x2="362" y2="88"/>
+                  <line x1="356" y1="150" x2="384" y2="150"/>
+                  <line x1="341" y1="189" x2="362" y2="212"/>
+                  <line x1="300" y1="204" x2="300" y2="230"/>
+                  <line x1="259" y1="189" x2="238" y2="212"/>
+                  <line x1="244" y1="150" x2="216" y2="150"/>
+                  <line x1="259" y1="111" x2="238" y2="88"/>
+                </g>
+
+                <!-- Pupil — desaturated slate-teal -->
+                <circle cx="300" cy="150" r="33" fill="#8eb4b7"/>
+                <circle cx="300" cy="150" r="21" fill="#7aa5a8"/>
+
+                <!-- Catchlight -->
+                <ellipse cx="316" cy="134" rx="10" ry="8"
+                         fill="white" opacity="0.45"/>
+
+                <!-- Lower lid edge -->
+                <path d="M 30 150 Q 300 278 570 150"
+                      stroke="white" stroke-width="2.2" stroke-linecap="round"
+                      fill="none" opacity="0.55"/>
+
+                <!-- Lower lashes -->
+                <g stroke="white" stroke-width="1.6" stroke-linecap="round" opacity="0.45">
+                  <line x1="75"  y1="168" x2="63"  y2="190"/>
+                  <line x1="118" y1="192" x2="111" y2="216"/>
+                  <line x1="168" y1="212" x2="165" y2="237"/>
+                  <line x1="224" y1="225" x2="224" y2="251"/>
+                  <line x1="280" y1="232" x2="281" y2="258"/>
+                  <line x1="300" y1="234" x2="300" y2="260"/>
+                  <line x1="320" y1="232" x2="319" y2="258"/>
+                  <line x1="376" y1="225" x2="376" y2="251"/>
+                  <line x1="432" y1="212" x2="435" y2="237"/>
+                  <line x1="482" y1="192" x2="489" y2="216"/>
+                  <line x1="525" y1="168" x2="537" y2="190"/>
+                </g>
+
+                <!-- EYELID — animates downward on scroll -->
+                <g id="heroEyelid">
+                  <!-- Fully opaque white fill -->
+                  <path d="M 20 150 Q 300 22 580 150 L 580 -70 L 20 -70 Z"
+                        fill="white"/>
+                  <!-- Lid edge -->
+                  <path d="M 30 150 Q 300 22 570 150"
+                        stroke="white" stroke-width="2.5" stroke-linecap="round"
+                        fill="none" opacity="0.85"/>
+                  <!-- Upper lashes -->
+                  <g stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.65">
+                    <line x1="45"  y1="142" x2="30"  y2="118"/>
+                    <line x1="72"  y1="122" x2="60"  y2="96"/>
+                    <line x1="103" y1="104" x2="94"  y2="76"/>
+                    <line x1="137" y1="89"  x2="132" y2="60"/>
+                    <line x1="174" y1="77"  x2="172" y2="47"/>
+                    <line x1="213" y1="65"  x2="213" y2="35"/>
+                    <line x1="253" y1="57"  x2="254" y2="26"/>
+                    <line x1="278" y1="53"  x2="278" y2="20"/>
+                    <line x1="300" y1="50"  x2="300" y2="16"/>
+                    <line x1="322" y1="53"  x2="322" y2="20"/>
+                    <line x1="347" y1="57"  x2="346" y2="26"/>
+                    <line x1="387" y1="65"  x2="387" y2="35"/>
+                    <line x1="426" y1="77"  x2="428" y2="47"/>
+                    <line x1="463" y1="89"  x2="468" y2="60"/>
+                    <line x1="497" y1="104" x2="506" y2="76"/>
+                    <line x1="528" y1="122" x2="540" y2="96"/>
+                    <line x1="555" y1="142" x2="570" y2="118"/>
+                  </g>
+                </g>
+              </g><!-- /almondClip -->
+
+              <!-- Outer almond frame — always on top of the clip -->
+              <path d="M 30 150 Q 300 22 570 150"
+                    stroke="white" stroke-width="2" stroke-linecap="round"
+                    fill="none" opacity="0.6"/>
+              <path d="M 30 150 Q 300 278 570 150"
+                    stroke="white" stroke-width="2" stroke-linecap="round"
+                    fill="none" opacity="0.6"/>
+            </svg>
+          </div>
+          <!-- ═══ /EYE ANIMATION ═══ -->
+
           <span class="eyebrow reveal">Fellowship-Trained Ophthalmologist</span>
           <h1>
             <div class="hero-line1 reveal reveal-delay-1">Thoughtful <em>Eye Care,</em></div>
@@ -277,7 +410,6 @@
     </div>
   </div>
 
-  <!-- Intro band: same light bg, no dividing line -->
   <div class="hero-intro-band">
     <div class="wrap">
       <p class="reveal">I specialize in glaucoma, cataract surgery, premium intraocular lens counseling, and complex anterior segment care. My practice is built on a simple idea: patients who understand their condition make better decisions and have better outcomes.</p>
@@ -286,7 +418,6 @@
 
 </section>
 
-<!-- ABOUT: darker bg starts here -->
 <section id="about" class="bg-mid">
   <div class="wrap">
     <div class="about-cols">
@@ -431,12 +562,35 @@
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ── Scroll-driven eye blink ──
+     Animates over the first 60% of the hero section height.
+     At progress=0 → lid tucked up (eye open)
+     At progress=1 → lid descended 262px in SVG units (eye closed) */
+  (function(){
+    const lid    = document.getElementById('heroEyelid');
+    const hero   = document.querySelector('.hero-top');
+    if (!lid || !hero) return;
+    const MAX_TY = 262;
+    function tick(){
+      const heroH   = hero.offsetHeight;
+      const progress = Math.min(Math.max(window.scrollY / (heroH * 0.75), 0), 1);
+      lid.setAttribute('transform', 'translate(0,' + (progress * MAX_TY) + ')');
+    }
+    window.addEventListener('scroll', tick, { passive: true });
+    tick();
+  })();
+
+  /* ── Reveal on scroll ── */
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal, .section-reveal').forEach(el => io.observe(el));
+
+  /* ── Nav scroll effect ── */
   const nav = document.getElementById('siteNav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
+
   function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
   function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); }
   function toggleFaq(btn) { btn.parentElement.classList.toggle('open'); }
