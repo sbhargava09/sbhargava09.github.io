@@ -70,22 +70,27 @@
     .display-lg  { font-size: clamp(2.4rem, 5vw, 4.2rem); }
     .display em  { font-style: italic; color: var(--accent); }
 
-    /* HERO */
-    .hero { padding-top: calc(var(--nav-h) + clamp(3rem, 6vw, 5rem)); padding-bottom: clamp(4rem, 8vw, 7rem); border-bottom: 1px solid var(--rule); }
+    /* HERO — dark top panel */
+    .hero { padding: 0; border-bottom: 1px solid var(--rule); }
+
+    /* Top panel: dark background, headline + photo */
+    .hero-top {
+      background: var(--bg-dark);
+      padding-top: calc(var(--nav-h) + clamp(3rem, 6vw, 5rem));
+      padding-bottom: clamp(3rem, 6vw, 5rem);
+    }
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr 340px;
       gap: clamp(3rem, 6vw, 6rem);
       align-items: center;
     }
-    .hero-left { display: flex; flex-direction: column; gap: 2.5rem; }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
     .hero-headline { max-width: 16ch; }
-    .hero-meta { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); line-height: 1.9; }
-    .hero-intro p { font-size: 1.05rem; line-height: 1.75; color: var(--ink-mid); margin-bottom: 1.25rem; }
-    .hero-pillars { border-top: 1px solid var(--rule); }
-    .hero-pillar { display: flex; align-items: flex-start; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--rule); }
-    .hero-pillar-num { font-family: var(--f-serif); font-size: 0.85rem; color: var(--accent); min-width: 1.5rem; margin-top: 0.1rem; }
-    .hero-pillar-text { font-size: 0.92rem; color: var(--ink-mid); line-height: 1.55; }
 
     /* HERO PHOTO */
     .hero-photo-wrap { position: relative; }
@@ -105,6 +110,19 @@
       text-transform: uppercase;
       color: var(--ink-light);
       text-align: center;
+    }
+
+    /* Bottom intro band: light background, full width */
+    .hero-intro-band {
+      background: var(--bg);
+      padding: clamp(2.5rem, 5vw, 4rem) 0;
+      border-top: 1px solid var(--rule);
+    }
+    .hero-intro-band p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--ink-mid);
+      max-width: 72ch;
     }
 
     /* ABOUT */
@@ -212,42 +230,39 @@
   <a href="#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
+<!-- HERO -->
 <section class="hero" id="home">
-  <div class="wrap">
-    <div class="hero-grid">
 
-      <!-- LEFT: headline + intro + pillars -->
-      <div class="hero-left">
-        <div>
+  <!-- Dark top panel: headline left, photo right -->
+  <div class="hero-top">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-left">
           <span class="eyebrow reveal">Fellowship-Trained Ophthalmologist</span>
           <h1 class="display display-xl hero-headline reveal reveal-delay-1">Thoughtful eye care,<br><em>centered on clarity.</em></h1>
         </div>
-        <div class="hero-intro reveal reveal-delay-2">
-          <p>I specialize in glaucoma, cataract surgery, premium intraocular lens counseling, and complex anterior segment care. My practice is built on a simple idea: patients who understand their condition make better decisions and have better outcomes.</p>
-          <p>I trained at Albany Medical College, completed my residency at Eastern Virginia Medical School, and finished a glaucoma fellowship at Washington University in St. Louis.</p>
-        </div>
-        <div class="hero-pillars reveal reveal-delay-3">
-          <div class="hero-pillar"><span class="hero-pillar-num">01</span><span class="hero-pillar-text">Fellowship-trained in glaucoma and advanced anterior segment care at Washington University in St. Louis.</span></div>
-          <div class="hero-pillar"><span class="hero-pillar-num">02</span><span class="hero-pillar-text">Committed to clear explanations and shared decision-making at every appointment.</span></div>
-          <div class="hero-pillar"><span class="hero-pillar-num">03</span><span class="hero-pillar-text">Modern surgical and medical treatments individualized to each patient&rsquo;s needs and visual goals.</span></div>
+        <div class="hero-photo-wrap reveal reveal-delay-2">
+          <img
+            src="Bhargava-Siddharth-Photo.jpg"
+            alt="Dr. Siddharth Bhargava, MD"
+            class="hero-photo"
+            width="340"
+            height="453"
+            loading="eager"
+          />
+          <p class="hero-photo-caption">Dr. Siddharth Bhargava, MD<br>Cataracts &amp; Glaucoma &middot; Southern California</p>
         </div>
       </div>
-
-      <!-- RIGHT: headshot -->
-      <div class="hero-photo-wrap reveal reveal-delay-2">
-        <img
-          src="Bhargava-Siddharth-Photo.jpg"
-          alt="Dr. Siddharth Bhargava, MD"
-          class="hero-photo"
-          width="340"
-          height="453"
-          loading="eager"
-        />
-        <p class="hero-photo-caption">Dr. Siddharth Bhargava, MD<br>Cataracts &amp; Glaucoma &middot; Southern California</p>
-      </div>
-
     </div>
   </div>
+
+  <!-- Light intro band: full width below -->
+  <div class="hero-intro-band">
+    <div class="wrap">
+      <p class="reveal">I specialize in glaucoma, cataract surgery, premium intraocular lens counseling, and complex anterior segment care. My practice is built on a simple idea: patients who understand their condition make better decisions and have better outcomes.</p>
+    </div>
+  </div>
+
 </section>
 
 <section id="about" class="bg-mid">
