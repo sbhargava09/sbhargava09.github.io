@@ -9,126 +9,127 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:#f0f4f5; --bg-mid:#e4edf0; --bg-dark:#d4e3e8;
-      --ink:#0d1f2d; --ink-mid:#3a5060; --ink-light:#7a9aaa;
-      --rule:rgba(13,31,45,0.13);
-      --accent:#0a7e8c; --accent-dark:#065f6b; --accent-light:#e0f2f4;
-      --f-serif:'Cormorant Garamond',Georgia,serif;
-      --f-sans:'DM Sans',system-ui,sans-serif;
-      --ease-out:cubic-bezier(0.16,1,0.3,1);
-      --nav-h:68px;
+      --bg:           #f0f4f5;
+      --bg-mid:       #e4edf0;
+      --bg-dark:      #d4e3e8;
+      --ink:          #0d1f2d;
+      --ink-mid:      #3a5060;
+      --ink-light:    #7a9aaa;
+      --rule:         rgba(13,31,45,0.13);
+      --accent:       #0a7e8c;
+      --accent-dark:  #065f6b;
+      --accent-light: #e0f2f4;
+      --f-serif: 'Cormorant Garamond', Georgia, serif;
+      --f-sans:  'DM Sans', system-ui, sans-serif;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --nav-h: 68px;
     }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h);-webkit-font-smoothing:antialiased;}
-    body{background:var(--bg);color:var(--ink);font-family:var(--f-sans);font-size:1rem;line-height:1.65;}
-    img{display:block;max-width:100%;} a{color:inherit;text-decoration:none;} ul,ol{list-style:none;} button{cursor:pointer;background:none;border:none;font:inherit;}
-    ::selection{background:rgba(10,126,140,0.18);}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); -webkit-font-smoothing: antialiased; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 1rem; line-height: 1.65; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul, ol { list-style: none; }
+    button { cursor: pointer; background: none; border: none; font: inherit; }
+    ::selection { background: rgba(10,126,140,0.18); }
 
-    .reveal{opacity:0;transform:translateY(60px);transition:opacity 1s var(--ease-out),transform 1s var(--ease-out);}
-    .reveal.visible{opacity:1;transform:translateY(0);}
-    .reveal-delay-1{transition-delay:0.15s;} .reveal-delay-2{transition-delay:0.3s;} .reveal-delay-3{transition-delay:0.45s;}
-    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+    .reveal { opacity: 0; transform: translateY(60px); transition: opacity 1s var(--ease-out), transform 1s var(--ease-out); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
-    /* NAV */
-    .nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,4rem);background:var(--bg);border-bottom:1px solid transparent;transition:border-color 0.3s,background 0.3s;}
-    .nav.scrolled{border-color:var(--rule);background:rgba(240,244,245,0.96);backdrop-filter:blur(10px);}
-    .nav-logo{font-family:var(--f-serif);font-size:1.15rem;font-weight:400;display:flex;flex-direction:column;line-height:1.2;}
-    .nav-logo span{font-family:var(--f-sans);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-light);margin-top:1px;}
-    .nav-links{display:flex;align-items:center;gap:2.25rem;font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;}
-    .nav-links a{color:var(--ink-mid);position:relative;transition:color 0.2s;}
-    .nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent);transition:width 0.25s var(--ease-out);}
-    .nav-links a:hover,.nav-links a.active{color:var(--accent);}
-    .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
-    .nav-hamburger{display:none;flex-direction:column;gap:5px;padding:4px;min-width:44px;min-height:44px;align-items:center;justify-content:center;}
-    .nav-hamburger span{display:block;width:22px;height:1px;background:var(--ink);}
-    .mobile-nav{display:none;position:fixed;inset:0;z-index:99;background:var(--bg);padding:calc(var(--nav-h) + 2rem) 2rem 2rem;flex-direction:column;gap:2rem;overflow-y:auto;}
-    .mobile-nav.open{display:flex;}
-    .mobile-nav a{font-family:var(--f-serif);font-size:clamp(1.6rem,7vw,2.2rem);font-weight:300;color:var(--ink);border-bottom:1px solid var(--rule);padding-bottom:1rem;min-height:44px;display:flex;align-items:center;}
+    /* NAV — light blue (--bg) */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem,5vw,4rem); background: var(--bg); border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
+    .nav.scrolled { border-color: var(--rule); background: rgba(240,244,245,0.96); backdrop-filter: blur(10px); }
+    .nav-logo { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 400; display: flex; flex-direction: column; line-height: 1.2; }
+    .nav-logo span { font-family: var(--f-sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-top: 1px; }
+    .nav-links { display: flex; align-items: center; gap: 2.25rem; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .nav-links a { color: var(--ink-mid); position: relative; transition: color 0.2s; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.25s var(--ease-out); }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--ink); }
+    .mobile-nav { display: none; position: fixed; inset: 0; z-index: 99; background: var(--bg); padding: calc(var(--nav-h) + 2rem) 2rem 2rem; flex-direction: column; gap: 2rem; overflow-y: auto; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-family: var(--f-serif); font-size: clamp(1.6rem,7vw,2.2rem); font-weight: 300; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; min-height: 44px; display: flex; align-items: center; }
 
     /* LAYOUT */
-    .wrap{max-width:1140px;margin:0 auto;padding:0 clamp(1rem,5vw,4rem);}
-    section{padding:clamp(4rem,10vw,9rem) 0;}
-    .bg-mid{background:var(--bg-mid);}
-    .eyebrow{display:inline-block;font-family:var(--f-sans);font-size:0.7rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;}
-    .display{font-family:var(--f-serif);font-weight:300;line-height:1.1;letter-spacing:-0.01em;}
-    .display-xl{font-size:clamp(3.2rem,7vw,6.5rem);} .display-lg{font-size:clamp(2.4rem,5vw,4.2rem);}
-    .display em{font-style:italic;color:var(--accent);}
+    .wrap { max-width: 1140px; margin: 0 auto; padding: 0 clamp(1rem,5vw,4rem); }
+    .eyebrow { display: inline-block; font-family: var(--f-sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+    .display { font-family: var(--f-serif); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
+    .display-xl { font-size: clamp(3.2rem,7vw,6.5rem); }
+    .display em { font-style: italic; color: var(--accent); }
 
-    /* EYE BACKGROUND — hero only */
-    .bg-eye{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      pointer-events:none;
-      z-index:0;
-      overflow:hidden;
-      opacity:var(--eye-opacity,1);
-    }
-    .bg-eye svg{
-      position:absolute;
-      left:50%;
-      top:50%;
-      width:min(120vw,1600px);
-      height:auto;
-      transform:translate(-50%,-50%);
-      overflow:visible;
-    }
-    @media(prefers-reduced-motion:reduce){.bg-eye{opacity:0.5;}}
+    /* EYE BACKGROUND — fixed, identical to index.html */
+    .bg-eye { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; opacity: var(--eye-opacity,1); transition: opacity 0.4s var(--ease-out); }
+    .bg-eye svg { position: absolute; left: 50%; top: 50%; width: min(120vw,1600px); height: auto; transform: translate(-50%,-50%); overflow: visible; }
+    @media (prefers-reduced-motion: reduce) { .bg-eye { opacity: 0.5; } }
 
-    /* HERO */
-    .page-hero{
-      position:relative;
-      padding-top:calc(var(--nav-h) + clamp(4rem,8vw,7rem));
-      padding-bottom:clamp(4rem,8vw,7rem);
-      border-bottom:1px solid var(--rule);
-      overflow:hidden;
-      background:var(--bg);
-    }
-    .page-hero .wrap{position:relative;z-index:1;}
-    .page-hero p{font-size:1.05rem;color:var(--ink-mid);line-height:1.75;max-width:56ch;margin-top:1.5rem;}
+    /* ALTERNATING SECTION COLORS */
+    /* Panel 1 — Hero: light blue (--bg) */
+    .page-hero { position: relative; z-index: 2; background: var(--bg); padding-top: calc(var(--nav-h) + clamp(4rem,8vw,7rem)); padding-bottom: clamp(4rem,8vw,7rem); border-bottom: 1px solid var(--rule); }
+    .page-hero p { font-size: 1.05rem; color: var(--ink-mid); line-height: 1.75; max-width: 56ch; margin-top: 1.5rem; }
+    /* Panel 2 — Row 1: teal (--bg-mid) */
+    .edu-row-1 { position: relative; z-index: 2; background: var(--bg-mid); padding: clamp(4rem,10vw,9rem) 0; }
+    /* Panel 3 — Row 2: light blue (--bg) */
+    .edu-row-2 { position: relative; z-index: 2; background: var(--bg); padding: clamp(4rem,10vw,9rem) 0; }
+    /* Disclaimer: teal (--bg-mid) */
+    .disclaimer { position: relative; z-index: 2; padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-light); line-height: 1.65; background: var(--bg-mid); }
+    /* Footer: light blue (--bg) */
+    footer { position: relative; z-index: 2; padding: 3rem 0; border-top: 1px solid var(--rule); background: var(--bg); }
 
-    /* EDUCATION GRID — alternating bg/bg-mid per row of 3 */
-    .edu-section-1{background:var(--bg);}
-    .edu-section-2{background:var(--bg-mid);}
-
-    .edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--rule);border-left:1px solid var(--rule);}
-    .edu-card{padding:2.25rem 2rem;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);transition:background 0.2s;}
-    .edu-section-1 .edu-card:hover{background:var(--bg-mid);}
-    .edu-section-2 .edu-card:hover{background:var(--bg-dark);}
-    .edu-card-num{font-family:var(--f-serif);font-size:2.5rem;font-weight:300;color:var(--bg-dark);line-height:1;margin-bottom:0.75rem;}
-    .edu-section-2 .edu-card-num{color:var(--accent-light);}
-    .edu-card h3{font-family:var(--f-serif);font-size:1.25rem;font-weight:400;margin-bottom:1rem;color:var(--ink);}
-    .edu-card ul{display:flex;flex-direction:column;gap:0.55rem;}
-    .edu-card li{font-size:0.85rem;color:var(--ink-mid);padding-left:1rem;position:relative;}
-    .edu-card li::before{content:'\2014';position:absolute;left:0;color:var(--accent);font-size:0.75rem;}
+    /* EDUCATION GRID */
+    .edu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
+    .edu-card { padding: 2.25rem 2rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); transition: background 0.2s; }
+    .edu-row-1 .edu-card:hover { background: var(--bg-dark); }
+    .edu-row-2 .edu-card:hover { background: var(--bg-mid); }
+    .edu-card-num { font-family: var(--f-serif); font-size: 2.5rem; font-weight: 300; color: var(--bg-dark); line-height: 1; margin-bottom: 0.75rem; }
+    .edu-row-1 .edu-card-num { color: rgba(10,126,140,0.18); }
+    .edu-card h3 { font-family: var(--f-serif); font-size: 1.25rem; font-weight: 400; margin-bottom: 1rem; color: var(--ink); }
+    .edu-card ul { display: flex; flex-direction: column; gap: 0.55rem; }
+    .edu-card li { font-size: 0.85rem; color: var(--ink-mid); padding-left: 1rem; position: relative; }
+    .edu-card li::before { content: '\2014'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; }
 
     /* FOOTER */
-    .disclaimer{padding:2rem 0;border-top:1px solid var(--rule);font-size:0.78rem;color:var(--ink-light);line-height:1.65;background:var(--bg);position:relative;z-index:2;}
-    footer{padding:3rem 0;border-top:1px solid var(--rule);background:var(--bg);position:relative;z-index:2;}
-    .footer-inner{display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
-    .footer-name{font-family:var(--f-serif);font-size:1.4rem;font-weight:300;margin-bottom:0.25rem;}
-    .footer-sub{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-light);}
-    .footer-links{display:flex;gap:1.25rem;flex-wrap:wrap;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-mid);}
-    .footer-links a:hover{color:var(--accent);}
-    .footer-copy{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--rule);font-size:0.75rem;color:var(--ink-light);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+    .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    .footer-name { font-family: var(--f-serif); font-size: 1.4rem; font-weight: 300; margin-bottom: 0.25rem; }
+    .footer-sub { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+    .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mid); }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 0.75rem; color: var(--ink-light); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
-    @media(max-width:900px){
-      .edu-grid{grid-template-columns:1fr 1fr;}
-    }
-    @media(max-width:640px){
-      :root{--nav-h:60px;}
-      .nav-links{display:none;}
-      .nav-hamburger{display:flex;}
-      .nav-logo{font-size:1rem;}
-      .edu-grid{grid-template-columns:1fr;}
-      .footer-inner{flex-direction:column;gap:1.5rem;}
-      .footer-links{gap:0.75rem;}
-      .bg-eye{--eye-opacity:0.45;}
+    @media (max-width: 900px) { .edu-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px) {
+      :root { --nav-h: 60px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-logo { font-size: 1rem; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; gap: 1.5rem; }
+      .footer-links { gap: 0.75rem; }
+      .bg-eye { --eye-opacity: 0.45; }
     }
   </style>
 </head>
 <body>
+
+<!-- Fixed eye (identical SVG + z-index to index.html) -->
+<div class="bg-eye" id="bgEye" aria-hidden="true">
+  <svg viewBox="0 0 1000 500" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <defs><clipPath id="bgEyeLidClip"><path id="bgEyeClipPath" d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/></clipPath></defs>
+    <g clip-path="url(#bgEyeLidClip)">
+      <circle cx="500" cy="250" r="105" fill="none" stroke="rgba(10,126,140,0.07)" stroke-width="1.2"/>
+      <circle cx="500" cy="250" r="44" fill="rgba(10,126,140,0.06)"/>
+      <circle cx="484" cy="234" r="9" fill="rgba(255,255,255,0.28)"/>
+      <circle cx="481" cy="231" r="3.5" fill="rgba(255,255,255,0.55)"/>
+    </g>
+    <path id="bgEyeUpper" d="M 80 250 Q 500 60 920 250" stroke="rgba(10,126,140,0.11)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    <path id="bgEyeLower" d="M 80 250 Q 500 440 920 250" stroke="rgba(10,126,140,0.11)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+  </svg>
+</div>
 
 <header class="nav" id="siteNav">
   <a href="index.html" class="nav-logo">
@@ -155,22 +156,8 @@
   <a href="index.html#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
-<!-- HERO with eye animation -->
+<!-- Panel 1: LIGHT BLUE + eye animation visible -->
 <section class="page-hero" id="pageHero">
-  <!-- Eye background (identical to index.html) -->
-  <div class="bg-eye" aria-hidden="true">
-    <svg viewBox="0 0 1000 500" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-      <defs><clipPath id="bgEyeLidClip"><path id="bgEyeClipPath" d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/></clipPath></defs>
-      <g clip-path="url(#bgEyeLidClip)">
-        <circle cx="500" cy="250" r="105" fill="none" stroke="rgba(10,126,140,0.07)" stroke-width="1.2"/>
-        <circle cx="500" cy="250" r="44" fill="rgba(10,126,140,0.06)"/>
-        <circle cx="484" cy="234" r="9" fill="rgba(255,255,255,0.28)"/>
-        <circle cx="481" cy="231" r="3.5" fill="rgba(255,255,255,0.55)"/>
-      </g>
-      <path id="bgEyeUpper" d="M 80 250 Q 500 60 920 250" stroke="rgba(10,126,140,0.11)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-      <path id="bgEyeLower" d="M 80 250 Q 500 440 920 250" stroke="rgba(10,126,140,0.11)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-    </svg>
-  </div>
   <div class="wrap">
     <span class="eyebrow reveal">Patient Education</span>
     <h1 class="display display-xl reveal reveal-delay-1">Understanding<br><em>your eyes.</em></h1>
@@ -178,8 +165,8 @@
   </div>
 </section>
 
-<!-- Row 1: light blue background (var(--bg)) -->
-<section class="edu-section-1">
+<!-- Panel 2: TEAL -->
+<section class="edu-row-1">
   <div class="wrap">
     <div class="edu-grid">
       <div class="edu-card reveal">
@@ -219,8 +206,8 @@
   </div>
 </section>
 
-<!-- Row 2: teal/mid background (var(--bg-mid)) -->
-<section class="edu-section-2">
+<!-- Panel 3: LIGHT BLUE -->
+<section class="edu-row-2">
   <div class="wrap">
     <div class="edu-grid">
       <div class="edu-card reveal">
@@ -258,8 +245,10 @@
   </div>
 </section>
 
+<!-- Disclaimer: TEAL -->
 <div class="disclaimer"><div class="wrap"><strong>Medical disclaimer:</strong> The educational information on this website is provided for general informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Use of this website does not by itself create a physician&ndash;patient relationship. Always seek the advice of your physician or qualified eye care provider with any questions about your eye health.</div></div>
 
+<!-- Footer: LIGHT BLUE -->
 <footer>
   <div class="wrap">
     <div class="footer-inner">
@@ -274,7 +263,7 @@
     </div>
     <div class="footer-copy">
       <p>&copy; <span id="yr"></span> Dr. Siddharth Bhargava, MD. All rights reserved.</p>
-      <p>Site v2.0</p>
+      <p>Site v2.1</p>
     </div>
   </div>
 </footer>
@@ -282,51 +271,44 @@
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  /* Eye blink animation — identical logic to index.html */
+  /* Scroll-based eye animation — exact copy of index.html */
   (function(){
     const upper = document.getElementById('bgEyeUpper');
     const lower = document.getElementById('bgEyeLower');
     const clip  = document.getElementById('bgEyeClipPath');
     const hero  = document.getElementById('pageHero');
     if (!upper || !lower || !clip || !hero) return;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    /* On the education page the eye simply does a slow idle blink loop
-       since there is no scroll-based hero to close against. */
-    const UPPER_OPEN = 60,  UPPER_SHUT = 248;
-    const LOWER_OPEN = 440, LOWER_SHUT = 252;
-    let startTime = null;
-    const PERIOD = 5000; /* full blink cycle in ms */
+    const UPPER_OPEN = 60, UPPER_SHUT = 250;
+    const LOWER_OPEN = 440, LOWER_SHUT = 250;
+    const FINISH_AT  = 0.85;
+    let pending = false, lastProgress = -1;
 
-    function ease(t) {
-      /* smooth step */
-      return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2;
+    function compute() {
+      const rect = hero.getBoundingClientRect();
+      const h    = hero.offsetHeight || 1;
+      const raw  = 1 - (rect.bottom / h);
+      const scaled = Math.min(1, Math.max(0, raw / FINISH_AT));
+      return scaled < 0.5 ? 2 * scaled * scaled : 1 - Math.pow(-2 * scaled + 2, 2) / 2;
     }
 
-    function render(ts) {
-      if (!startTime) startTime = ts;
-      const elapsed = (ts - startTime) % PERIOD;
-      const phase = elapsed / PERIOD; /* 0 → 1 over one cycle */
-
-      /* phase 0-0.08: close; 0.08-0.16: open; 0.16-1: fully open */
-      let p;
-      if (phase < 0.08) {
-        p = ease(phase / 0.08);
-      } else if (phase < 0.16) {
-        p = ease(1 - (phase - 0.08) / 0.08);
-      } else {
-        p = 0;
-      }
-
+    function render() {
+      pending = false;
+      const p = compute();
+      if (Math.abs(p - lastProgress) < 0.002) return;
+      lastProgress = p;
       const uy = UPPER_OPEN + (UPPER_SHUT - UPPER_OPEN) * p;
       const ly = LOWER_OPEN + (LOWER_SHUT - LOWER_OPEN) * p;
       upper.setAttribute('d', 'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250');
       lower.setAttribute('d', 'M 80 250 Q 500 ' + ly.toFixed(1) + ' 920 250');
-      clip.setAttribute('d', 'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250 Q 500 ' + ly.toFixed(1) + ' 80 250 Z');
-      requestAnimationFrame(render);
+      clip.setAttribute('d',  'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250 Q 500 ' + ly.toFixed(1) + ' 80 250 Z');
     }
-    requestAnimationFrame(render);
+
+    function onScroll() { if (pending) return; pending = true; requestAnimationFrame(render); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    render();
   })();
 
   /* Scroll reveal */
