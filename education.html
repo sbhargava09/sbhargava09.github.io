@@ -63,23 +63,20 @@
     .display-xl { font-size: clamp(3.2rem,7vw,6.5rem); }
     .display em { font-style: italic; color: var(--accent); }
 
-    /* EYE BACKGROUND — fixed, identical to index.html */
+    /* EYE — fixed layer behind everything, identical to index.html */
     .bg-eye { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; opacity: var(--eye-opacity,1); transition: opacity 0.4s var(--ease-out); }
     .bg-eye svg { position: absolute; left: 50%; top: 50%; width: min(120vw,1600px); height: auto; transform: translate(-50%,-50%); overflow: visible; }
     @media (prefers-reduced-motion: reduce) { .bg-eye { opacity: 0.5; } }
 
-    /* ALTERNATING SECTION COLORS */
-    /* Panel 1 — Hero: light blue (--bg) */
-    .page-hero { position: relative; z-index: 2; background: var(--bg); padding-top: calc(var(--nav-h) + clamp(4rem,8vw,7rem)); padding-bottom: clamp(4rem,8vw,7rem); border-bottom: 1px solid var(--rule); }
+    /* HERO — transparent background so fixed eye shows through, matching index.html hero */
+    .page-hero { background: transparent; position: relative; z-index: 1; padding-top: calc(var(--nav-h) + clamp(4rem,8vw,7rem)); padding-bottom: clamp(4rem,8vw,7rem); border-bottom: 1px solid var(--rule); }
     .page-hero p { font-size: 1.05rem; color: var(--ink-mid); line-height: 1.75; max-width: 56ch; margin-top: 1.5rem; }
-    /* Panel 2 — Row 1: teal (--bg-mid) */
+
+    /* Remaining sections — solid backgrounds to cover eye as you scroll */
     .edu-row-1 { position: relative; z-index: 2; background: var(--bg-mid); padding: clamp(4rem,10vw,9rem) 0; }
-    /* Panel 3 — Row 2: light blue (--bg) */
-    .edu-row-2 { position: relative; z-index: 2; background: var(--bg); padding: clamp(4rem,10vw,9rem) 0; }
-    /* Disclaimer: teal (--bg-mid) */
+    .edu-row-2 { position: relative; z-index: 2; background: var(--bg);     padding: clamp(4rem,10vw,9rem) 0; }
     .disclaimer { position: relative; z-index: 2; padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-light); line-height: 1.65; background: var(--bg-mid); }
-    /* Footer: light blue (--bg) */
-    footer { position: relative; z-index: 2; padding: 3rem 0; border-top: 1px solid var(--rule); background: var(--bg); }
+    footer      { position: relative; z-index: 2; padding: 3rem 0; border-top: 1px solid var(--rule); background: var(--bg); }
 
     /* EDUCATION GRID */
     .edu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
@@ -116,7 +113,7 @@
 </head>
 <body>
 
-<!-- Fixed eye (identical SVG + z-index to index.html) -->
+<!-- Fixed eye — z-index:0, identical to index.html -->
 <div class="bg-eye" id="bgEye" aria-hidden="true">
   <svg viewBox="0 0 1000 500" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
     <defs><clipPath id="bgEyeLidClip"><path id="bgEyeClipPath" d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/></clipPath></defs>
@@ -156,7 +153,7 @@
   <a href="index.html#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
-<!-- Panel 1: LIGHT BLUE + eye animation visible -->
+<!-- Panel 1: transparent — fixed eye visible beneath -->
 <section class="page-hero" id="pageHero">
   <div class="wrap">
     <span class="eyebrow reveal">Patient Education</span>
@@ -165,7 +162,7 @@
   </div>
 </section>
 
-<!-- Panel 2: TEAL -->
+<!-- Panel 2: TEAL — solid, covers eye as you scroll past hero -->
 <section class="edu-row-1">
   <div class="wrap">
     <div class="edu-grid">
@@ -280,15 +277,15 @@
     if (!upper || !lower || !clip || !hero) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const UPPER_OPEN = 60, UPPER_SHUT = 250;
+    const UPPER_OPEN = 60,  UPPER_SHUT = 250;
     const LOWER_OPEN = 440, LOWER_SHUT = 250;
     const FINISH_AT  = 0.85;
     let pending = false, lastProgress = -1;
 
     function compute() {
-      const rect = hero.getBoundingClientRect();
-      const h    = hero.offsetHeight || 1;
-      const raw  = 1 - (rect.bottom / h);
+      const rect   = hero.getBoundingClientRect();
+      const h      = hero.offsetHeight || 1;
+      const raw    = 1 - (rect.bottom / h);
       const scaled = Math.min(1, Math.max(0, raw / FINISH_AT));
       return scaled < 0.5 ? 2 * scaled * scaled : 1 - Math.pow(-2 * scaled + 2, 2) / 2;
     }
