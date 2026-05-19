@@ -215,21 +215,21 @@
       .nav-hamburger { display: flex; }
       .nav-logo { font-size: 1rem; }
 
-      /* Hero: headline FIRST (order:1), then photo below (order:2) */
+      /* Hero: photo FIRST (order:1), headline below (order:2) */
       .hero-grid {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
         gap: 1.5rem;
       }
-      .hero-left { order: 1; }
       .hero-photo-wrap {
-        order: 2;
-        /* Full width, no max-width cap — let the photo fill the column naturally */
+        order: 1;
         max-width: 100%;
         width: 100%;
         margin: 0;
       }
-      /* On mobile show the photo at its natural 3:4 portrait ratio, not cropped */
+      .hero-left { order: 2; }
+
+      /* Photo fills full width at natural 3:4 portrait ratio */
       .hero-photo {
         aspect-ratio: 3 / 4;
         width: 100%;
@@ -237,7 +237,6 @@
         object-position: center top;
       }
 
-      /* Keep the big headline large on mobile */
       .hero-line1, .hero-line2 { font-size: clamp(2.6rem, 11vw, 3.5rem); }
 
       /* Expertise items: single column */
@@ -485,7 +484,7 @@
     <div class="footer-inner">
       <div>
         <div class="footer-name">Dr. Siddharth Bhargava</div>
-        <div class="footer-sub">Cataracts &middot; Glaucoma &middot; Premium IOLs</div>
+        <div class="footer-sub">Cataracts &middot; Glaucoma &middot; Patient Education</div>
       </div>
       <nav class="footer-links">
         <a href="#home">Home</a><a href="#about">About</a><a href="#expertise">Expertise</a>
