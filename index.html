@@ -234,13 +234,17 @@
       <div class="hero-grid" id="heroGrid">
 
         <!--
-          Eye canvas: spans full hero-grid, behind both text and photo columns.
-          viewBox 1000×500. Eye centre at (500,250).
-          ALL fills and strokes: rgba(255,255,255,0.40) — white at 40% opacity.
-          Pupil fill: #f0f4f5 (site background colour).
-          No lashes.
-          Eyelid (lid fill + lid strokes): white 40%.
-          Scroll-driven: lid descends MAX=330px as hero scrolls.
+          EYE CANVAS — viewBox 0 0 1000 500
+          Almond: corners (80,250) & (920,250), top peak (500,60), bottom (500,440)
+          All fills/strokes: rgba(255,255,255,0.40) — white 40%
+          Pupil: #f0f4f5 (site background)
+          No lashes
+
+          EYELID sits OUTSIDE almondClip so it is NOT clipped away.
+          It starts parked above the almond (translateY=0 → lid bottom edge at Y=60).
+          JS translates it downward up to +380 units (full almond height: 60→440).
+          Lid shape: a filled crescent whose bottom edge is the upper almond curve.
+          Fill: rgba(255,255,255,0.40); bottom-edge stroke: rgba(255,255,255,0.60).
         -->
         <div class="hero-eye-canvas" id="heroEyeCanvas" aria-hidden="true">
           <svg id="heroEyeSvg" viewBox="0 0 1000 500" fill="none"
@@ -253,20 +257,21 @@
               </clipPath>
             </defs>
 
+            <!-- ① EYE INTERIOR (clipped to almond) -->
             <g clip-path="url(#almondClip)">
-              <!-- BG fill inside almond —  site background colour -->
+              <!-- site background fill so eye interior matches page -->
               <rect x="0" y="0" width="1000" height="500" fill="#f0f4f5"/>
 
               <!-- Iris disc — white 40% -->
               <circle cx="500" cy="250" r="130" fill="rgba(255,255,255,0.40)"/>
 
-              <!-- Iris outer ring — white 40% -->
+              <!-- Iris outer ring -->
               <circle cx="500" cy="250" r="130" fill="none" stroke="rgba(255,255,255,0.40)" stroke-width="2.5"/>
 
-              <!-- Iris inner ring — white 40% -->
+              <!-- Iris inner ring -->
               <circle cx="500" cy="250" r="90" fill="none" stroke="rgba(255,255,255,0.40)" stroke-width="1.5"/>
 
-              <!-- Spokes — white 40% -->
+              <!-- Spokes -->
               <g stroke="rgba(255,255,255,0.40)" stroke-width="1.2">
                 <line x1="500" y1="160" x2="500" y2="120"/>
                 <line x1="565" y1="185" x2="598" y2="152"/>
@@ -278,48 +283,65 @@
                 <line x1="435" y1="185" x2="402" y2="152"/>
               </g>
 
-              <!-- Pupil — filled with site background colour #f0f4f5 -->
+              <!-- Pupil — site background colour so it reads as hollow/same-as-bg -->
               <circle cx="500" cy="250" r="54" fill="#f0f4f5"/>
-              <!-- Pupil ring — white 40% -->
               <circle cx="500" cy="250" r="54" fill="none" stroke="rgba(255,255,255,0.40)" stroke-width="1.8"/>
 
-              <!-- Lower almond edge — white 40% -->
+              <!-- Lower almond edge inside clip -->
               <path d="M 80 250 Q 500 440 920 250"
                     stroke="rgba(255,255,255,0.40)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            </g>
 
-              <!--
-                EYELID GROUP — scroll-animated via translateY.
-                Lid fill: white 40%.
-                Lid lower margin (smile): white 40%.
-                Lid upper arch: white 40%.
-                At rest (translateY=0): lid sits above almond, eye open.
-                At translateY=330: lid fully covers almond (eye closed).
-              -->
-              <g id="heroEyelid">
-                <!-- Lid fill — white 40% -->
-                <path d="M 70 -80 Q 500 -300 930 -80 Q 500 60 70 -80 Z"
-                      fill="rgba(255,255,255,0.40)"/>
-                <!-- Lid lower margin — smile curve, white 40% -->
-                <path d="M 70 -80 Q 500 60 930 -80"
-                      stroke="rgba(255,255,255,0.40)" stroke-width="2.8"
-                      stroke-linecap="round" fill="none"/>
-                <!-- Lid upper arch — white 40% -->
-                <path d="M 70 -80 Q 500 -300 930 -80"
-                      stroke="rgba(255,255,255,0.40)" stroke-width="2.4"
-                      stroke-linecap="round" fill="none"/>
-              </g>
-            </g><!-- /almondClip -->
-
-            <!-- Outer almond frame — white 40% (outside clip, always visible) -->
+            <!-- ② ALMOND FRAME — drawn outside clip so always visible -->
             <path d="M 80 250 Q 500 60 920 250"
                   stroke="rgba(255,255,255,0.40)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
             <path d="M 80 250 Q 500 440 920 250"
                   stroke="rgba(255,255,255,0.40)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+
+            <!--
+              ③ EYELID — drawn OUTSIDE almondClip so scroll-translate is visible.
+
+              The lid is a filled shape that covers the top part of the eye:
+                - Bottom edge (lid margin): the same curve as the upper almond: M 80 250 Q 500 60 920 250
+                  (but this IS the resting position of the lid bottom — it sits ON the top of the almond)
+                - The lid body extends far upward to Y=-300 so the fill covers everything above.
+
+              At translateY = 0:
+                Lid margin sits exactly at the upper almond curve (Y≈60 at peak, Y=250 at corners).
+                The fill covers the area above that curve — NOT inside the eye yet.
+
+              As translateY increases toward 380:
+                The lid margin sweeps downward, eventually reaching Y≈440 (bottom of almond).
+                The fill covers the entire almond interior, simulating a closed eye.
+
+              Lid fill:          rgba(255,255,255,0.40)  ← matches spec
+              Lid margin stroke: rgba(255,255,255,0.60)  ← slightly bolder so the edge reads
+            -->
+            <g id="heroEyelid" transform="translate(0,0)">
+              <!--
+                Shape: starts at almond corners (80,250)&(920,250),
+                curves UP to (500,60) along the upper almond,
+                then continues far above to close the fill region.
+                Using a closed path:
+                  M 80 250
+                  Q 500 60 920 250    ← upper almond curve (lid bottom margin)
+                  L 920 -300          ← extend upward right
+                  L 80 -300           ← extend upward left
+                  Z
+              -->
+              <path d="M 80 250 Q 500 60 920 250 L 920 -300 L 80 -300 Z"
+                    fill="rgba(255,255,255,0.40)"/>
+              <!-- Lid margin line — slightly more opaque so it reads as an edge -->
+              <path d="M 80 250 Q 500 60 920 250"
+                    stroke="rgba(255,255,255,0.60)" stroke-width="3"
+                    stroke-linecap="round" fill="none"/>
+            </g>
+
           </svg>
         </div>
         <!-- /Eye canvas -->
 
-        <!-- Left: headline, z-index 1 above eye -->
+        <!-- Left: headline -->
         <div class="hero-left">
           <h1>
             <div class="hero-line1 reveal reveal-delay-1">Thoughtful <em>Eye Care,</em></div>
@@ -327,7 +349,7 @@
           </h1>
         </div>
 
-        <!-- Right: photo, z-index 1 above eye -->
+        <!-- Right: photo -->
         <div class="hero-photo-wrap reveal reveal-delay-2" id="heroPhotoWrap">
           <img
             src="Bhargava-Siddharth-Photo.jpg"
@@ -496,7 +518,7 @@
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  /* ── Eye canvas: size & position to span hero-grid, vertically centre on photo ── */
+  /* ── Eye canvas: size & position to span hero-grid, vertically centred on photo ── */
   function positionEyeCanvas() {
     const grid   = document.getElementById('heroGrid');
     const canvas = document.getElementById('heroEyeCanvas');
@@ -514,15 +536,21 @@
   window.addEventListener('load',   positionEyeCanvas);
   window.addEventListener('resize', positionEyeCanvas);
 
-  /* ── Scroll-driven eyelid blink ── */
+  /* ── Scroll-driven eyelid ── */
   (function(){
     const lid  = document.getElementById('heroEyelid');
     const hero = document.querySelector('.hero-top');
     if (!lid || !hero) return;
-    const MAX = 330;
+    /*
+      SVG viewBox height = 500. Almond top peak Y=60, bottom Y=440. Range = 380 SVG units.
+      We translate the lid group DOWN by up to 380 units so the lid margin
+      sweeps from the top of the almond (Y=60) all the way to the bottom (Y=440),
+      fully covering the eye as the user scrolls the hero out of view.
+    */
+    const MAX_TRANSLATE = 380;
     function tick(){
-      const progress = Math.min(Math.max(window.scrollY / (hero.offsetHeight * 0.75), 0), 1);
-      lid.setAttribute('transform', 'translate(0,' + (progress * MAX) + ')');
+      const progress = Math.min(Math.max(window.scrollY / (hero.offsetHeight * 0.85), 0), 1);
+      lid.setAttribute('transform', 'translate(0,' + (progress * MAX_TRANSLATE) + ')');
     }
     window.addEventListener('scroll', tick, { passive: true });
     tick();
