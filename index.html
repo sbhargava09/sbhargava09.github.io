@@ -240,10 +240,10 @@
               </clipPath>
             </defs>
 
-            <!-- EYE INTERIOR — everything clipped to almond shape -->
+            <!-- EYE INTERIOR — clipped to almond -->
             <g clip-path="url(#almondClip)">
 
-              <!-- Background fill — exact site bg color, no white flash -->
+              <!-- Exact bg fill — no white flash at rest -->
               <rect x="-100" y="-100" width="1200" height="700" fill="#f0f4f5"/>
 
               <!-- Iris disc — white 40% -->
@@ -263,19 +263,20 @@
                 <line x1="435" y1="185" x2="402" y2="152"/>
               </g>
 
-              <!-- Pupil — same as bg color -->
+              <!-- Pupil — bg color -->
               <circle cx="500" cy="250" r="54" fill="#f0f4f5"/>
               <circle cx="500" cy="250" r="54" fill="none" stroke="rgba(255,255,255,0.40)" stroke-width="1.8"/>
 
               <!-- Catchlight -->
               <ellipse cx="524" cy="228" rx="14" ry="11" fill="rgba(255,255,255,0.85)"/>
 
-              <!-- EYELID — smile crescent, clipped inside almond -->
+              <!-- EYELID — fully opaque white smile crescent, clipped inside almond -->
               <g id="heroEyelid" transform="translate(0,0)">
                 <path
-                  d="M 80 250 Q 500 440 920 250 L 1100 -400 L -100 -400 Z"
-                  fill="rgba(255,255,255,0.92)"
+                  d="M 80 250 Q 500 440 920 250 L 1100 -500 L -100 -500 Z"
+                  fill="white"
                 />
+                <!-- Leading edge — subtle teal stroke -->
                 <path
                   d="M 80 250 Q 500 440 920 250"
                   stroke="rgba(10,126,140,0.30)" stroke-width="3"
@@ -285,7 +286,7 @@
 
             </g>
 
-            <!-- ALMOND FRAME OUTLINE — subtle teal -->
+            <!-- ALMOND FRAME — subtle teal, outside clip -->
             <path d="M 80 250 Q 500 60 920 250"
                   stroke="rgba(10,126,140,0.28)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
             <path d="M 80 250 Q 500 440 920 250"
@@ -493,10 +494,14 @@
     const lid  = document.getElementById('heroEyelid');
     const hero = document.querySelector('.hero-top');
     if (!lid || !hero) return;
-    const OFFSET = -380;
-    const MAX    =  380;
+    // OFFSET: how far above almond the lid starts (hidden)
+    // At translateY = OFFSET, smile bottom is at Y=250+OFFSET = well above Y=60 (almond top)
+    // At translateY = 0, smile bottom sits exactly at Y=250 (eye centre), half-closed
+    // We start it hidden at -420 and travel +420 to fully sweep to centre
+    const OFFSET = -420;
+    const MAX    =  420;
     function tick(){
-      const progress = Math.min(Math.max(window.scrollY / (hero.offsetHeight * 0.85), 0), 1);
+      const progress = Math.min(Math.max(window.scrollY / (hero.offsetHeight * 0.8), 0), 1);
       lid.setAttribute('transform', 'translate(0,' + (OFFSET + progress * MAX) + ')');
     }
     window.addEventListener('scroll', tick, { passive: true });
