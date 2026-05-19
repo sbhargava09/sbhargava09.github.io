@@ -69,7 +69,7 @@
     .display-lg  { font-size: clamp(2.4rem, 5vw, 4.2rem); }
 
     /* HERO */
-    .hero { background: var(--bg); padding: 0; border-bottom: 1px solid var(--rule); }
+    .hero { background: transparent; padding: 0; border-bottom: 1px solid var(--rule); }
     .hero-top { padding-top: calc(var(--nav-h) + clamp(3rem, 6vw, 5rem)); padding-bottom: clamp(3rem, 6vw, 5rem); }
 
     .hero-grid {
@@ -80,16 +80,48 @@
       position: relative;
     }
 
-    .hero-eye-canvas {
-      position: absolute;
+    /* =========================================================
+       BACKGROUND EYE
+       A subtle, full-width outline eye that sits behind the hero
+       and blinks closed as the user scrolls the hero off screen.
+       - Fixed to viewport so it stays visible while scrolling
+       - Pointer-events: none so it never blocks clicks
+       - Opacity is low; relies on stroke-only line art (no fills)
+         so it never overpowers content
+       - Only rendered behind the hero — fades out as hero leaves
+       To tweak look: adjust --eye-opacity / stroke colors below.
+       To tweak motion: adjust the JS block labelled "Eye blink".
+       ========================================================= */
+    .bg-eye {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
       z-index: 0;
+      overflow: hidden;
+      opacity: var(--eye-opacity, 1);
+      transition: opacity 0.4s var(--ease-out);
+    }
+    .bg-eye svg {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(120vw, 1600px);
+      height: auto;
+      transform: translate(-50%, -50%);
       overflow: visible;
     }
-    .hero-eye-canvas svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
+    /* Hero content needs to sit above the background eye */
+    .hero { position: relative; z-index: 1; }
+    /* Sections below hero get the site bg so the fixed eye is hidden behind them */
+    section:not(.hero) { position: relative; z-index: 2; background-color: var(--bg); }
+    section.bg-mid { background-color: var(--bg-mid); }
+    .disclaimer, footer { position: relative; z-index: 2; background: var(--bg); }
+
+    @media (prefers-reduced-motion: reduce) {
+      /* Static, lids drawn already at the open arch position — no animation */
+      .bg-eye { opacity: 0.5; }
     }
 
     .hero-left {
@@ -190,11 +222,74 @@
     @media (max-width: 640px) {
       .nav-links { display: none; } .nav-hamburger { display: flex; }
       .expertise-item { grid-template-columns: 40px 1fr; }
-      .hero-eye-canvas { display: none; }
+      /* Background eye stays — just a touch fainter on tiny screens */
+      .bg-eye { --eye-opacity: 0.55; }
     }
   </style>
 </head>
 <body>
+
+<!--
+  Background eye — subtle line-art eye that sits behind the hero.
+  It blinks (lids close) as the user scrolls the hero section off the top
+  of the viewport, and is fully shut by the time the hero is gone.
+  All animation lives in the IIFE at the bottom of <script>; the SVG here
+  defines just the shape. Stroke colors use the site accent at low alpha,
+  so adjusting --accent in :root will tint the eye automatically.
+-->
+<div class="bg-eye" id="bgEye" aria-hidden="true">
+  <svg viewBox="0 0 1000 500" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <!--
+      Geometry:
+        Corners:  (80, 250)  and  (920, 250)
+        Upper lid: quadratic Bézier with control point (500, uy)
+                   uy = 60  → fully open arch
+                   uy = 250 → flat line, fully shut
+        Lower lid: quadratic Bézier with control point (500, ly)
+                   ly = 440 → fully open arch
+                   ly = 250 → flat line, fully shut
+      The iris/pupil is clipped to the region BETWEEN the two lid paths,
+      so as the lids close they visibly cover the iris (no floating disc).
+      The clipPath is updated each frame in JS along with the lid paths.
+    -->
+    <defs>
+      <clipPath id="bgEyeLidClip">
+        <!-- Closed region: upper arc forward, lower arc back. Updated by JS. -->
+        <path id="bgEyeClipPath" d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/>
+      </clipPath>
+    </defs>
+
+    <!--
+      Iris / pupil / catch light — all clipped to the lid region so nothing
+      can render outside the closing eye. To tweak the look, adjust the
+      alpha values in the rgba() strokes/fills below — keep them low so the
+      eye stays a subtle background element.
+    -->
+    <g clip-path="url(#bgEyeLidClip)">
+      <!-- Iris ring -->
+      <circle cx="500" cy="250" r="105"
+              fill="none" stroke="rgba(10,126,140,0.07)" stroke-width="1.2"/>
+      <!-- Pupil disc -->
+      <circle cx="500" cy="250" r="44"
+              fill="rgba(10,126,140,0.06)"/>
+      <!--
+        Catch light — a tiny soft highlight on the upper-left of the pupil.
+        Two stacked white discs (larger soft halo + small bright dot) give
+        the impression of a reflection without being heavy.
+      -->
+      <circle cx="484" cy="234" r="9"  fill="rgba(255,255,255,0.28)"/>
+      <circle cx="481" cy="231" r="3.5" fill="rgba(255,255,255,0.55)"/>
+    </g>
+
+    <!-- The two lid edge strokes — subtle teal lines that meet flat when shut -->
+    <path id="bgEyeUpper" d="M 80 250 Q 500 60 920 250"
+          stroke="rgba(10,126,140,0.11)" stroke-width="1.8"
+          stroke-linecap="round" fill="none"/>
+    <path id="bgEyeLower" d="M 80 250 Q 500 440 920 250"
+          stroke="rgba(10,126,140,0.11)" stroke-width="1.8"
+          stroke-linecap="round" fill="none"/>
+  </svg>
+</div>
 
 <header class="nav" id="siteNav">
   <a href="#home" class="nav-logo">
@@ -228,85 +323,6 @@
   <div class="hero-top">
     <div class="wrap">
       <div class="hero-grid" id="heroGrid">
-
-        <div class="hero-eye-canvas" id="heroEyeCanvas" aria-hidden="true">
-          <svg id="heroEyeSvg" viewBox="0 0 1000 500" fill="none"
-               preserveAspectRatio="xMidYMid meet"
-               xmlns="http://www.w3.org/2000/svg"
-               style="overflow:visible;">
-            <defs>
-              <!--
-                Almond clip: upper arch Q500,60 and lower arch Q500,440
-                Both lids are rendered inside this clip so they can never
-                bleed outside the almond shape, fixing the corner bleed issue.
-              -->
-              <clipPath id="almondClip">
-                <path d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/>
-              </clipPath>
-            </defs>
-
-            <!-- EYE INTERIOR — everything clipped to almond -->
-            <g clip-path="url(#almondClip)">
-
-              <!-- BG fill matching site colour -->
-              <rect x="-200" y="-200" width="1400" height="900" fill="#f0f4f5"/>
-
-              <!-- Iris disc — white 40% -->
-              <circle cx="500" cy="250" r="130" fill="rgba(255,255,255,0.40)"/>
-              <circle cx="500" cy="250" r="130" fill="none" stroke="rgba(255,255,255,0.40)" stroke-width="2.5"/>
-              <circle cx="500" cy="250" r="90"  fill="none" stroke="rgba(255,255,255,0.40)" stroke-width="1.5"/>
-
-              <!-- Spokes -->
-              <g stroke="rgba(255,255,255,0.40)" stroke-width="1.2">
-                <line x1="500" y1="160" x2="500" y2="120"/>
-                <line x1="565" y1="185" x2="598" y2="152"/>
-                <line x1="590" y1="250" x2="630" y2="250"/>
-                <line x1="565" y1="315" x2="598" y2="348"/>
-                <line x1="500" y1="340" x2="500" y2="380"/>
-                <line x1="435" y1="315" x2="402" y2="348"/>
-                <line x1="410" y1="250" x2="370" y2="250"/>
-                <line x1="435" y1="185" x2="402" y2="152"/>
-              </g>
-
-              <!-- Pupil — bg colour so it reads as the background -->
-              <circle cx="500" cy="250" r="54" fill="#f0f4f5"/>
-
-              <!--
-                UPPER LID
-                Shape: filled white region above the upper arch.
-                Path bottom edge = upper arch (Q 500 60).
-                At translateY = -190: lid hidden entirely above the almond top edge.
-                At translateY = 0: lid edge sits on the upper arch — eye open.
-                Travels from -190 → 0 as progress goes 0 → 1 (eye closes from top).
-                No eyelashes.
-              -->
-              <g id="eyeUpperLid" transform="translate(0,-190)">
-                <path d="M 80 250 Q 500 60 920 250 L 1100 -800 L -100 -800 Z" fill="white"/>
-              </g>
-
-              <!--
-                LOWER LID
-                Shape: filled white region below the lower arch.
-                Path top edge = lower arch (Q 500 440).
-                At translateY = +190: lid hidden entirely below the almond bottom edge.
-                At translateY = 0: lid edge sits on the lower arch — eye open.
-                Travels from +190 → 0 as progress goes 0 → 1 (eye closes from bottom).
-                No eyelashes.
-              -->
-              <g id="eyeLowerLid" transform="translate(0,190)">
-                <path d="M 80 250 Q 500 440 920 250 L 1100 1200 L -100 1200 Z" fill="white"/>
-              </g>
-
-            </g>
-
-            <!-- ALMOND OUTLINE — drawn outside clip so always visible -->
-            <path d="M 80 250 Q 500 60 920 250"
-                  stroke="rgba(10,126,140,0.28)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <path d="M 80 250 Q 500 440 920 250"
-                  stroke="rgba(10,126,140,0.28)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-
-          </svg>
-        </div>
 
         <!-- Left: headline -->
         <div class="hero-left">
@@ -485,53 +501,83 @@
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  /* Position the SVG canvas over the photo */
-  function positionEyeCanvas() {
-    const grid   = document.getElementById('heroGrid');
-    const canvas = document.getElementById('heroEyeCanvas');
-    const photo  = document.getElementById('heroPhotoWrap');
-    if (!grid || !canvas || !photo) return;
-    const img   = photo.querySelector('img');
-    const gRect = grid.getBoundingClientRect();
-    const iRect = (img || photo).getBoundingClientRect();
-    canvas.style.left   = '0';
-    canvas.style.right  = '0';
-    canvas.style.width  = '100%';
-    canvas.style.top    = (iRect.top - gRect.top) + 'px';
-    canvas.style.height = iRect.height + 'px';
-    canvas.style.bottom = 'auto';
-  }
-  window.addEventListener('load',   positionEyeCanvas);
-  window.addEventListener('resize', positionEyeCanvas);
-
-  /* Eye close animation — triggers as the hero section scrolls OFF screen */
+  /* =========================================================
+     Eye blink — background eye closes as the hero scrolls off.
+     Implementation notes:
+       - Drives two SVG quadratic-Bézier control points to morph
+         the upper and lower lid arcs from "fully open" (arches at
+         y=60 and y=440) to "fully shut" (both flat at y=250).
+       - Progress comes from getBoundingClientRect().bottom of the
+         hero section, so it's stable across resize, zoom, etc.
+       - Scroll events only flag a pending update; the actual DOM
+         write happens inside requestAnimationFrame to keep things
+         off the scrolling thread (no layout thrash, no jank).
+       - Respects prefers-reduced-motion: no animation, lids stay
+         in their initial open state (defined in the SVG markup).
+     ========================================================= */
   (function(){
-    const upperLid = document.getElementById('eyeUpperLid');
-    const lowerLid = document.getElementById('eyeLowerLid');
-    const heroSection = document.querySelector('.hero');
-    if (!upperLid || !lowerLid || !heroSection) return;
+    const upper = document.getElementById('bgEyeUpper');
+    const lower = document.getElementById('bgEyeLower');
+    const clip  = document.getElementById('bgEyeClipPath');
+    const hero  = document.querySelector('.hero');
+    if (!upper || !lower || !clip || !hero) return;
 
-    function tick() {
-      // rect.bottom = distance from top of viewport to bottom of hero
-      // When rect.bottom goes from heroSection.offsetHeight → 0,
-      // the hero is scrolling off the top of the screen.
-      const rect = heroSection.getBoundingClientRect();
-      const total = heroSection.offsetHeight;
-      // progress: 0 = hero fully visible, 1 = hero fully gone
-      const raw = 1 - (rect.bottom / total);
-      const progress = Math.min(Math.max(raw, 0), 1);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return; // keep the static open arches as the "subtle non-animated state"
 
-      // Upper lid: -190 (open/hidden above) → 0 (closed, at arch)
-      const upperY = -190 + progress * 190;
-      // Lower lid: +190 (open/hidden below) → 0 (closed, at arch)
-      const lowerY =  190 - progress * 190;
+    // Lid arch control-point Y values (see SVG comments for geometry)
+    const UPPER_OPEN = 60,  UPPER_SHUT = 250;
+    const LOWER_OPEN = 440, LOWER_SHUT = 250;
+    // Trigger window: 0 = fully open, FINISH_AT = fully shut.
+    // Setting < 1 means the lids reach fully closed slightly before the hero
+    // is 100% off-screen, guaranteeing a decisive shut by the end of the scroll.
+    const FINISH_AT = 0.85;
 
-      upperLid.setAttribute('transform', 'translate(0,' + upperY + ')');
-      lowerLid.setAttribute('transform', 'translate(0,' + lowerY + ')');
+    let pending = false;
+    let lastProgress = -1;
+
+    function compute() {
+      const rect = hero.getBoundingClientRect();
+      const h = hero.offsetHeight || 1;
+      // 0 = hero fully visible, 1 = hero fully scrolled off the top
+      const raw = 1 - (rect.bottom / h);
+      // Remap [0..FINISH_AT] → [0..1] and clamp so we stay shut once closed.
+      const scaled = Math.min(1, Math.max(0, raw / FINISH_AT));
+      // Ease-in-out so the blink feels natural rather than linear
+      return scaled < 0.5
+        ? 2 * scaled * scaled
+        : 1 - Math.pow(-2 * scaled + 2, 2) / 2;
     }
 
-    window.addEventListener('scroll', tick, { passive: true });
-    tick();
+    function render() {
+      pending = false;
+      const p = compute();
+      if (Math.abs(p - lastProgress) < 0.002) return;
+      lastProgress = p;
+
+      const uy = UPPER_OPEN + (UPPER_SHUT - UPPER_OPEN) * p;
+      const ly = LOWER_OPEN + (LOWER_SHUT - LOWER_OPEN) * p;
+      const upperD = 'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250';
+      const lowerD = 'M 80 250 Q 500 ' + ly.toFixed(1) + ' 920 250';
+      upper.setAttribute('d', upperD);
+      lower.setAttribute('d', lowerD);
+      // Keep the iris clip in sync: region enclosed by current upper + current lower arc.
+      // Walking the upper arc forward (left → right), then the lower arc back (right → left).
+      clip.setAttribute(
+        'd',
+        'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250 Q 500 ' + ly.toFixed(1) + ' 80 250 Z'
+      );
+    }
+
+    function onScroll() {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(render);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    render(); // initial paint
   })();
 
   /* Scroll reveal */
