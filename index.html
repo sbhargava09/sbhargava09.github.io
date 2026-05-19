@@ -45,7 +45,7 @@
     @media (prefers-reduced-motion: reduce) { .reveal, .section-reveal { opacity: 1; transform: none; transition: none; } }
 
     /* NAV */
-    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1.5rem, 5vw, 4rem); background: var(--bg); border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem, 5vw, 4rem); background: var(--bg); border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
     .nav.scrolled { border-color: var(--rule); background: rgba(240,244,245,0.96); backdrop-filter: blur(10px); }
     .nav-logo { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 400; display: flex; flex-direction: column; line-height: 1.2; }
     .nav-logo span { font-family: var(--f-sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-top: 1px; }
@@ -54,44 +54,32 @@
     .nav-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.25s var(--ease-out); }
     .nav-links a:hover { color: var(--accent); }
     .nav-links a:hover::after { width: 100%; }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
     .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--ink); }
-    .mobile-nav { display: none; position: fixed; inset: 0; z-index: 99; background: var(--bg); padding: calc(var(--nav-h) + 2rem) 2rem 2rem; flex-direction: column; gap: 2rem; }
+    .mobile-nav { display: none; position: fixed; inset: 0; z-index: 99; background: var(--bg); padding: calc(var(--nav-h) + 2rem) 2rem 2rem; flex-direction: column; gap: 2rem; overflow-y: auto; }
     .mobile-nav.open { display: flex; }
-    .mobile-nav a { font-family: var(--f-serif); font-size: 2.2rem; font-weight: 300; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; }
+    .mobile-nav a { font-family: var(--f-serif); font-size: clamp(1.6rem, 7vw, 2.2rem); font-weight: 300; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; min-height: 44px; display: flex; align-items: center; }
 
     /* LAYOUT */
-    .wrap { max-width: 1140px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); }
-    section { padding: clamp(5rem, 10vw, 9rem) 0; }
+    .wrap { max-width: 1140px; margin: 0 auto; padding: 0 clamp(1rem, 5vw, 4rem); }
+    section { padding: clamp(4rem, 10vw, 9rem) 0; }
     .bg-mid { background: var(--bg-mid); }
     .eyebrow { display: inline-block; font-family: var(--f-sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
     .display { font-family: var(--f-serif); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
-    .display-lg  { font-size: clamp(2.4rem, 5vw, 4.2rem); }
+    .display-lg  { font-size: clamp(2rem, 5vw, 4.2rem); }
 
     /* HERO */
     .hero { background: transparent; padding: 0; border-bottom: 1px solid var(--rule); }
-    .hero-top { padding-top: calc(var(--nav-h) + clamp(3rem, 6vw, 5rem)); padding-bottom: clamp(3rem, 6vw, 5rem); }
+    .hero-top { padding-top: calc(var(--nav-h) + clamp(2rem, 6vw, 5rem)); padding-bottom: clamp(2rem, 6vw, 5rem); }
 
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr 340px;
-      gap: clamp(3rem, 6vw, 6rem);
+      gap: clamp(2rem, 6vw, 6rem);
       align-items: center;
       position: relative;
     }
 
-    /* =========================================================
-       BACKGROUND EYE
-       A subtle, full-width outline eye that sits behind the hero
-       and blinks closed as the user scrolls the hero off screen.
-       - Fixed to viewport so it stays visible while scrolling
-       - Pointer-events: none so it never blocks clicks
-       - Opacity is low; relies on stroke-only line art (no fills)
-         so it never overpowers content
-       - Only rendered behind the hero — fades out as hero leaves
-       To tweak look: adjust --eye-opacity / stroke colors below.
-       To tweak motion: adjust the JS block labelled "Eye blink".
-       ========================================================= */
     .bg-eye {
       position: fixed;
       inset: 0;
@@ -112,15 +100,12 @@
       transform: translate(-50%, -50%);
       overflow: visible;
     }
-    /* Hero content needs to sit above the background eye */
     .hero { position: relative; z-index: 1; }
-    /* Sections below hero get the site bg so the fixed eye is hidden behind them */
     section:not(.hero) { position: relative; z-index: 2; background-color: var(--bg); }
     section.bg-mid { background-color: var(--bg-mid); }
     .disclaimer, footer { position: relative; z-index: 2; background: var(--bg); }
 
     @media (prefers-reduced-motion: reduce) {
-      /* Static, lids drawn already at the open arch position — no animation */
       .bg-eye { opacity: 0.5; }
     }
 
@@ -134,7 +119,7 @@
 
     .hero-line1, .hero-line2 {
       font-family: var(--f-serif);
-      font-size: clamp(3.2rem, 7vw, 6.5rem);
+      font-size: clamp(2.6rem, 7vw, 6.5rem);
       font-weight: 300;
       line-height: 1.1;
       font-style: normal;
@@ -146,28 +131,28 @@
     .hero-photo { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: center top; border: 1px solid var(--rule); border-radius: 2px; box-shadow: 0 8px 32px rgba(13,31,45,0.10); }
     .hero-photo-caption { margin-top: 1rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); text-align: center; }
 
-    .hero-intro-band { padding-bottom: clamp(3rem, 6vw, 5rem); }
-    .hero-intro-band p { font-size: 1.05rem; line-height: 1.8; color: var(--ink-mid); max-width: 72ch; }
+    .hero-intro-band { padding-bottom: clamp(2rem, 6vw, 5rem); }
+    .hero-intro-band p { font-size: clamp(0.95rem, 2.5vw, 1.05rem); line-height: 1.8; color: var(--ink-mid); max-width: 72ch; }
 
     /* ABOUT */
-    .about-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 6vw, 7rem); align-items: start; }
-    .about-quote { font-family: var(--f-serif); font-size: clamp(1.5rem, 2.8vw, 2rem); font-weight: 300; font-style: italic; line-height: 1.4; color: var(--ink); margin: 2.5rem 0; padding-left: 1.5rem; border-left: 2px solid var(--accent); }
+    .about-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 7rem); align-items: start; }
+    .about-quote { font-family: var(--f-serif); font-size: clamp(1.25rem, 2.8vw, 2rem); font-weight: 300; font-style: italic; line-height: 1.4; color: var(--ink); margin: 2rem 0; padding-left: 1.25rem; border-left: 2px solid var(--accent); }
     .about-body p { font-size: 1rem; line-height: 1.8; color: var(--ink-mid); margin-bottom: 1.25rem; max-width: 56ch; }
-    .cred-list { margin-top: 2.5rem; }
+    .cred-list { margin-top: 2rem; }
     .cred-row { display: flex; align-items: baseline; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--rule); }
     .cred-row:first-child { border-top: 1px solid var(--rule); }
-    .cred-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); min-width: 90px; }
+    .cred-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); min-width: 80px; flex-shrink: 0; }
     .cred-value { font-size: 0.92rem; color: var(--ink); }
 
     /* EXPERTISE */
-    .expertise-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 6rem); align-items: end; margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--rule); }
+    .expertise-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 6rem); align-items: end; margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--rule); }
     .expertise-intro p { font-size: 1rem; color: var(--ink-mid); line-height: 1.75; max-width: 44ch; }
     .expertise-list { display: flex; flex-direction: column; }
     .expertise-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 2rem; align-items: start; padding: 2.5rem 0; border-bottom: 1px solid var(--rule); cursor: default; }
     .expertise-item:first-child { border-top: 1px solid var(--rule); }
     .expertise-item:hover .expertise-title { color: var(--accent); }
     .expertise-num { font-family: var(--f-serif); font-size: 0.85rem; color: var(--ink-light); padding-top: 0.2rem; }
-    .expertise-title { font-family: var(--f-serif); font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 300; line-height: 1.25; margin-bottom: 0.75rem; transition: color 0.25s; }
+    .expertise-title { font-family: var(--f-serif); font-size: clamp(1.2rem, 2vw, 1.7rem); font-weight: 300; line-height: 1.25; margin-bottom: 0.75rem; transition: color 0.25s; }
     .expertise-desc { font-size: 0.9rem; color: var(--ink-mid); line-height: 1.7; max-width: 52ch; }
     .expertise-tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 0.3rem 0.75rem; white-space: nowrap; align-self: start; margin-top: 0.3rem; }
 
@@ -175,7 +160,7 @@
     .faq-list { display: flex; flex-direction: column; }
     .faq-item { border-bottom: 1px solid var(--rule); }
     .faq-item:first-child { border-top: 1px solid var(--rule); }
-    .faq-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 1.6rem 0; text-align: left; font-family: var(--f-serif); font-size: clamp(1.05rem, 2vw, 1.35rem); font-weight: 300; color: var(--ink); cursor: pointer; transition: color 0.2s; }
+    .faq-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.4rem 0; text-align: left; font-family: var(--f-serif); font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 300; color: var(--ink); cursor: pointer; transition: color 0.2s; min-height: 44px; }
     .faq-btn:hover { color: var(--accent); }
     .faq-icon { width: 20px; height: 20px; flex-shrink: 0; position: relative; color: var(--accent); }
     .faq-icon::before, .faq-icon::after { content: ''; position: absolute; background: currentColor; transition: transform 0.3s var(--ease-out), opacity 0.3s; }
@@ -185,18 +170,18 @@
     .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s var(--ease-out); }
     .faq-item.open .faq-answer { grid-template-rows: 1fr; }
     .faq-answer-inner { overflow: hidden; }
-    .faq-answer-inner p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.75; padding-bottom: 1.75rem; max-width: 68ch; }
+    .faq-answer-inner p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.75; padding-bottom: 1.5rem; max-width: 68ch; }
 
     /* CONTACT */
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 6vw, 7rem); align-items: start; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 7rem); align-items: start; }
     .contact-info p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 2rem; }
-    .contact-note { font-size: 0.8rem; color: var(--ink-mid); line-height: 1.6; padding: 1.25rem; border: 1px solid var(--accent); background: var(--accent-light); }
+    .contact-note { font-size: 0.82rem; color: var(--ink-mid); line-height: 1.6; padding: 1.25rem; border: 1px solid var(--accent); background: var(--accent-light); }
     .form-field { margin-bottom: 1.5rem; }
     .form-field label { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
     .form-field input, .form-field textarea { width: 100%; padding: 0.75rem 0; font-family: var(--f-sans); font-size: 1rem; color: var(--ink); background: transparent; border: none; border-bottom: 1px solid var(--rule); outline: none; transition: border-color 0.2s; }
     .form-field input:focus, .form-field textarea:focus { border-color: var(--accent); }
     .form-field textarea { min-height: 120px; resize: vertical; }
-    .btn-submit { display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; transition: color 0.2s, border-color 0.2s; }
+    .btn-submit { display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; transition: color 0.2s, border-color 0.2s; min-height: 44px; }
     .btn-submit:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
     .form-msg { margin-top: 1rem; font-size: 0.85rem; color: var(--accent); display: none; }
 
@@ -206,82 +191,82 @@
     .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
     .footer-name { font-family: var(--f-serif); font-size: 1.4rem; font-weight: 300; margin-bottom: 0.25rem; }
     .footer-sub { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
-    .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mid); }
+    .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mid); }
     .footer-links a:hover { color: var(--accent); }
     .footer-copy { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 0.75rem; color: var(--ink-light); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
-    /* RESPONSIVE */
+    /* ===== RESPONSIVE ===== */
+
+    /* Tablet */
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; }
-      .hero-photo-wrap { max-width: 280px; margin: 0 auto; }
-      .about-cols { grid-template-columns: 1fr; }
-      .expertise-intro { grid-template-columns: 1fr; }
-      .expertise-item { grid-template-columns: 50px 1fr; } .expertise-tag { display: none; }
-      .contact-grid { grid-template-columns: 1fr; }
+      .hero-photo-wrap { max-width: 260px; margin: 0 auto; }
+      .about-cols { grid-template-columns: 1fr; gap: clamp(2rem, 5vw, 3rem); }
+      .expertise-intro { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; padding-bottom: 2rem; }
+      .expertise-item { grid-template-columns: 50px 1fr; gap: 1.25rem; } .expertise-tag { display: none; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     }
+
+    /* Mobile */
     @media (max-width: 640px) {
-      .nav-links { display: none; } .nav-hamburger { display: flex; }
-      .expertise-item { grid-template-columns: 40px 1fr; }
-      /* Background eye stays — just a touch fainter on tiny screens */
-      .bg-eye { --eye-opacity: 0.55; }
+      :root { --nav-h: 60px; }
+
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-logo { font-size: 1rem; }
+
+      /* Hero: photo above headline on mobile */
+      .hero-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+      }
+      .hero-left { order: 2; }
+      .hero-photo-wrap { order: 1; max-width: 200px; margin: 0 auto; }
+
+      .hero-line1, .hero-line2 { font-size: clamp(2.2rem, 10vw, 3rem); }
+
+      /* Expertise items: single column */
+      .expertise-item {
+        grid-template-columns: 36px 1fr;
+        gap: 0.75rem;
+        padding: 1.75rem 0;
+      }
+      .expertise-num { font-size: 0.75rem; }
+      .expertise-title { font-size: 1.2rem; }
+
+      /* FAQ: tighter padding */
+      .faq-btn { padding: 1.1rem 0; font-size: 1rem; }
+
+      /* About credentials: stack label/value */
+      .cred-row { flex-direction: column; gap: 0.25rem; }
+      .cred-label { min-width: unset; }
+
+      /* Footer links: tighter gap */
+      .footer-links { gap: 0.75rem; }
+      .footer-inner { flex-direction: column; gap: 1.5rem; }
+
+      /* Background eye: fainter on small screens */
+      .bg-eye { --eye-opacity: 0.45; }
     }
   </style>
 </head>
 <body>
 
-<!--
-  Background eye — subtle line-art eye that sits behind the hero.
-  It blinks (lids close) as the user scrolls the hero section off the top
-  of the viewport, and is fully shut by the time the hero is gone.
-  All animation lives in the IIFE at the bottom of <script>; the SVG here
-  defines just the shape. Stroke colors use the site accent at low alpha,
-  so adjusting --accent in :root will tint the eye automatically.
--->
 <div class="bg-eye" id="bgEye" aria-hidden="true">
   <svg viewBox="0 0 1000 500" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-    <!--
-      Geometry:
-        Corners:  (80, 250)  and  (920, 250)
-        Upper lid: quadratic Bézier with control point (500, uy)
-                   uy = 60  → fully open arch
-                   uy = 250 → flat line, fully shut
-        Lower lid: quadratic Bézier with control point (500, ly)
-                   ly = 440 → fully open arch
-                   ly = 250 → flat line, fully shut
-      The iris/pupil is clipped to the region BETWEEN the two lid paths,
-      so as the lids close they visibly cover the iris (no floating disc).
-      The clipPath is updated each frame in JS along with the lid paths.
-    -->
     <defs>
       <clipPath id="bgEyeLidClip">
-        <!-- Closed region: upper arc forward, lower arc back. Updated by JS. -->
         <path id="bgEyeClipPath" d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/>
       </clipPath>
     </defs>
-
-    <!--
-      Iris / pupil / catch light — all clipped to the lid region so nothing
-      can render outside the closing eye. To tweak the look, adjust the
-      alpha values in the rgba() strokes/fills below — keep them low so the
-      eye stays a subtle background element.
-    -->
     <g clip-path="url(#bgEyeLidClip)">
-      <!-- Iris ring -->
       <circle cx="500" cy="250" r="105"
               fill="none" stroke="rgba(10,126,140,0.07)" stroke-width="1.2"/>
-      <!-- Pupil disc -->
       <circle cx="500" cy="250" r="44"
               fill="rgba(10,126,140,0.06)"/>
-      <!--
-        Catch light — a tiny soft highlight on the upper-left of the pupil.
-        Two stacked white discs (larger soft halo + small bright dot) give
-        the impression of a reflection without being heavy.
-      -->
       <circle cx="484" cy="234" r="9"  fill="rgba(255,255,255,0.28)"/>
       <circle cx="481" cy="231" r="3.5" fill="rgba(255,255,255,0.55)"/>
     </g>
-
-    <!-- The two lid edge strokes — subtle teal lines that meet flat when shut -->
     <path id="bgEyeUpper" d="M 80 250 Q 500 60 920 250"
           stroke="rgba(10,126,140,0.11)" stroke-width="1.8"
           stroke-linecap="round" fill="none"/>
@@ -428,7 +413,7 @@
 <section id="faq" class="bg-mid">
   <div class="wrap">
     <span class="eyebrow reveal">Frequently Asked Questions</span>
-    <h2 class="display display-lg reveal reveal-delay-1" style="margin-bottom:3rem;">Questions patients often ask</h2>
+    <h2 class="display display-lg reveal reveal-delay-1" style="margin-bottom:2.5rem;">Questions patients often ask</h2>
     <div class="faq-list reveal reveal-delay-2">
       <div class="faq-item">
         <button class="faq-btn" onclick="toggleFaq(this)">What should I expect at my first visit?<span class="faq-icon" aria-hidden="true"></span></button>
@@ -501,20 +486,6 @@
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  /* =========================================================
-     Eye blink — background eye closes as the hero scrolls off.
-     Implementation notes:
-       - Drives two SVG quadratic-Bézier control points to morph
-         the upper and lower lid arcs from "fully open" (arches at
-         y=60 and y=440) to "fully shut" (both flat at y=250).
-       - Progress comes from getBoundingClientRect().bottom of the
-         hero section, so it's stable across resize, zoom, etc.
-       - Scroll events only flag a pending update; the actual DOM
-         write happens inside requestAnimationFrame to keep things
-         off the scrolling thread (no layout thrash, no jank).
-       - Respects prefers-reduced-motion: no animation, lids stay
-         in their initial open state (defined in the SVG markup).
-     ========================================================= */
   (function(){
     const upper = document.getElementById('bgEyeUpper');
     const lower = document.getElementById('bgEyeLower');
@@ -523,14 +494,10 @@
     if (!upper || !lower || !clip || !hero) return;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) return; // keep the static open arches as the "subtle non-animated state"
+    if (reduceMotion) return;
 
-    // Lid arch control-point Y values (see SVG comments for geometry)
     const UPPER_OPEN = 60,  UPPER_SHUT = 250;
     const LOWER_OPEN = 440, LOWER_SHUT = 250;
-    // Trigger window: 0 = fully open, FINISH_AT = fully shut.
-    // Setting < 1 means the lids reach fully closed slightly before the hero
-    // is 100% off-screen, guaranteeing a decisive shut by the end of the scroll.
     const FINISH_AT = 0.85;
 
     let pending = false;
@@ -539,11 +506,8 @@
     function compute() {
       const rect = hero.getBoundingClientRect();
       const h = hero.offsetHeight || 1;
-      // 0 = hero fully visible, 1 = hero fully scrolled off the top
       const raw = 1 - (rect.bottom / h);
-      // Remap [0..FINISH_AT] → [0..1] and clamp so we stay shut once closed.
       const scaled = Math.min(1, Math.max(0, raw / FINISH_AT));
-      // Ease-in-out so the blink feels natural rather than linear
       return scaled < 0.5
         ? 2 * scaled * scaled
         : 1 - Math.pow(-2 * scaled + 2, 2) / 2;
@@ -561,8 +525,6 @@
       const lowerD = 'M 80 250 Q 500 ' + ly.toFixed(1) + ' 920 250';
       upper.setAttribute('d', upperD);
       lower.setAttribute('d', lowerD);
-      // Keep the iris clip in sync: region enclosed by current upper + current lower arc.
-      // Walking the upper arc forward (left → right), then the lower arc back (right → left).
       clip.setAttribute(
         'd',
         'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250 Q 500 ' + ly.toFixed(1) + ' 80 250 Z'
@@ -577,7 +539,7 @@
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
-    render(); // initial paint
+    render();
   })();
 
   /* Scroll reveal */
