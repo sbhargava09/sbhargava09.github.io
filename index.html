@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Dr. Siddharth Bhargava, MD — Cataracts &amp; Glaucoma</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Dr. Siddharth Bhargava is a fellowship-trained ophthalmologist specializing in glaucoma, cataracts, premium IOL counseling, and complex anterior segment care." />
+  <meta name="description" content="Dr. Siddharth Bhargava is a board-certified, fellowship-trained ophthalmologist specializing in glaucoma, cataracts, premium IOL counseling, and complex anterior segment care." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -44,7 +44,6 @@
     .section-reveal.visible { opacity: 1; transform: translateY(0); }
     @media (prefers-reduced-motion: reduce) { .reveal, .section-reveal { opacity: 1; transform: none; transition: none; } }
 
-    /* NAV */
     .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem, 5vw, 4rem); background: var(--bg); border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
     .nav.scrolled { border-color: var(--rule); background: rgba(240,244,245,0.96); backdrop-filter: blur(10px); }
     .nav-logo { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 400; display: flex; flex-direction: column; line-height: 1.2; }
@@ -60,7 +59,6 @@
     .mobile-nav.open { display: flex; }
     .mobile-nav a { font-family: var(--f-serif); font-size: clamp(1.6rem, 7vw, 2.2rem); font-weight: 300; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; min-height: 44px; display: flex; align-items: center; }
 
-    /* LAYOUT */
     .wrap { max-width: 1140px; margin: 0 auto; padding: 0 clamp(1rem, 5vw, 4rem); }
     section { padding: clamp(4rem, 10vw, 9rem) 0; }
     .bg-mid { background: var(--bg-mid); }
@@ -68,83 +66,35 @@
     .display { font-family: var(--f-serif); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
     .display-lg  { font-size: clamp(2rem, 5vw, 4.2rem); }
 
-    /* HERO */
-    .hero { background: transparent; padding: 0; border-bottom: 1px solid var(--rule); }
+    .hero { background: transparent; padding: 0; border-bottom: 1px solid var(--rule); position: relative; z-index: 1; }
     .hero-top { padding-top: calc(var(--nav-h) + clamp(2rem, 6vw, 5rem)); padding-bottom: clamp(2rem, 6vw, 5rem); }
+    .hero-grid { display: grid; grid-template-columns: 1fr 340px; gap: clamp(2rem, 6vw, 6rem); align-items: center; position: relative; }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: clamp(2rem, 6vw, 6rem);
-      align-items: center;
-      position: relative;
-    }
-
-    .bg-eye {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-      opacity: var(--eye-opacity, 1);
-      transition: opacity 0.4s var(--ease-out);
-    }
-    .bg-eye svg {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: min(120vw, 1600px);
-      height: auto;
-      transform: translate(-50%, -50%);
-      overflow: visible;
-    }
-    .hero { position: relative; z-index: 1; }
+    .bg-eye { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; opacity: var(--eye-opacity, 1); transition: opacity 0.4s var(--ease-out); }
+    .bg-eye svg { position: absolute; left: 50%; top: 50%; width: min(120vw, 1600px); height: auto; transform: translate(-50%, -50%); overflow: visible; }
     section:not(.hero) { position: relative; z-index: 2; background-color: var(--bg); }
     section.bg-mid { background-color: var(--bg-mid); }
     .disclaimer, footer { position: relative; z-index: 2; background: var(--bg); }
+    @media (prefers-reduced-motion: reduce) { .bg-eye { opacity: 0.5; } }
 
-    @media (prefers-reduced-motion: reduce) {
-      .bg-eye { opacity: 0.5; }
-    }
-
-    .hero-left {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .hero-line1, .hero-line2 {
-      font-family: var(--f-serif);
-      font-size: clamp(2.6rem, 7vw, 6.5rem);
-      font-weight: 300;
-      line-height: 1.1;
-      font-style: normal;
-      color: var(--ink);
-    }
+    .hero-left { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+    .hero-line1, .hero-line2 { font-family: var(--f-serif); font-size: clamp(2.6rem, 7vw, 6.5rem); font-weight: 300; line-height: 1.1; font-style: normal; color: var(--ink); }
     .hero-line1 em, .hero-line2 em { font-style: italic; color: var(--accent); }
-
     .hero-photo-wrap { position: relative; z-index: 1; }
     .hero-photo { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: center top; border: 1px solid var(--rule); border-radius: 2px; box-shadow: 0 8px 32px rgba(13,31,45,0.10); }
     .hero-photo-caption { margin-top: 1rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); text-align: center; }
-
     .hero-intro-band { padding-bottom: clamp(2rem, 6vw, 5rem); }
     .hero-intro-band p { font-size: clamp(0.95rem, 2.5vw, 1.05rem); line-height: 1.8; color: var(--ink-mid); max-width: 72ch; }
 
-    /* ABOUT */
     .about-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 7rem); align-items: start; }
     .about-quote { font-family: var(--f-serif); font-size: clamp(1.25rem, 2.8vw, 2rem); font-weight: 300; font-style: italic; line-height: 1.4; color: var(--ink); margin: 2rem 0; padding-left: 1.25rem; border-left: 2px solid var(--accent); }
     .about-body p { font-size: 1rem; line-height: 1.8; color: var(--ink-mid); margin-bottom: 1.25rem; max-width: 56ch; }
     .cred-list { margin-top: 2rem; }
     .cred-row { display: flex; align-items: baseline; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--rule); }
     .cred-row:first-child { border-top: 1px solid var(--rule); }
-    .cred-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); min-width: 80px; flex-shrink: 0; }
+    .cred-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); min-width: 92px; flex-shrink: 0; }
     .cred-value { font-size: 0.92rem; color: var(--ink); }
 
-    /* EXPERTISE */
     .expertise-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 6rem); align-items: end; margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--rule); }
     .expertise-intro p { font-size: 1rem; color: var(--ink-mid); line-height: 1.75; max-width: 44ch; }
     .expertise-list { display: flex; flex-direction: column; }
@@ -156,7 +106,6 @@
     .expertise-desc { font-size: 0.9rem; color: var(--ink-mid); line-height: 1.7; max-width: 52ch; }
     .expertise-tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 0.3rem 0.75rem; white-space: nowrap; align-self: start; margin-top: 0.3rem; }
 
-    /* FAQ */
     .faq-list { display: flex; flex-direction: column; }
     .faq-item { border-bottom: 1px solid var(--rule); }
     .faq-item:first-child { border-top: 1px solid var(--rule); }
@@ -172,7 +121,6 @@
     .faq-answer-inner { overflow: hidden; }
     .faq-answer-inner p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.75; padding-bottom: 1.5rem; max-width: 68ch; }
 
-    /* CONTACT */
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 7rem); align-items: start; }
     .contact-info p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 2rem; }
     .contact-note { font-size: 0.82rem; color: var(--ink-mid); line-height: 1.6; padding: 1.25rem; border: 1px solid var(--accent); background: var(--accent-light); }
@@ -185,7 +133,6 @@
     .btn-submit:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
     .form-msg { margin-top: 1rem; font-size: 0.85rem; color: var(--accent); display: none; }
 
-    /* FOOTER */
     .disclaimer { padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-light); line-height: 1.65; }
     footer { padding: 3rem 0; border-top: 1px solid var(--rule); }
     .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
@@ -195,9 +142,6 @@
     .footer-links a:hover { color: var(--accent); }
     .footer-copy { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 0.75rem; color: var(--ink-light); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
-    /* ===== RESPONSIVE ===== */
-
-    /* Tablet */
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; }
       .hero-photo-wrap { max-width: 260px; margin: 0 auto; }
@@ -206,60 +150,24 @@
       .expertise-item { grid-template-columns: 50px 1fr; gap: 1.25rem; } .expertise-tag { display: none; }
       .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     }
-
-    /* Mobile */
     @media (max-width: 640px) {
       :root { --nav-h: 60px; }
-
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
       .nav-logo { font-size: 1rem; }
-
-      /* Hero: photo FIRST (order:1), headline below (order:2) */
-      .hero-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 1.5rem;
-      }
-      .hero-photo-wrap {
-        order: 1;
-        max-width: 100%;
-        width: 100%;
-        margin: 0;
-      }
+      .hero-grid { grid-template-columns: 1fr; grid-template-rows: auto auto; gap: 1.5rem; }
+      .hero-photo-wrap { order: 1; max-width: 100%; width: 100%; margin: 0; }
       .hero-left { order: 2; }
-
-      /* Photo fills full width at natural 3:4 portrait ratio */
-      .hero-photo {
-        aspect-ratio: 3 / 4;
-        width: 100%;
-        object-fit: cover;
-        object-position: center top;
-      }
-
+      .hero-photo { aspect-ratio: 3 / 4; width: 100%; object-fit: cover; object-position: center top; }
       .hero-line1, .hero-line2 { font-size: clamp(2.6rem, 11vw, 3.5rem); }
-
-      /* Expertise items: single column */
-      .expertise-item {
-        grid-template-columns: 36px 1fr;
-        gap: 0.75rem;
-        padding: 1.75rem 0;
-      }
+      .expertise-item { grid-template-columns: 36px 1fr; gap: 0.75rem; padding: 1.75rem 0; }
       .expertise-num { font-size: 0.75rem; }
       .expertise-title { font-size: 1.2rem; }
-
-      /* FAQ: tighter padding */
       .faq-btn { padding: 1.1rem 0; font-size: 1rem; }
-
-      /* About credentials: stack label/value */
       .cred-row { flex-direction: column; gap: 0.25rem; }
       .cred-label { min-width: unset; }
-
-      /* Footer links: tighter gap */
       .footer-links { gap: 0.75rem; }
       .footer-inner { flex-direction: column; gap: 1.5rem; }
-
-      /* Background eye: fainter on small screens */
       .bg-eye { --eye-opacity: 0.45; }
     }
   </style>
@@ -268,32 +176,22 @@
 
 <div class="bg-eye" id="bgEye" aria-hidden="true">
   <svg viewBox="0 0 1000 500" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-    <defs>
-      <clipPath id="bgEyeLidClip">
-        <path id="bgEyeClipPath" d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/>
-      </clipPath>
-    </defs>
+    <defs><clipPath id="bgEyeLidClip"><path id="bgEyeClipPath" d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/></clipPath></defs>
     <g clip-path="url(#bgEyeLidClip)">
-      <circle cx="500" cy="250" r="105"
-              fill="none" stroke="rgba(10,126,140,0.07)" stroke-width="1.2"/>
-      <circle cx="500" cy="250" r="44"
-              fill="rgba(10,126,140,0.06)"/>
-      <circle cx="484" cy="234" r="9"  fill="rgba(255,255,255,0.28)"/>
+      <circle cx="500" cy="250" r="105" fill="none" stroke="rgba(10,126,140,0.07)" stroke-width="1.2"/>
+      <circle cx="500" cy="250" r="44" fill="rgba(10,126,140,0.06)"/>
+      <circle cx="484" cy="234" r="9" fill="rgba(255,255,255,0.28)"/>
       <circle cx="481" cy="231" r="3.5" fill="rgba(255,255,255,0.55)"/>
     </g>
-    <path id="bgEyeUpper" d="M 80 250 Q 500 60 920 250"
-          stroke="rgba(10,126,140,0.11)" stroke-width="1.8"
-          stroke-linecap="round" fill="none"/>
-    <path id="bgEyeLower" d="M 80 250 Q 500 440 920 250"
-          stroke="rgba(10,126,140,0.11)" stroke-width="1.8"
-          stroke-linecap="round" fill="none"/>
+    <path id="bgEyeUpper" d="M 80 250 Q 500 60 920 250" stroke="rgba(10,126,140,0.11)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    <path id="bgEyeLower" d="M 80 250 Q 500 440 920 250" stroke="rgba(10,126,140,0.11)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
   </svg>
 </div>
 
 <header class="nav" id="siteNav">
   <a href="#home" class="nav-logo">
-    Dr. Siddharth Bhargava
-    <span>Cataracts &amp; Glaucoma</span>
+    Siddharth Bhargava, MD
+    <span>Cataracts &middot; Glaucoma &middot; Patient Education</span>
   </a>
   <nav class="nav-links" aria-label="Main navigation">
     <a href="#home">Home</a>
@@ -303,9 +201,7 @@
     <a href="#faq">FAQs</a>
     <a href="#contact">Contact</a>
   </nav>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMobileNav()">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
 </header>
 
 <div class="mobile-nav" id="mobileNav">
@@ -318,66 +214,44 @@
 </div>
 
 <section class="hero" id="home">
-
-  <div class="hero-top">
-    <div class="wrap">
-      <div class="hero-grid" id="heroGrid">
-
-        <!-- Left: headline -->
-        <div class="hero-left">
-          <h1>
-            <div class="hero-line1 reveal reveal-delay-1">Thoughtful <em>Eye Care,</em></div>
-            <div class="hero-line2 reveal reveal-delay-1">Centered on <em>Clarity.</em></div>
-          </h1>
-        </div>
-
-        <!-- Right: photo -->
-        <div class="hero-photo-wrap reveal reveal-delay-2" id="heroPhotoWrap">
-          <img
-            src="Bhargava-Siddharth-Photo.jpg"
-            alt="Dr. Siddharth Bhargava, MD"
-            class="hero-photo"
-            width="340"
-            height="453"
-            loading="eager"
-          />
-          <p class="hero-photo-caption">Dr. Siddharth Bhargava, MD<br>Cataract and Glaucoma Surgeon</p>
-        </div>
-
-      </div>
+  <div class="hero-top"><div class="wrap"><div class="hero-grid" id="heroGrid">
+    <div class="hero-left">
+      <h1>
+        <div class="hero-line1 reveal reveal-delay-1">Thoughtful <em>Eye Care,</em></div>
+        <div class="hero-line2 reveal reveal-delay-1">Centered on <em>Clarity.</em></div>
+      </h1>
     </div>
-  </div>
-
-  <div class="hero-intro-band">
-    <div class="wrap">
-      <p class="reveal">I specialize in glaucoma, cataract surgery, premium intraocular lens counseling, and complex anterior segment care. My practice is built on a simple idea: patients who understand their condition make better decisions and have better outcomes.</p>
+    <div class="hero-photo-wrap reveal reveal-delay-2" id="heroPhotoWrap">
+      <img src="Bhargava-Siddharth-Photo.jpg" alt="Dr. Siddharth Bhargava, MD" class="hero-photo" width="340" height="453" loading="eager" />
+      <p class="hero-photo-caption">Dr. Siddharth Bhargava, MD<br>Cataract and Glaucoma Surgeon</p>
     </div>
-  </div>
-
+  </div></div></div>
+  <div class="hero-intro-band"><div class="wrap">
+    <p class="reveal">I specialize in glaucoma and complex cataract surgeries. But my true passion lies in patient education. My practice is built on a simple idea: empower patients with understanding of their condition to make decisions <em>with</em> them rather than <em>for</em> them.</p>
+  </div></div>
 </section>
 
 <section id="about" class="bg-mid">
-  <div class="wrap">
-    <div class="about-cols">
-      <div>
-        <span class="eyebrow reveal">About</span>
-        <h2 class="display display-lg reveal reveal-delay-1">A physician who believes patients deserve clarity.</h2>
-        <blockquote class="about-quote reveal reveal-delay-2">&ldquo;I want every patient to leave their appointment better informed about their eyes than when they arrived.&rdquo;</blockquote>
-      </div>
-      <div class="about-body reveal reveal-delay-2">
-        <p>Dr. Siddharth Bhargava is a fellowship-trained ophthalmologist with specialized expertise in glaucoma management, cataract surgery, premium intraocular lens counseling, and complex anterior segment care.</p>
-        <p>He completed his medical degree at Albany Medical College and his ophthalmology residency at Eastern Virginia Medical School, followed by a glaucoma fellowship at Washington University in St. Louis &mdash; where he focused on medical and surgical glaucoma, micro-invasive glaucoma surgery (MIGS), and the intersection of glaucoma and lens-based surgery.</p>
-        <p>His approach to care is built on patient education: helping people understand not just what treatment is recommended, but why &mdash; and what to expect at every step. Dr. Bhargava speaks English, Hindi, and Urdu and welcomes patients from diverse backgrounds.</p>
-        <div class="cred-list">
-          <div class="cred-row"><span class="cred-label">MD</span><span class="cred-value">Albany Medical College</span></div>
-          <div class="cred-row"><span class="cred-label">Residency</span><span class="cred-value">Eastern Virginia Medical School</span></div>
-          <div class="cred-row"><span class="cred-label">Fellowship</span><span class="cred-value">Washington University in St. Louis</span></div>
-          <div class="cred-row"><span class="cred-label">Societies</span><span class="cred-value">American Glaucoma Society &middot; ASCRS</span></div>
-          <div class="cred-row"><span class="cred-label">Languages</span><span class="cred-value">English &middot; Hindi &middot; Urdu</span></div>
-        </div>
+  <div class="wrap"><div class="about-cols">
+    <div>
+      <span class="eyebrow reveal">About</span>
+      <h2 class="display display-lg reveal reveal-delay-1">A physician who believes patients deserve clarity.</h2>
+      <blockquote class="about-quote reveal reveal-delay-2">&ldquo;I want every patient to leave their appointment better informed about their eye conditions than when they arrived.&rdquo;</blockquote>
+    </div>
+    <div class="about-body reveal reveal-delay-2">
+      <p>Siddharth Bhargava is a Board-certified, Fellowship-trained Ophthalmologist with expertise in glaucoma management, cataract surgery, premium intraocular lenses, and complex anterior segment care.</p>
+      <p>Dr. Bhargava grew up in the Bay Area and was fascinated by the high-tech environment of Silicon Valley. He was drawn to Ophthalmology after conducting Bioengineering research at UCLA that highlighted the importance of innovation in providing personalized and precise medical care. He returned to California in 2025 with his wife, Mansi, to be closer to their family and friends.</p>
+      <p>He has trained at institutions across the country and has consistently observed a profound lack of patient education at every stage of care. It is not infrequent that he encounters a patient treated for glaucoma for over ten years who doesn&rsquo;t know what glaucoma is or why they are taking their drops. Thus, his approach to care is built on patient education: helping people understand not just what treatment is recommended, but why &mdash; and what to expect at every step.</p>
+      <div class="cred-list">
+        <div class="cred-row"><span class="cred-label">Bachelors</span><span class="cred-value">UCLA</span></div>
+        <div class="cred-row"><span class="cred-label">MD</span><span class="cred-value">Albany Medical College</span></div>
+        <div class="cred-row"><span class="cred-label">Residency</span><span class="cred-value">Eastern Virginia Medical School</span></div>
+        <div class="cred-row"><span class="cred-label">Fellowship</span><span class="cred-value">Washington University in St. Louis</span></div>
+        <div class="cred-row"><span class="cred-label">Societies</span><span class="cred-value">American Glaucoma Society &middot; American Academy of Ophthalmology &middot; American Society of Cataract and Refractive Surgery</span></div>
+        <div class="cred-row"><span class="cred-label">Languages</span><span class="cred-value">English &middot; Hindi &middot; Urdu</span></div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
 <section id="expertise">
@@ -387,12 +261,12 @@
         <span class="eyebrow reveal">Clinical Expertise</span>
         <h2 class="display display-lg reveal reveal-delay-1">Areas of Focus</h2>
       </div>
-      <p class="reveal reveal-delay-2">From routine comprehensive care to complex glaucoma surgery and premium cataract counseling &mdash; every patient receives thoughtful, individualized treatment.</p>
+      <p class="reveal reveal-delay-2">From routine comprehensive eye care to complex glaucoma surgeries &mdash; every patient receives thoughtful, individualized treatment.</p>
     </div>
     <div class="expertise-list">
       <div class="expertise-item section-reveal">
         <span class="expertise-num">01</span>
-        <div><div class="expertise-title">Comprehensive Ophthalmology</div><p class="expertise-desc">Evaluation and ongoing care for a wide range of eye conditions, from routine annual exams to complex medical eye disease and long-term monitoring.</p></div>
+        <div><div class="expertise-title">Comprehensive Ophthalmology</div><p class="expertise-desc">Evaluation and ongoing care for a wide range of eye conditions, from routine diabetes and macular degeneration annual exams to complex medical eye disease and long-term monitoring.</p></div>
         <span class="expertise-tag">General</span>
       </div>
       <div class="expertise-item section-reveal">
@@ -402,22 +276,22 @@
       </div>
       <div class="expertise-item section-reveal">
         <span class="expertise-num">03</span>
-        <div><div class="expertise-title">Cataract Surgery</div><p class="expertise-desc">Comprehensive evaluation and counseling on cataract surgery timing, what to expect from the procedure, and coordination with glaucoma care when both conditions are present.</p></div>
+        <div><div class="expertise-title">Cataract Surgery</div><p class="expertise-desc">Comprehensive evaluation and counseling on cataract surgery timing, what to expect from the procedure, and ethically offers only intraocular lenses that he believes would be worth your time. He is fellowship trained in <strong>all</strong> FDA-approved MIGS procedures and uniquely positioned to offer the most personalized glaucoma surgery for your eyes at the same time as cataract surgery if both conditions are present.</p></div>
         <span class="expertise-tag">Surgical</span>
       </div>
       <div class="expertise-item section-reveal">
         <span class="expertise-num">04</span>
-        <div><div class="expertise-title">Premium IOL Counseling</div><p class="expertise-desc">In-depth discussions of intraocular lens options based on each patient&rsquo;s lifestyle, visual priorities, and eye health &mdash; with an honest review of tradeoffs and realistic recommendations.</p></div>
+        <div><div class="expertise-title">Premium IOL Counseling</div><p class="expertise-desc">In-depth discussions of advanced intraocular lens options based on each patient&rsquo;s lifestyle, visual priorities, and eye health &mdash; with an honest review of tradeoffs and realistic recommendations.</p></div>
         <span class="expertise-tag">Counseling</span>
       </div>
       <div class="expertise-item section-reveal">
         <span class="expertise-num">05</span>
-        <div><div class="expertise-title">Complex Anterior Segment Care</div><p class="expertise-desc">Management of advanced anterior segment conditions, combined glaucoma and cataract procedures, and lens-related surgical problem solving requiring specialized expertise.</p></div>
+        <div><div class="expertise-title">Complex Anterior Segment Care</div><p class="expertise-desc">Management of advanced anterior segment conditions such as intraocular lens repositioning, intraocular lens exchange, and iris suturing; most physicians are not comfortable treating such highly-complex complications and often seek Dr. Bhargava&rsquo;s opinion.</p></div>
         <span class="expertise-tag">Surgical</span>
       </div>
       <div class="expertise-item section-reveal">
         <span class="expertise-num">06</span>
-        <div><div class="expertise-title">Collaborative &amp; Coordinated Care</div><p class="expertise-desc">Close coordination with optometrists, primary care providers, and specialists to support patients with complex ocular or medical histories.</p></div>
+        <div><div class="expertise-title">Collaborative &amp; Coordinated Care</div><p class="expertise-desc">Close coordination with optometrists, primary care providers, and specialists to support patients with complex ocular or medical histories. He does not treat you only as a patient with an eye condition, but treats you holistically like a human being.</p></div>
         <span class="expertise-tag">Coordination</span>
       </div>
     </div>
@@ -431,7 +305,7 @@
     <div class="faq-list reveal reveal-delay-2">
       <div class="faq-item">
         <button class="faq-btn" onclick="toggleFaq(this)">What should I expect at my first visit?<span class="faq-icon" aria-hidden="true"></span></button>
-        <div class="faq-answer"><div class="faq-answer-inner"><p>A first visit typically includes a thorough history, vision testing, intraocular pressure measurements, slit-lamp examination, and imaging or visual field testing when indicated. The goal is to understand your eye health fully and discuss a clear, reasoned plan together.</p></div></div>
+        <div class="faq-answer"><div class="faq-answer-inner"><p>A first visit typically includes a thorough history, vision testing, eye pressure measurements, slit-lamp examination, and imaging or visual field testing when indicated. The goal is to understand your eye health fully and discuss a clear, reasoned plan together.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-btn" onclick="toggleFaq(this)">How do you decide when cataract surgery is appropriate?<span class="faq-icon" aria-hidden="true"></span></button>
@@ -439,42 +313,36 @@
       </div>
       <div class="faq-item">
         <button class="faq-btn" onclick="toggleFaq(this)">Why do I need repeat glaucoma tests if my vision feels the same?<span class="faq-icon" aria-hidden="true"></span></button>
-        <div class="faq-answer"><div class="faq-answer-inner"><p>Glaucoma is a long-term condition that can progress silently before affecting central vision. Repeating visual field tests, OCT scans, and pressure checks helps us determine whether the disease is stable or changing &mdash; and whether treatment needs to be adjusted.</p></div></div>
+        <div class="faq-answer"><div class="faq-answer-inner"><p>Glaucoma is a long-term condition that can progress silently before affecting central vision &mdash; most glaucoma patients are asymptomatic until it is too late. Repeating visual field tests, OCT scans, and pressure checks helps us determine whether the disease is stable or changing &mdash; and adjust treatment to minimize deterioration of vision.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-btn" onclick="toggleFaq(this)">What is the difference between MIGS and traditional glaucoma surgery?<span class="faq-icon" aria-hidden="true"></span></button>
-        <div class="faq-answer"><div class="faq-answer-inner"><p>Micro-invasive glaucoma surgery (MIGS) uses smaller incisions and typically has a faster recovery and a more favorable safety profile than traditional procedures such as trabeculectomy or tube shunts. MIGS is often performed alongside cataract surgery. The right approach depends on the severity of your glaucoma and individual factors.</p></div></div>
+        <div class="faq-answer"><div class="faq-answer-inner"><p>Micro-invasive glaucoma surgeries (MIGS) use smaller incisions and typically have a faster recovery and a more favorable safety profile than traditional procedures such as trabeculectomy or tube shunts, but MIGS may not have the lasting effect seen with traditional surgeries. MIGS are often performed alongside cataract surgery, adding only a few minutes to the procedure. The right approach depends on the severity of your glaucoma and individual factors.</p></div></div>
       </div>
       <div class="faq-item">
         <button class="faq-btn" onclick="toggleFaq(this)">Do you see patients in languages other than English?<span class="faq-icon" aria-hidden="true"></span></button>
-        <div class="faq-answer"><div class="faq-answer-inner"><p>Yes. Dr. Bhargava speaks English, Hindi, and Urdu and welcomes patients from diverse linguistic and cultural backgrounds.</p></div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">Can this website replace an eye examination?<span class="faq-icon" aria-hidden="true"></span></button>
-        <div class="faq-answer"><div class="faq-answer-inner"><p>No. The information on this website is for general education only and cannot diagnose conditions, replace an in-person evaluation, or provide personalized treatment recommendations.</p></div></div>
+        <div class="faq-answer"><div class="faq-answer-inner"><p>Yes. Dr. Bhargava also speaks Hindi and Urdu and welcomes patients from diverse linguistic and cultural backgrounds. Interpretation services are available for all languages.</p></div></div>
       </div>
     </div>
   </div>
 </section>
 
 <section id="contact">
-  <div class="wrap">
-    <div class="contact-grid">
-      <div class="contact-info">
-        <span class="eyebrow reveal">Contact</span>
-        <h2 class="display display-lg reveal reveal-delay-1">Get in touch</h2>
-        <p class="reveal reveal-delay-2">This form is for general professional inquiries only. Please do not use it for urgent medical questions or emergencies.</p>
-        <div class="contact-note reveal reveal-delay-3">If you are experiencing a sudden change in vision, eye pain, or any acute ocular symptoms, please contact an emergency eye care provider or go to your nearest emergency department.</div>
-      </div>
-      <form class="reveal reveal-delay-2" onsubmit="submitForm(event)">
-        <div class="form-field"><label for="fname">Name</label><input id="fname" type="text" name="name" placeholder="Your full name" required /></div>
-        <div class="form-field"><label for="femail">Email</label><input id="femail" type="email" name="email" placeholder="you@example.com" required /></div>
-        <div class="form-field"><label for="fmsg">Message</label><textarea id="fmsg" name="message" placeholder="Your question or message" required></textarea></div>
-        <button type="submit" class="btn-submit">Send message <span>&rarr;</span></button>
-        <p class="form-msg" id="formMsg">Thank you &mdash; contact details will be updated as the site evolves.</p>
-      </form>
+  <div class="wrap"><div class="contact-grid">
+    <div class="contact-info">
+      <span class="eyebrow reveal">Contact</span>
+      <h2 class="display display-lg reveal reveal-delay-1">Get in touch</h2>
+      <p class="reveal reveal-delay-2">This form is for general professional inquiries only. Please do not use it for urgent medical questions or emergencies.</p>
+      <div class="contact-note reveal reveal-delay-3">If you are experiencing a sudden change in vision, eye pain, or any acute ocular symptoms, please contact an emergency eye care provider or go to your nearest emergency department.</div>
     </div>
-  </div>
+    <form class="reveal reveal-delay-2" onsubmit="submitForm(event)">
+      <div class="form-field"><label for="fname">Name</label><input id="fname" type="text" name="name" placeholder="Your full name" required /></div>
+      <div class="form-field"><label for="femail">Email</label><input id="femail" type="email" name="email" placeholder="you@example.com" required /></div>
+      <div class="form-field"><label for="fmsg">Message</label><textarea id="fmsg" name="message" placeholder="Your question or message" required></textarea></div>
+      <button type="submit" class="btn-submit">Send message <span>&rarr;</span></button>
+      <p class="form-msg" id="formMsg">Thank you &mdash; contact details will be updated as the site evolves.</p>
+    </form>
+  </div></div>
 </section>
 
 <div class="disclaimer"><div class="wrap"><strong>Medical disclaimer:</strong> The educational information on this website is provided for general informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Use of this website does not by itself create a physician&ndash;patient relationship. Always seek the advice of your physician or qualified eye care provider with any questions about your eye health.</div></div>
@@ -483,7 +351,7 @@
   <div class="wrap">
     <div class="footer-inner">
       <div>
-        <div class="footer-name">Dr. Siddharth Bhargava</div>
+        <div class="footer-name">Siddharth Bhargava, MD</div>
         <div class="footer-sub">Cataracts &middot; Glaucoma &middot; Patient Education</div>
       </div>
       <nav class="footer-links">
@@ -493,6 +361,7 @@
     </div>
     <div class="footer-copy">
       <p>&copy; <span id="yr"></span> Dr. Siddharth Bhargava, MD. All rights reserved.</p>
+      <p>Site v2.0</p>
     </div>
   </div>
 </footer>
@@ -501,68 +370,28 @@
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   (function(){
-    const upper = document.getElementById('bgEyeUpper');
-    const lower = document.getElementById('bgEyeLower');
-    const clip  = document.getElementById('bgEyeClipPath');
-    const hero  = document.querySelector('.hero');
-    if (!upper || !lower || !clip || !hero) return;
-
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) return;
-
-    const UPPER_OPEN = 60,  UPPER_SHUT = 250;
-    const LOWER_OPEN = 440, LOWER_SHUT = 250;
-    const FINISH_AT = 0.85;
-
-    let pending = false;
-    let lastProgress = -1;
-
-    function compute() {
-      const rect = hero.getBoundingClientRect();
-      const h = hero.offsetHeight || 1;
-      const raw = 1 - (rect.bottom / h);
-      const scaled = Math.min(1, Math.max(0, raw / FINISH_AT));
-      return scaled < 0.5
-        ? 2 * scaled * scaled
-        : 1 - Math.pow(-2 * scaled + 2, 2) / 2;
-    }
-
-    function render() {
-      pending = false;
-      const p = compute();
-      if (Math.abs(p - lastProgress) < 0.002) return;
-      lastProgress = p;
-
-      const uy = UPPER_OPEN + (UPPER_SHUT - UPPER_OPEN) * p;
-      const ly = LOWER_OPEN + (LOWER_SHUT - LOWER_OPEN) * p;
-      const upperD = 'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250';
-      const lowerD = 'M 80 250 Q 500 ' + ly.toFixed(1) + ' 920 250';
-      upper.setAttribute('d', upperD);
-      lower.setAttribute('d', lowerD);
-      clip.setAttribute(
-        'd',
-        'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250 Q 500 ' + ly.toFixed(1) + ' 80 250 Z'
-      );
-    }
-
-    function onScroll() {
-      if (pending) return;
-      pending = true;
-      requestAnimationFrame(render);
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
+    const upper=document.getElementById('bgEyeUpper');
+    const lower=document.getElementById('bgEyeLower');
+    const clip=document.getElementById('bgEyeClipPath');
+    const hero=document.querySelector('.hero');
+    if(!upper||!lower||!clip||!hero)return;
+    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduceMotion)return;
+    const UPPER_OPEN=60,UPPER_SHUT=250,LOWER_OPEN=440,LOWER_SHUT=250,FINISH_AT=0.85;
+    let pending=false,lastProgress=-1;
+    function compute(){const rect=hero.getBoundingClientRect();const h=hero.offsetHeight||1;const raw=1-(rect.bottom/h);const scaled=Math.min(1,Math.max(0,raw/FINISH_AT));return scaled<0.5?2*scaled*scaled:1-Math.pow(-2*scaled+2,2)/2}
+    function render(){pending=false;const p=compute();if(Math.abs(p-lastProgress)<0.002)return;lastProgress=p;const uy=UPPER_OPEN+(UPPER_SHUT-UPPER_OPEN)*p;const ly=LOWER_OPEN+(LOWER_SHUT-LOWER_OPEN)*p;upper.setAttribute('d','M 80 250 Q 500 '+uy.toFixed(1)+' 920 250');lower.setAttribute('d','M 80 250 Q 500 '+ly.toFixed(1)+' 920 250');clip.setAttribute('d','M 80 250 Q 500 '+uy.toFixed(1)+' 920 250 Q 500 '+ly.toFixed(1)+' 80 250 Z')}
+    function onScroll(){if(pending)return;pending=true;requestAnimationFrame(render)}
+    window.addEventListener('scroll',onScroll,{passive:true});
+    window.addEventListener('resize',onScroll,{passive:true});
     render();
   })();
 
-  /* Scroll reveal */
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal, .section-reveal').forEach(el => io.observe(el));
 
-  /* Nav scroll state */
   const nav = document.getElementById('siteNav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
 
