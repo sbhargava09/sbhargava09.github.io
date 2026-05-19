@@ -235,16 +235,21 @@
                xmlns="http://www.w3.org/2000/svg"
                style="overflow:visible;">
             <defs>
+              <!--
+                Almond clip: upper arch Q500,60 and lower arch Q500,440
+                Both lids are rendered inside this clip so they can never
+                bleed outside the almond shape, fixing the corner bleed issue.
+              -->
               <clipPath id="almondClip">
                 <path d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/>
               </clipPath>
             </defs>
 
-            <!-- EYE INTERIOR — clipped to almond -->
+            <!-- EYE INTERIOR — everything clipped to almond -->
             <g clip-path="url(#almondClip)">
 
-              <!-- Exact bg fill — no white flash at rest -->
-              <rect x="-100" y="-100" width="1200" height="700" fill="#f0f4f5"/>
+              <!-- BG fill matching site colour -->
+              <rect x="-200" y="-200" width="1400" height="900" fill="#f0f4f5"/>
 
               <!-- Iris disc — white 40% -->
               <circle cx="500" cy="250" r="130" fill="rgba(255,255,255,0.40)"/>
@@ -263,30 +268,38 @@
                 <line x1="435" y1="185" x2="402" y2="152"/>
               </g>
 
-              <!-- Pupil — bg color -->
+              <!-- Pupil — bg colour so it reads as the background -->
               <circle cx="500" cy="250" r="54" fill="#f0f4f5"/>
-              <circle cx="500" cy="250" r="54" fill="none" stroke="rgba(255,255,255,0.40)" stroke-width="1.8"/>
 
-              <!-- Catchlight -->
-              <ellipse cx="524" cy="228" rx="14" ry="11" fill="rgba(255,255,255,0.85)"/>
+              <!--
+                UPPER LID
+                Shape: filled white region above the upper arch.
+                Path bottom edge = upper arch (Q 500 60).
+                At translateY = -190: lid hidden entirely above the almond top edge.
+                At translateY = 0: lid edge sits on the upper arch — eye open.
+                Travels from -190 → 0 as progress goes 0 → 1 (eye closes from top).
+                No eyelashes.
+              -->
+              <g id="eyeUpperLid" transform="translate(0,-190)">
+                <path d="M 80 250 Q 500 60 920 250 L 1100 -800 L -100 -800 Z" fill="white"/>
+              </g>
 
-              <!-- EYELID — fully opaque white smile crescent, clipped inside almond -->
-              <g id="heroEyelid" transform="translate(0,0)">
-                <path
-                  d="M 80 250 Q 500 440 920 250 L 1100 -500 L -100 -500 Z"
-                  fill="white"
-                />
-                <!-- Leading edge — subtle teal stroke -->
-                <path
-                  d="M 80 250 Q 500 440 920 250"
-                  stroke="rgba(10,126,140,0.30)" stroke-width="3"
-                  stroke-linecap="round" fill="none"
-                />
+              <!--
+                LOWER LID
+                Shape: filled white region below the lower arch.
+                Path top edge = lower arch (Q 500 440).
+                At translateY = +190: lid hidden entirely below the almond bottom edge.
+                At translateY = 0: lid edge sits on the lower arch — eye open.
+                Travels from +190 → 0 as progress goes 0 → 1 (eye closes from bottom).
+                No eyelashes.
+              -->
+              <g id="eyeLowerLid" transform="translate(0,190)">
+                <path d="M 80 250 Q 500 440 920 250 L 1100 1200 L -100 1200 Z" fill="white"/>
               </g>
 
             </g>
 
-            <!-- ALMOND FRAME — subtle teal, outside clip -->
+            <!-- ALMOND OUTLINE — drawn outside clip so always visible -->
             <path d="M 80 250 Q 500 60 920 250"
                   stroke="rgba(10,126,140,0.28)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
             <path d="M 80 250 Q 500 440 920 250"
@@ -472,47 +485,62 @@
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
+  /* Position the SVG canvas over the photo */
   function positionEyeCanvas() {
     const grid   = document.getElementById('heroGrid');
     const canvas = document.getElementById('heroEyeCanvas');
     const photo  = document.getElementById('heroPhotoWrap');
     if (!grid || !canvas || !photo) return;
-    const img    = photo.querySelector('img');
-    const gRect  = grid.getBoundingClientRect();
-    const iRect  = (img || photo).getBoundingClientRect();
+    const img   = photo.querySelector('img');
+    const gRect = grid.getBoundingClientRect();
+    const iRect = (img || photo).getBoundingClientRect();
     canvas.style.left   = '0';
     canvas.style.right  = '0';
     canvas.style.width  = '100%';
-    canvas.style.top    = (iRect.top  - gRect.top)  + 'px';
+    canvas.style.top    = (iRect.top - gRect.top) + 'px';
     canvas.style.height = iRect.height + 'px';
     canvas.style.bottom = 'auto';
   }
   window.addEventListener('load',   positionEyeCanvas);
   window.addEventListener('resize', positionEyeCanvas);
 
+  /* Eye close animation — triggers as the hero section scrolls OFF screen */
   (function(){
-    const lid  = document.getElementById('heroEyelid');
-    const hero = document.querySelector('.hero-top');
-    if (!lid || !hero) return;
-    // OFFSET: how far above almond the lid starts (hidden)
-    // At translateY = OFFSET, smile bottom is at Y=250+OFFSET = well above Y=60 (almond top)
-    // At translateY = 0, smile bottom sits exactly at Y=250 (eye centre), half-closed
-    // We start it hidden at -420 and travel +420 to fully sweep to centre
-    const OFFSET = -420;
-    const MAX    =  420;
-    function tick(){
-      const progress = Math.min(Math.max(window.scrollY / (hero.offsetHeight * 0.8), 0), 1);
-      lid.setAttribute('transform', 'translate(0,' + (OFFSET + progress * MAX) + ')');
+    const upperLid = document.getElementById('eyeUpperLid');
+    const lowerLid = document.getElementById('eyeLowerLid');
+    const heroSection = document.querySelector('.hero');
+    if (!upperLid || !lowerLid || !heroSection) return;
+
+    function tick() {
+      // rect.bottom = distance from top of viewport to bottom of hero
+      // When rect.bottom goes from heroSection.offsetHeight → 0,
+      // the hero is scrolling off the top of the screen.
+      const rect = heroSection.getBoundingClientRect();
+      const total = heroSection.offsetHeight;
+      // progress: 0 = hero fully visible, 1 = hero fully gone
+      const raw = 1 - (rect.bottom / total);
+      const progress = Math.min(Math.max(raw, 0), 1);
+
+      // Upper lid: -190 (open/hidden above) → 0 (closed, at arch)
+      const upperY = -190 + progress * 190;
+      // Lower lid: +190 (open/hidden below) → 0 (closed, at arch)
+      const lowerY =  190 - progress * 190;
+
+      upperLid.setAttribute('transform', 'translate(0,' + upperY + ')');
+      lowerLid.setAttribute('transform', 'translate(0,' + lowerY + ')');
     }
+
     window.addEventListener('scroll', tick, { passive: true });
     tick();
   })();
 
+  /* Scroll reveal */
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal, .section-reveal').forEach(el => io.observe(el));
 
+  /* Nav scroll state */
   const nav = document.getElementById('siteNav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
 
