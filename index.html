@@ -72,16 +72,14 @@
     .hero { background: var(--bg); padding: 0; border-bottom: 1px solid var(--rule); }
     .hero-top { padding-top: calc(var(--nav-h) + clamp(3rem, 6vw, 5rem)); padding-bottom: clamp(3rem, 6vw, 5rem); }
 
-    /* hero-grid: 2-col with eye canvas spanning BOTH columns behind everything */
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr 340px;
       gap: clamp(3rem, 6vw, 6rem);
       align-items: center;
-      position: relative; /* eye canvas is absolute inside this */
+      position: relative;
     }
 
-    /* Eye canvas — spans full hero-grid, z-index 0, pointer-events none */
     .hero-eye-canvas {
       position: absolute;
       inset: 0;
@@ -98,17 +96,14 @@
       overflow: visible;
     }
 
-    /* Left column — text sits above eye (z-index 1) */
     .hero-left {
       position: relative;
       z-index: 1;
       display: flex;
       flex-direction: column;
-      /* align text to match the photo column width/position */
       justify-content: center;
     }
 
-    /* Headline — sized so the two lines roughly match the photo column width (340px) */
     .hero-line1, .hero-line2 {
       font-family: var(--f-serif);
       font-size: clamp(3.2rem, 7vw, 6.5rem);
@@ -119,12 +114,10 @@
     }
     .hero-line1 em, .hero-line2 em { font-style: italic; color: var(--accent); }
 
-    /* HERO PHOTO — sits above eye (z-index 1) */
     .hero-photo-wrap { position: relative; z-index: 1; }
     .hero-photo { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: center top; border: 1px solid var(--rule); border-radius: 2px; box-shadow: 0 8px 32px rgba(13,31,45,0.10); }
     .hero-photo-caption { margin-top: 1rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); text-align: center; }
 
-    /* Intro band */
     .hero-intro-band { padding-bottom: clamp(3rem, 6vw, 5rem); }
     .hero-intro-band p { font-size: 1.05rem; line-height: 1.8; color: var(--ink-mid); max-width: 72ch; }
 
@@ -241,14 +234,13 @@
       <div class="hero-grid" id="heroGrid">
 
         <!--
-          Eye canvas: absolutely positioned over the full hero-grid.
-          The SVG viewBox is 1000 wide × 500 tall.
-          Eye center is at (500, 250) — the horizontal midpoint between the two columns.
-          Vertically the eye fills most of the canvas height, centering on the photo.
-          All strokes/fills: rgba(255,255,255,0.40).
-          Lashes: upper (17) and lower (11).
-          Iris: desaturated teal fill #b8d4d6 between r=57–82; pupil #2a6e74 r=34.
-          Almond corners at (80,250) and (920,250).
+          Eye canvas: spans full hero-grid, behind both text and photo columns.
+          viewBox 1000×500. Eye centre at (500,250).
+          ALL fills and strokes: rgba(255,255,255,0.40) — white at 40% opacity.
+          Pupil fill: #f0f4f5 (site background colour).
+          No lashes.
+          Eyelid (lid fill + lid strokes): white 40%.
+          Scroll-driven: lid descends MAX=330px as hero scrolls.
         -->
         <div class="hero-eye-canvas" id="heroEyeCanvas" aria-hidden="true">
           <svg id="heroEyeSvg" viewBox="0 0 1000 500" fill="none"
@@ -256,26 +248,25 @@
                xmlns="http://www.w3.org/2000/svg"
                style="overflow:visible;">
             <defs>
-              <!-- Almond clip: corners (80,250)&(920,250), upper ctrl (500,60), lower ctrl (500,440) -->
               <clipPath id="almondClip">
                 <path d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/>
               </clipPath>
             </defs>
 
             <g clip-path="url(#almondClip)">
-              <!-- BG fill -->
+              <!-- BG fill inside almond —  site background colour -->
               <rect x="0" y="0" width="1000" height="500" fill="#f0f4f5"/>
 
-              <!-- Iris fill — desaturated teal -->
-              <circle cx="500" cy="250" r="130" fill="#b8d4d6"/>
+              <!-- Iris disc — white 40% -->
+              <circle cx="500" cy="250" r="130" fill="rgba(255,255,255,0.40)"/>
 
-              <!-- Iris outer ring -->
+              <!-- Iris outer ring — white 40% -->
               <circle cx="500" cy="250" r="130" fill="none" stroke="rgba(255,255,255,0.40)" stroke-width="2.5"/>
 
-              <!-- Iris inner ring -->
+              <!-- Iris inner ring — white 40% -->
               <circle cx="500" cy="250" r="90" fill="none" stroke="rgba(255,255,255,0.40)" stroke-width="1.5"/>
 
-              <!-- Spokes -->
+              <!-- Spokes — white 40% -->
               <g stroke="rgba(255,255,255,0.40)" stroke-width="1.2">
                 <line x1="500" y1="160" x2="500" y2="120"/>
                 <line x1="565" y1="185" x2="598" y2="152"/>
@@ -287,81 +278,39 @@
                 <line x1="435" y1="185" x2="402" y2="152"/>
               </g>
 
-              <!-- Pupil -->
-              <circle cx="500" cy="250" r="54" fill="#2a6e74"/>
-              <circle cx="500" cy="250" r="38" fill="#1d555a"/>
+              <!-- Pupil — filled with site background colour #f0f4f5 -->
+              <circle cx="500" cy="250" r="54" fill="#f0f4f5"/>
+              <!-- Pupil ring — white 40% -->
               <circle cx="500" cy="250" r="54" fill="none" stroke="rgba(255,255,255,0.40)" stroke-width="1.8"/>
 
-              <!-- Catchlight -->
-              <ellipse cx="524" cy="228" rx="14" ry="11" fill="rgba(255,255,255,0.50)"/>
-
-              <!-- Lower almond edge (inside clip for layering) -->
+              <!-- Lower almond edge — white 40% -->
               <path d="M 80 250 Q 500 440 920 250"
                     stroke="rgba(255,255,255,0.40)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
 
-              <!-- LOWER LASHES (11) — pointing downward from lower lid edge -->
-              <g stroke="rgba(255,255,255,0.40)" stroke-linecap="round">
-                <line x1="500" y1="436" x2="500" y2="468" stroke-width="2.0"/>
-                <line x1="455" y1="430" x2="447" y2="462" stroke-width="1.8"/>
-                <line x1="412" y1="413" x2="400" y2="444" stroke-width="1.6"/>
-                <line x1="372" y1="392" x2="356" y2="420" stroke-width="1.5"/>
-                <line x1="336" y1="366" x2="316" y2="392" stroke-width="1.4"/>
-                <line x1="545" y1="430" x2="553" y2="462" stroke-width="1.8"/>
-                <line x1="588" y1="413" x2="600" y2="444" stroke-width="1.6"/>
-                <line x1="628" y1="392" x2="644" y2="420" stroke-width="1.5"/>
-                <line x1="664" y1="366" x2="684" y2="392" stroke-width="1.4"/>
-                <line x1="303" y1="338" x2="281" y2="360" stroke-width="1.3"/>
-                <line x1="697" y1="338" x2="719" y2="360" stroke-width="1.3"/>
-              </g>
-
               <!--
-                EYELID GROUP — scroll-animated.
-                Upper arch: M 70 -80 Q 500 -300 930 -80
-                Lower margin (smile): M 70 -80 Q 500 60 930 -80
-                At rest (translateY=0): lid rests above almond, eye open.
-                At translateY=330: lid covers full almond.
+                EYELID GROUP — scroll-animated via translateY.
+                Lid fill: white 40%.
+                Lid lower margin (smile): white 40%.
+                Lid upper arch: white 40%.
+                At rest (translateY=0): lid sits above almond, eye open.
+                At translateY=330: lid fully covers almond (eye closed).
               -->
               <g id="heroEyelid">
-                <!-- Lid fill -->
+                <!-- Lid fill — white 40% -->
                 <path d="M 70 -80 Q 500 -300 930 -80 Q 500 60 70 -80 Z"
                       fill="rgba(255,255,255,0.40)"/>
-                <!-- Lid lower margin — smile -->
+                <!-- Lid lower margin — smile curve, white 40% -->
                 <path d="M 70 -80 Q 500 60 930 -80"
                       stroke="rgba(255,255,255,0.40)" stroke-width="2.8"
                       stroke-linecap="round" fill="none"/>
-                <!-- Lid upper arch -->
+                <!-- Lid upper arch — white 40% -->
                 <path d="M 70 -80 Q 500 -300 930 -80"
                       stroke="rgba(255,255,255,0.40)" stroke-width="2.4"
                       stroke-linecap="round" fill="none"/>
-
-                <!-- UPPER LASHES (17) — attached to lower margin of lid, pointing outward/upward -->
-                <g stroke="rgba(255,255,255,0.40)" stroke-linecap="round">
-                  <!-- centre -->
-                  <line x1="500" y1="58"  x2="500"  y2="88"  stroke-width="2.2"/>
-                  <!-- right of centre -->
-                  <line x1="546" y1="51"  x2="552"  y2="82"  stroke-width="2.1"/>
-                  <line x1="590" y1="36"  x2="602"  y2="66"  stroke-width="2.0"/>
-                  <line x1="632" y1="16"  x2="650"  y2="44"  stroke-width="1.9"/>
-                  <line x1="670" y1="-6"  x2="692"  y2="20"  stroke-width="1.8"/>
-                  <line x1="705" y1="-30" x2="730"  y2="-6"  stroke-width="1.7"/>
-                  <line x1="735" y1="-54" x2="763"  y2="-32" stroke-width="1.6"/>
-                  <line x1="762" y1="-76" x2="792"  y2="-57" stroke-width="1.4"/>
-                  <!-- left of centre -->
-                  <line x1="454" y1="51"  x2="448"  y2="82"  stroke-width="2.1"/>
-                  <line x1="410" y1="36"  x2="398"  y2="66"  stroke-width="2.0"/>
-                  <line x1="368" y1="16"  x2="350"  y2="44"  stroke-width="1.9"/>
-                  <line x1="330" y1="-6"  x2="308"  y2="20"  stroke-width="1.8"/>
-                  <line x1="295" y1="-30" x2="270"  y2="-6"  stroke-width="1.7"/>
-                  <line x1="265" y1="-54" x2="237"  y2="-32" stroke-width="1.6"/>
-                  <line x1="238" y1="-76" x2="208"  y2="-57" stroke-width="1.4"/>
-                  <!-- far corners, shorter -->
-                  <line x1="786" y1="-96" x2="812"  y2="-80" stroke-width="1.2"/>
-                  <line x1="214" y1="-96" x2="188"  y2="-80" stroke-width="1.2"/>
-                </g>
               </g>
             </g><!-- /almondClip -->
 
-            <!-- Outer almond frame (outside clip, always visible) -->
+            <!-- Outer almond frame — white 40% (outside clip, always visible) -->
             <path d="M 80 250 Q 500 60 920 250"
                   stroke="rgba(255,255,255,0.40)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
             <path d="M 80 250 Q 500 440 920 250"
@@ -553,25 +502,15 @@
     const canvas = document.getElementById('heroEyeCanvas');
     const photo  = document.getElementById('heroPhotoWrap');
     if (!grid || !canvas || !photo) return;
-
     const gRect = grid.getBoundingClientRect();
     const pRect = photo.getBoundingClientRect();
-
-    /* Canvas spans full grid width */
     canvas.style.left   = '0';
     canvas.style.right  = '0';
     canvas.style.width  = '100%';
-
-    /* Height = photo height; top offset = photo top relative to grid top */
-    const photoTop    = pRect.top  - gRect.top;
-    const photoHeight = pRect.height;
-
-    canvas.style.top    = photoTop + 'px';
-    canvas.style.height = photoHeight + 'px';
-    /* override inset:0 */
+    canvas.style.top    = (pRect.top - gRect.top) + 'px';
+    canvas.style.height = pRect.height + 'px';
     canvas.style.bottom = 'auto';
   }
-
   window.addEventListener('load',   positionEyeCanvas);
   window.addEventListener('resize', positionEyeCanvas);
 
@@ -582,8 +521,7 @@
     if (!lid || !hero) return;
     const MAX = 330;
     function tick(){
-      const heroH    = hero.offsetHeight;
-      const progress = Math.min(Math.max(window.scrollY / (heroH * 0.75), 0), 1);
+      const progress = Math.min(Math.max(window.scrollY / (hero.offsetHeight * 0.75), 0), 1);
       lid.setAttribute('transform', 'translate(0,' + (progress * MAX) + ')');
     }
     window.addEventListener('scroll', tick, { passive: true });
