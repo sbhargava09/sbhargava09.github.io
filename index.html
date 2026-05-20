@@ -168,7 +168,12 @@
       .cred-label { min-width: unset; }
       .footer-links { gap: 0.75rem; }
       .footer-inner { flex-direction: column; gap: 1.5rem; }
-      .bg-eye { --eye-opacity: 0.45; }
+      /* Mobile-only: eye animation more visible */
+      .bg-eye { --eye-opacity: 0.72; }
+      .bg-eye #bgEyeUpper,
+      .bg-eye #bgEyeLower { stroke: rgba(10,126,140,0.2); }
+      .bg-eye circle[cx="500"][cy="250"][r="105"] { stroke: rgba(10,126,140,0.14); }
+      .bg-eye circle[cx="500"][cy="250"][r="44"]  { fill:   rgba(10,126,140,0.11); }
     }
   </style>
 </head>
@@ -361,7 +366,7 @@
     </div>
     <div class="footer-copy">
       <p>&copy; <span id="yr"></span> Siddharth Bhargava, MD. All rights reserved.</p>
-      <p>Site v2.1</p>
+      <p>Site v2.2</p>
     </div>
   </div>
 </footer>

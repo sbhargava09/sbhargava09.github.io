@@ -40,7 +40,6 @@
     .reveal-delay-3 { transition-delay: 0.45s; }
     @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
-    /* NAV — light blue (--bg) */
     .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem,5vw,4rem); background: var(--bg); border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
     .nav.scrolled { border-color: var(--rule); background: rgba(240,244,245,0.96); backdrop-filter: blur(10px); }
     .nav-logo { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 400; display: flex; flex-direction: column; line-height: 1.2; }
@@ -56,29 +55,24 @@
     .mobile-nav.open { display: flex; }
     .mobile-nav a { font-family: var(--f-serif); font-size: clamp(1.6rem,7vw,2.2rem); font-weight: 300; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; min-height: 44px; display: flex; align-items: center; }
 
-    /* LAYOUT */
     .wrap { max-width: 1140px; margin: 0 auto; padding: 0 clamp(1rem,5vw,4rem); }
     .eyebrow { display: inline-block; font-family: var(--f-sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
     .display { font-family: var(--f-serif); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
     .display-xl { font-size: clamp(3.2rem,7vw,6.5rem); }
     .display em { font-style: italic; color: var(--accent); }
 
-    /* EYE — fixed layer behind everything, identical to index.html */
     .bg-eye { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; opacity: var(--eye-opacity,1); transition: opacity 0.4s var(--ease-out); }
     .bg-eye svg { position: absolute; left: 50%; top: 50%; width: min(120vw,1600px); height: auto; transform: translate(-50%,-50%); overflow: visible; }
     @media (prefers-reduced-motion: reduce) { .bg-eye { opacity: 0.5; } }
 
-    /* HERO — transparent background so fixed eye shows through, matching index.html hero */
     .page-hero { background: transparent; position: relative; z-index: 1; padding-top: calc(var(--nav-h) + clamp(4rem,8vw,7rem)); padding-bottom: clamp(4rem,8vw,7rem); border-bottom: 1px solid var(--rule); }
     .page-hero p { font-size: 1.05rem; color: var(--ink-mid); line-height: 1.75; max-width: 56ch; margin-top: 1.5rem; }
 
-    /* Remaining sections — solid backgrounds to cover eye as you scroll */
     .edu-row-1 { position: relative; z-index: 2; background: var(--bg-mid); padding: clamp(4rem,10vw,9rem) 0; }
     .edu-row-2 { position: relative; z-index: 2; background: var(--bg);     padding: clamp(4rem,10vw,9rem) 0; }
     .disclaimer { position: relative; z-index: 2; padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-light); line-height: 1.65; background: var(--bg-mid); }
     footer      { position: relative; z-index: 2; padding: 3rem 0; border-top: 1px solid var(--rule); background: var(--bg); }
 
-    /* EDUCATION GRID */
     .edu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
     .edu-card { padding: 2.25rem 2rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); transition: background 0.2s; }
     .edu-row-1 .edu-card:hover { background: var(--bg-dark); }
@@ -90,7 +84,6 @@
     .edu-card li { font-size: 0.85rem; color: var(--ink-mid); padding-left: 1rem; position: relative; }
     .edu-card li::before { content: '\2014'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; }
 
-    /* FOOTER */
     .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
     .footer-name { font-family: var(--f-serif); font-size: 1.4rem; font-weight: 300; margin-bottom: 0.25rem; }
     .footer-sub { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
@@ -107,13 +100,17 @@
       .edu-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; gap: 1.5rem; }
       .footer-links { gap: 0.75rem; }
-      .bg-eye { --eye-opacity: 0.45; }
+      /* Mobile-only: eye animation more visible */
+      .bg-eye { --eye-opacity: 0.72; }
+      .bg-eye #bgEyeUpper,
+      .bg-eye #bgEyeLower { stroke: rgba(10,126,140,0.2); }
+      .bg-eye circle[cx="500"][cy="250"][r="105"] { stroke: rgba(10,126,140,0.14); }
+      .bg-eye circle[cx="500"][cy="250"][r="44"]  { fill:   rgba(10,126,140,0.11); }
     }
   </style>
 </head>
 <body>
 
-<!-- Fixed eye — z-index:0, identical to index.html -->
 <div class="bg-eye" id="bgEye" aria-hidden="true">
   <svg viewBox="0 0 1000 500" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
     <defs><clipPath id="bgEyeLidClip"><path id="bgEyeClipPath" d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/></clipPath></defs>
@@ -153,7 +150,6 @@
   <a href="index.html#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
-<!-- Panel 1: transparent — fixed eye visible beneath -->
 <section class="page-hero" id="pageHero">
   <div class="wrap">
     <span class="eyebrow reveal">Patient Education</span>
@@ -162,7 +158,6 @@
   </div>
 </section>
 
-<!-- Panel 2: TEAL — solid, covers eye as you scroll past hero -->
 <section class="edu-row-1">
   <div class="wrap">
     <div class="edu-grid">
@@ -203,7 +198,6 @@
   </div>
 </section>
 
-<!-- Panel 3: LIGHT BLUE -->
 <section class="edu-row-2">
   <div class="wrap">
     <div class="edu-grid">
@@ -242,10 +236,8 @@
   </div>
 </section>
 
-<!-- Disclaimer: TEAL -->
 <div class="disclaimer"><div class="wrap"><strong>Medical disclaimer:</strong> The educational information on this website is provided for general informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Use of this website does not by itself create a physician&ndash;patient relationship. Always seek the advice of your physician or qualified eye care provider with any questions about your eye health.</div></div>
 
-<!-- Footer: LIGHT BLUE -->
 <footer>
   <div class="wrap">
     <div class="footer-inner">
@@ -260,7 +252,7 @@
     </div>
     <div class="footer-copy">
       <p>&copy; <span id="yr"></span> Dr. Siddharth Bhargava, MD. All rights reserved.</p>
-      <p>Site v2.1</p>
+      <p>Site v2.2</p>
     </div>
   </div>
 </footer>
@@ -268,7 +260,6 @@
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  /* Scroll-based eye animation — exact copy of index.html */
   (function(){
     const upper = document.getElementById('bgEyeUpper');
     const lower = document.getElementById('bgEyeLower');
@@ -308,13 +299,11 @@
     render();
   })();
 
-  /* Scroll reveal */
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  /* Nav scroll state */
   const nav = document.getElementById('siteNav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
 
