@@ -61,14 +61,16 @@
     .display-xl { font-size: clamp(3.2rem,7vw,6.5rem); }
     .display em { font-style: italic; color: var(--accent); }
 
-    /* Eye: fixed full-viewport. On desktop, align the SVG center near the top
-       of page-hero — roughly where the "Patient Education" title sits.
-       nav-h (68px) + a small offset (~10%) puts it at about 30% from top. */
+    /* Eye: fixed full-viewport.
+       Desktop: top 42% — fully visible, aligned near the Patient Education title.
+       Mobile: top 50% — centered (overridden in media query below).
+       Closing animation starts early (FINISH_AT=0.55) so eye is shut
+       by the time the hero scrolls off on both desktop and mobile. */
     .bg-eye { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; opacity: var(--eye-opacity,1); transition: opacity 0.4s var(--ease-out); }
     .bg-eye svg {
       position: absolute;
       left: 50%;
-      top: 30%;
+      top: 42%;
       width: min(120vw,1600px);
       height: auto;
       transform: translate(-50%,-50%);
@@ -111,7 +113,7 @@
       .edu-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; gap: 1.5rem; }
       .footer-links { gap: 0.75rem; }
-      /* Mobile: restore centered eye */
+      /* Mobile: center the eye vertically */
       .bg-eye svg { top: 50%; }
       /* Mobile-only: eye animation more visible */
       .bg-eye { --eye-opacity: 0.72; }
@@ -265,7 +267,7 @@
     </div>
     <div class="footer-copy">
       <p>&copy; <span id="yr"></span> Dr. Siddharth Bhargava, MD. All rights reserved.</p>
-      <p>Site v2.3</p>
+      <p>Site v2.4</p>
     </div>
   </div>
 </footer>
@@ -281,23 +283,24 @@
     if (!upper || !lower || !clip || !hero) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    // Desktop only
-    const isMobile = () => window.innerWidth <= 640;
-
     const UPPER_OPEN = 60,  UPPER_SHUT = 250;
     const LOWER_OPEN = 440, LOWER_SHUT = 250;
-    // Eye closes fully as the page-hero scrolls off screen.
-    // raw = 0 when hero bottom = viewport height (starting to leave),
-    // raw = 1 when hero bottom = 0 (fully off screen).
-    const FINISH_AT = 1.0;
+
+    // FINISH_AT = 0.55 means the eye reaches fully closed when the hero has
+    // scrolled 55% of its own height off the top — well before the section
+    // disappears. This ensures the close completes in time on both desktop
+    // and mobile, regardless of hero height vs viewport height.
+    const FINISH_AT = 0.55;
 
     let pending = false, lastProgress = -1;
 
     function compute() {
-      if (isMobile()) return 0;
       const rect = hero.getBoundingClientRect();
+      // raw: 0 = hero bottom at viewport bottom (just starting to scroll),
+      //      1 = hero bottom at viewport top (fully scrolled off).
       const raw    = 1 - (rect.bottom / window.innerHeight);
       const scaled = Math.min(1, Math.max(0, raw / FINISH_AT));
+      // ease-in-out
       return scaled < 0.5 ? 2 * scaled * scaled : 1 - Math.pow(-2 * scaled + 2, 2) / 2;
     }
 
