@@ -70,8 +70,20 @@
     .hero-top { padding-top: calc(var(--nav-h) + clamp(2rem, 6vw, 5rem)); padding-bottom: clamp(2rem, 6vw, 5rem); }
     .hero-grid { display: grid; grid-template-columns: 1fr 340px; gap: clamp(2rem, 6vw, 6rem); align-items: center; position: relative; }
 
+    /* Eye: fixed, full viewport. On desktop, vertically center on the headshot midpoint.
+       Headshot midpoint ≈ nav-h (68px) + top-pad (~80px) + half photo height (~226px) = ~374px.
+       At a typical 900px viewport that is ~41.5%. We shift the SVG top to ~41% instead of 50%.
+       On mobile keep the original centered look. */
     .bg-eye { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; opacity: var(--eye-opacity, 1); transition: opacity 0.4s var(--ease-out); }
-    .bg-eye svg { position: absolute; left: 50%; top: 50%; width: min(120vw, 1600px); height: auto; transform: translate(-50%, -50%); overflow: visible; }
+    .bg-eye svg {
+      position: absolute;
+      left: 50%;
+      top: 41%;
+      width: min(120vw, 1600px);
+      height: auto;
+      transform: translate(-50%, -50%);
+      overflow: visible;
+    }
     section:not(.hero) { position: relative; z-index: 2; background-color: var(--bg); }
     section.bg-mid { background-color: var(--bg-mid); }
     .disclaimer, footer { position: relative; z-index: 2; background: var(--bg); }
@@ -168,6 +180,8 @@
       .cred-label { min-width: unset; }
       .footer-links { gap: 0.75rem; }
       .footer-inner { flex-direction: column; gap: 1.5rem; }
+      /* Mobile: restore centered eye */
+      .bg-eye svg { top: 50%; }
       /* Mobile-only: eye animation more visible */
       .bg-eye { --eye-opacity: 0.72; }
       .bg-eye #bgEyeUpper,
@@ -366,7 +380,7 @@
     </div>
     <div class="footer-copy">
       <p>&copy; <span id="yr"></span> Siddharth Bhargava, MD. All rights reserved.</p>
-      <p>Site v2.2</p>
+      <p>Site v2.3</p>
     </div>
   </div>
 </footer>
@@ -375,20 +389,55 @@
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   (function(){
-    const upper=document.getElementById('bgEyeUpper');
-    const lower=document.getElementById('bgEyeLower');
-    const clip=document.getElementById('bgEyeClipPath');
-    const hero=document.querySelector('.hero');
-    if(!upper||!lower||!clip||!hero)return;
-    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduceMotion)return;
-    const UPPER_OPEN=60,UPPER_SHUT=250,LOWER_OPEN=440,LOWER_SHUT=250,FINISH_AT=0.85;
-    let pending=false,lastProgress=-1;
-    function compute(){const rect=hero.getBoundingClientRect();const h=hero.offsetHeight||1;const raw=1-(rect.bottom/h);const scaled=Math.min(1,Math.max(0,raw/FINISH_AT));return scaled<0.5?2*scaled*scaled:1-Math.pow(-2*scaled+2,2)/2}
-    function render(){pending=false;const p=compute();if(Math.abs(p-lastProgress)<0.002)return;lastProgress=p;const uy=UPPER_OPEN+(UPPER_SHUT-UPPER_OPEN)*p;const ly=LOWER_OPEN+(LOWER_SHUT-LOWER_OPEN)*p;upper.setAttribute('d','M 80 250 Q 500 '+uy.toFixed(1)+' 920 250');lower.setAttribute('d','M 80 250 Q 500 '+ly.toFixed(1)+' 920 250');clip.setAttribute('d','M 80 250 Q 500 '+uy.toFixed(1)+' 920 250 Q 500 '+ly.toFixed(1)+' 80 250 Z')}
-    function onScroll(){if(pending)return;pending=true;requestAnimationFrame(render)}
-    window.addEventListener('scroll',onScroll,{passive:true});
-    window.addEventListener('resize',onScroll,{passive:true});
+    const upper = document.getElementById('bgEyeUpper');
+    const lower = document.getElementById('bgEyeLower');
+    const clip  = document.getElementById('bgEyeClipPath');
+    const hero  = document.querySelector('.hero');
+    if (!upper || !lower || !clip || !hero) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    // Desktop only: on mobile the eye is always open (decorative)
+    const isMobile = () => window.innerWidth <= 640;
+
+    const UPPER_OPEN = 60,  UPPER_SHUT = 250;
+    const LOWER_OPEN = 440, LOWER_SHUT = 250;
+    // FINISH_AT: fraction of hero height at which eye is fully closed.
+    // Set to 1.0 so the eye finishes closing exactly when the hero bottom
+    // reaches the top of the viewport (i.e. the section has fully scrolled off).
+    const FINISH_AT = 1.0;
+
+    let pending = false, lastProgress = -1;
+
+    function compute() {
+      if (isMobile()) return 0; // keep open on mobile
+      const rect = hero.getBoundingClientRect();
+      const h    = hero.offsetHeight || 1;
+      // raw: 0 when hero bottom is at viewport height (just leaving),
+      //       1 when hero bottom is at viewport top (fully gone).
+      // We want closing to start once the hero begins to leave the screen.
+      // Start closing when hero bottom < 100vh, finish when hero bottom <= 0.
+      const raw    = 1 - (rect.bottom / window.innerHeight);
+      const scaled = Math.min(1, Math.max(0, raw / FINISH_AT));
+      // ease-in-out
+      return scaled < 0.5 ? 2 * scaled * scaled : 1 - Math.pow(-2 * scaled + 2, 2) / 2;
+    }
+
+    function render() {
+      pending = false;
+      const p = compute();
+      if (Math.abs(p - lastProgress) < 0.002) return;
+      lastProgress = p;
+      const uy = UPPER_OPEN + (UPPER_SHUT - UPPER_OPEN) * p;
+      const ly = LOWER_OPEN + (LOWER_SHUT - LOWER_OPEN) * p;
+      upper.setAttribute('d', 'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250');
+      lower.setAttribute('d', 'M 80 250 Q 500 ' + ly.toFixed(1) + ' 920 250');
+      clip.setAttribute('d',  'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250 Q 500 ' + ly.toFixed(1) + ' 80 250 Z');
+    }
+
+    function onScroll() { if (pending) return; pending = true; requestAnimationFrame(render); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
     render();
   })();
 
