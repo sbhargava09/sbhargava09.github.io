@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Glaucoma — Patient Education | Siddharth Bhargava, MD</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A patient's guide to glaucoma — coming soon from Siddharth Bhargava, MD." />
+  <meta name="description" content="A patient's guide to glaucoma — what it is, the drainage system behind it, its subtypes, how it's diagnosed, and the full range of treatment options — from Siddharth Bhargava, MD." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -20,6 +20,8 @@
       --accent:       #0a7e8c;
       --accent-dark:  #065f6b;
       --accent-light: #e0f2f4;
+      --warn:         #a85d3e;
+      --warn-tint:    #f5e9e3;
       --f-serif: 'Cormorant Garamond', Georgia, serif;
       --f-sans:  'DM Sans', system-ui, sans-serif;
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -28,7 +30,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); -webkit-font-smoothing: antialiased; }
     body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 1rem; line-height: 1.65; }
-    img { display: block; max-width: 100%; }
+    img, svg.diagram { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
     ul, ol { list-style: none; }
     button { cursor: pointer; background: none; border: none; font: inherit; }
@@ -38,6 +40,7 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.15s; }
     .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
     @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
     /* ---------- Nav ---------- */
@@ -73,19 +76,106 @@
     .eyebrow { display: inline-block; font-family: var(--f-sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
     .display { font-family: var(--f-serif); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
     .display-xl { font-size: clamp(3.2rem,7vw,6.5rem); }
+    .display-lg { font-size: clamp(2rem,5vw,4.2rem); }
     .display em { font-style: italic; color: var(--accent); }
 
     .bg-eye { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; opacity: var(--eye-opacity,1); transition: opacity 0.4s var(--ease-out); }
     .bg-eye svg { position: absolute; left: 50%; top: 42%; width: min(120vw,1600px); height: auto; transform: translate(-50%,-50%); overflow: visible; }
     @media (prefers-reduced-motion: reduce) { .bg-eye { opacity: 0.5; } }
 
-    .page-hero { background: transparent; position: relative; z-index: 1; padding-top: calc(var(--nav-h) + clamp(4rem,8vw,7rem)); padding-bottom: clamp(4rem,8vw,7rem); border-bottom: 1px solid var(--rule); min-height: calc(100vh - var(--nav-h)); display: flex; align-items: center; }
-    .page-hero p { font-size: 1.05rem; color: var(--ink-mid); line-height: 1.75; max-width: 56ch; margin-top: 1.5rem; }
-    .page-hero .link-more { display: inline-flex; margin-top: 2rem; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
-    .page-hero .link-more:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
+    /* ---------- Floating table of contents ---------- */
+    .toc { position: fixed; left: clamp(1rem, 2.5vw, 2.5rem); top: 50%; transform: translateY(-50%); z-index: 15; display: flex; flex-direction: column; gap: 1rem; }
+    .toc::before { content: ''; position: absolute; left: 3px; top: 5px; bottom: 5px; width: 1px; background: var(--rule); z-index: -1; }
+    .toc a { position: relative; padding-left: 1.15rem; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-light); white-space: nowrap; transition: color 0.25s; }
+    .toc a::before { content: ''; position: absolute; left: 0; top: 50%; width: 7px; height: 7px; border-radius: 50%; background: var(--bg); border: 1px solid var(--ink-light); transform: translateY(-50%); transition: all 0.25s; }
+    .toc a:hover { color: var(--ink); }
+    .toc a.active { color: var(--accent); }
+    .toc a.active::before { background: var(--accent); border-color: var(--accent); width: 9px; height: 9px; }
+    @media (max-width: 1400px) { .toc { display: none; } }
 
+    .page-hero { background: transparent; position: relative; z-index: 1; padding-top: calc(var(--nav-h) + clamp(4rem,8vw,7rem)); padding-bottom: clamp(2.5rem,6vw,4rem); border-bottom: 1px solid var(--rule); }
+    .page-hero p { font-size: 1.05rem; color: var(--ink-mid); line-height: 1.75; max-width: 58ch; margin-top: 1.5rem; }
+
+    section { position: relative; z-index: 2; padding: clamp(4rem,10vw,8rem) 0; background: var(--bg); }
+    section.bg-mid { background: var(--bg-mid); }
     .disclaimer, footer { position: relative; z-index: 2; background: var(--bg); }
-    .disclaimer { padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-light); line-height: 1.65; }
+
+    .section-head { max-width: 660px; margin-bottom: 2.5rem; }
+    .section-head p { color: var(--ink-mid); font-size: 1rem; line-height: 1.75; margin-top: 1rem; }
+
+    /* ---------- Basics ---------- */
+    .basics-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem,6vw,5rem); align-items: start; }
+    .basics-grid p { color: var(--ink-mid); font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
+    .callout { margin-top: 1.5rem; padding: 1.1rem 1.25rem; background: var(--bg-mid); border-left: 2px solid var(--accent); font-size: 0.9rem; color: var(--ink-mid); }
+
+    .fact-stack { display: flex; flex-direction: column; gap: 1rem; }
+    .fact-card { display: flex; align-items: baseline; gap: 1.1rem; background: var(--bg-mid); padding: 1.1rem 1.3rem; border-left: 2px solid var(--accent); }
+    .fact-num { flex-shrink: 0; font-family: var(--f-serif); font-weight: 400; font-size: 2.1rem; color: var(--accent-dark); line-height: 1; min-width: 3ch; }
+    .fact-card p { margin: 0; font-size: 0.88rem; color: var(--ink-mid); line-height: 1.5; }
+
+    .signs-title { margin-top: 3rem; font-family: var(--f-serif); font-weight: 400; font-size: 1.15rem; color: var(--ink); }
+    .signs { margin-top: 1.25rem; display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
+    .signs.three { grid-template-columns: repeat(3,1fr); }
+    .sign-card { padding: 1.75rem 1.5rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); transition: background 0.2s; }
+    .sign-card:hover { background: var(--bg-mid); }
+    .sign-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--accent-light); color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 0.9rem; }
+    .sign-card h3, .sign-card h4 { font-family: var(--f-serif); font-weight: 400; font-size: 1.02rem; margin-bottom: 0.4rem; color: var(--ink); }
+    .sign-card p { margin: 0; font-size: 0.88rem; color: var(--ink-mid); line-height: 1.55; }
+
+    .expect-note { margin-top: 2.5rem; border: 1px solid var(--rule); background: var(--bg-mid); padding: 1.5rem 1.75rem; }
+    .expect-note h4 { display: flex; align-items: center; gap: 0.6rem; font-family: var(--f-serif); font-weight: 400; font-size: 1.15rem; color: var(--accent-dark); margin-bottom: 0.6rem; }
+    .expect-note h4 svg { color: var(--accent); flex-shrink: 0; }
+    .expect-note p { margin: 0; color: var(--ink-mid); font-size: 0.95rem; line-height: 1.75; }
+
+    /* ---------- Drainage angle comparison ---------- */
+    .compare-eyes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .eye-col { background: var(--bg-mid); padding: 1.5rem 1.4rem 1.75rem; text-align: center; }
+    .eye-diagram { display: block; height: 168px; width: auto; max-width: 100%; margin: 0 auto 1rem; overflow: visible; }
+    .eye-col h3 { font-family: var(--f-serif); font-weight: 400; font-size: 1.2rem; margin-bottom: 0.15rem; }
+    .eye-col.is-warn h3 { color: var(--warn); }
+    .eye-sub { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.85rem; }
+    .eye-note { font-size: 0.87rem; color: var(--ink-mid); margin-top: 0.6rem; line-height: 1.6; text-align: left; }
+
+    /* ---------- Diagnosis icon grids ---------- */
+    .expect-grid { margin-top: 1.5rem; display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
+    .expect-grid.cols-3 { grid-template-columns: repeat(3,1fr); }
+    .expect-grid.cols-2 { grid-template-columns: repeat(2,1fr); }
+    .expect-card { padding: 1.75rem 1.5rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); transition: background 0.2s; }
+    .expect-card:hover { background: var(--bg-mid); }
+    .expect-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--accent-light); color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 0.9rem; }
+    .expect-card h3 { font-family: var(--f-serif); font-weight: 400; font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--ink); }
+    .expect-card p { margin: 0; font-size: 0.85rem; color: var(--ink-mid); line-height: 1.6; }
+
+    /* ---------- Numbered list cards (subtypes / treatment) ---------- */
+    .lens-list { margin-top: 1rem; display: flex; flex-direction: column; }
+    .lens-card { display: grid; grid-template-columns: 56px 1fr; gap: 1.5rem; padding: 2.25rem 0; border-bottom: 1px solid var(--rule); align-items: start; }
+    .lens-card:first-child { border-top: 1px solid var(--rule); }
+    .lens-badge { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--accent); color: var(--accent); font-family: var(--f-serif); font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+    .lens-card h3 { font-family: var(--f-serif); font-weight: 400; font-size: 1.3rem; margin: 0 0 0.5rem; }
+    .lens-card h3 span { font-family: var(--f-sans); font-size: 0.85rem; font-weight: 400; color: var(--ink-light); }
+    .lens-sub { color: var(--ink-light); font-size: 0.88rem; margin: -0.15rem 0 1rem; }
+    .lens-features { margin: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+    .lens-features li { position: relative; padding-left: 1.1rem; font-size: 0.92rem; color: var(--ink-mid); line-height: 1.55; }
+    .lens-features li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+    /* ---------- Surgery sub-grid ---------- */
+    .surgery-grid { margin-top: 1.25rem; display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+    .surgery-col { background: var(--bg-mid); padding: 1.5rem 1.4rem; }
+    .surgery-col h4 { font-family: var(--f-serif); font-weight: 400; font-size: 1.05rem; margin-bottom: 0.25rem; color: var(--ink); }
+    .surgery-col p { margin: 0.75rem 0 0; font-size: 0.85rem; color: var(--ink-mid); line-height: 1.6; }
+    .device-grid { margin-top: 1rem; display: grid; grid-template-columns: repeat(2,1fr); gap: 0.6rem; }
+    .device-tile { background: var(--bg); border: 1px solid var(--rule); padding: 0.9rem 0.6rem 0.8rem; text-align: center; }
+    .device-tile svg { color: var(--accent); margin: 0 auto 0.4rem; display: block; }
+    .device-tile .device-name { font-size: 0.74rem; font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 0.35rem; }
+    .device-tile a { font-size: 0.63rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); }
+    .device-tile a:hover { color: var(--accent-dark); }
+
+    /* ---------- Closing CTA ---------- */
+    .cat-cta p { color: var(--ink-mid); max-width: 60ch; margin-bottom: 1.5rem; }
+    .link-arrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+    .link-arrow:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
+
+    .disclaimer { padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-light); line-height: 1.65; background: var(--bg-mid); }
     footer { padding: 3rem 0; border-top: 1px solid var(--rule); }
     .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
     .footer-name { font-family: var(--f-serif); font-size: 1.4rem; font-weight: 300; margin-bottom: 0.25rem; }
@@ -94,11 +184,25 @@
     .footer-links a:hover { color: var(--accent); }
     .footer-copy { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 0.75rem; color: var(--ink-light); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
+    @media (max-width: 900px) {
+      .basics-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .signs { grid-template-columns: repeat(2,1fr); }
+      .signs.three { grid-template-columns: repeat(2,1fr); }
+      .expect-grid, .expect-grid.cols-3, .expect-grid.cols-2 { grid-template-columns: repeat(2,1fr); }
+      .surgery-grid { grid-template-columns: 1fr; }
+    }
     @media (max-width: 640px) {
       :root { --nav-h: 60px; }
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
       .nav-logo { font-size: 1rem; }
+      .signs, .signs.three, .expect-grid, .expect-grid.cols-3, .expect-grid.cols-2 { grid-template-columns: 1fr; }
+      .lens-card { grid-template-columns: 1fr; gap: 0.75rem; }
+      .lens-badge { display: none; }
+      .compare-eyes { grid-template-columns: 1fr; gap: 0.75rem; }
+      .eye-col { padding: 1.25rem 1.1rem 1.5rem; }
+      .eye-diagram { height: 140px; }
+      .fact-card { padding: 1rem 1.1rem; }
       .footer-links { gap: 0.75rem; }
       .footer-inner { flex-direction: column; gap: 1.5rem; }
       .bg-eye svg { top: 50%; }
@@ -110,6 +214,83 @@
   </style>
 </head>
 <body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-family" viewBox="0 0 24 24">
+      <circle cx="9" cy="8" r="3.4" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <circle cx="16.5" cy="9.6" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <path d="M3.4 20c.4-3.7 2.7-5.8 5.6-5.8s5.1 2.1 5.6 5.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      <path d="M14.8 20c.3-2.6 1.8-4.3 4-4.3s3.5 1.6 3.9 3.9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24">
+      <rect x="3.2" y="5" width="17.6" height="15.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <path d="M3.2 9.8h17.6" stroke="currentColor" stroke-width="1.7"/>
+      <path d="M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24">
+      <path d="M4 16.5a8 8 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      <path d="M12 16.5 16.3 11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      <circle cx="12" cy="16.5" r="1.3" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s7 7.4 7 12a7 7 0 1 1-14 0c0-4.6 7-12 7-12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 11 4a6.8 6.8 0 0 0 9 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="12" cy="12" r="1" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-angle" viewBox="0 0 24 24">
+      <path d="M5 5v14h14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5 19 16.5 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      <path d="M8.3 19a6.2 6.2 0 0 1 3-8.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24">
+      <circle cx="6" cy="6" r="1.3" fill="currentColor"/><circle cx="12" cy="6" r="1.3" fill="currentColor"/><circle cx="18" cy="6" r="1.3" fill="currentColor"/>
+      <circle cx="6" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor" opacity="0.35"/><circle cx="18" cy="12" r="1.3" fill="currentColor"/>
+      <circle cx="6" cy="18" r="1.3" fill="currentColor"/><circle cx="12" cy="18" r="1.3" fill="currentColor"/><circle cx="18" cy="18" r="1.3" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24">
+      <path d="M4 8c3-2.2 13-2.2 16 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M4 13c3-2.2 13-2.2 16 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M4 18c3-2.2 13-2.2 16 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-loop" viewBox="0 0 24 24">
+      <path d="M4 12a8 8 0 0 1 13.6-5.7M20 12a8 8 0 0 1-13.6 5.7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M17.6 3.7v3.3h-3.3M6.4 20.3V17h3.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-dev-istent" viewBox="0 0 48 48">
+      <path d="M16 33c0-11 5-17 15-19" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="32" cy="13" r="3.2" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    </symbol>
+    <symbol id="i-dev-hydrus" viewBox="0 0 48 48">
+      <path d="M10 32a17 17 0 0 1 27-13" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-dev-itrack" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="2.2 4.4"/>
+      <circle cx="37" cy="24" r="2.4" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-dev-kdb" viewBox="0 0 48 48">
+      <path d="M15 35 28 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M21 35 34 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-dev-alloflo" viewBox="0 0 48 48">
+      <path d="M13 30c1-11 9-18 20-16-1 11-9 18-20 16Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-dev-tube" viewBox="0 0 48 48">
+      <ellipse cx="17" cy="31" rx="10" ry="6" fill="none" stroke="currentColor" stroke-width="2.4" transform="rotate(-8 17 31)"/>
+      <path d="M25 27c6-6 8-11 8-16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-dev-xen" viewBox="0 0 48 48">
+      <path d="M13 35 35 13" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="13" cy="35" r="2.3" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-dev-trab" viewBox="0 0 48 48">
+      <path d="M11 30h26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M18 30c0-9 3-14 6-14s6 5 6 14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
 
 <div class="bg-eye" id="bgEye" aria-hidden="true">
   <svg viewBox="0 0 1000 500" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
@@ -158,12 +339,341 @@
   <a href="index.html#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
+<nav class="toc" id="pageToc" aria-label="Page sections">
+  <a href="#basics" data-toc="basics">The Basics</a>
+  <a href="#drainage" data-toc="drainage">Drainage System</a>
+  <a href="#subtypes" data-toc="subtypes">Types of Glaucoma</a>
+  <a href="#diagnosis" data-toc="diagnosis">Diagnosis</a>
+  <a href="#treatment" data-toc="treatment">Treatment</a>
+</nav>
+
 <section class="page-hero" id="pageHero">
   <div class="wrap">
     <span class="eyebrow reveal">Patient Education &middot; Glaucoma</span>
-    <h1 class="display display-xl reveal reveal-delay-1">Working on <em>this page.</em></h1>
-    <p class="reveal reveal-delay-2">Our glaucoma guide is still being written. In the meantime, feel free to explore our cataract guide, or reach out with any questions about glaucoma directly.</p>
-    <a class="link-more reveal reveal-delay-2" href="cataracts.html">Read the cataract guide instead &rarr;</a>
+    <h1 class="display display-xl reveal reveal-delay-1">Glaucoma:<br>Protecting Your <em>Vision.</em></h1>
+    <p class="reveal reveal-delay-2">What glaucoma is, why the eye's drainage system matters, how it's diagnosed, and the full range of treatments &mdash; from drops to laser to microsurgery.</p>
+  </div>
+</section>
+
+<section id="basics">
+  <div class="wrap">
+    <div class="basics-grid">
+      <div class="reveal">
+        <span class="eyebrow">The Basics</span>
+        <h2 class="display display-lg">What is glaucoma?</h2>
+        <p>Glaucoma is a group of diseases that damage the optic nerve &mdash; the cable of over a million nerve fibers that carries images from your eye to your brain. It is usually, though not always, related to eye pressure that is too high for that particular nerve to tolerate.</p>
+        <p>Vision loss typically starts at the edges of your sight and creeps inward, which is why most people notice nothing is wrong until real damage has already occurred.</p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="fact-stack">
+          <div class="fact-card">
+            <div class="fact-num">2nd</div>
+            <p>Leading cause of irreversible blindness worldwide</p>
+          </div>
+          <div class="fact-card">
+            <div class="fact-num">40%</div>
+            <p>Of optic nerve fibers can be lost before a change in vision is even noticeable</p>
+          </div>
+          <div class="fact-card">
+            <div class="fact-num">0</div>
+            <p>Symptoms, in the most common forms, until damage is already advanced &mdash; regular exams are how it's caught early</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="signs-title reveal">Common risk factors</h3>
+    <div class="signs reveal">
+      <div class="sign-card">
+        <div class="sign-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-family"/></svg></div>
+        <h3>Family History</h3>
+        <p>Having a parent or sibling with glaucoma raises your own risk significantly.</p>
+      </div>
+      <div class="sign-card">
+        <div class="sign-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-calendar"/></svg></div>
+        <h3>Age 60+</h3>
+        <p>Risk rises steadily after 60, and even earlier for some higher-risk groups.</p>
+      </div>
+      <div class="sign-card">
+        <div class="sign-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-gauge"/></svg></div>
+        <h3>Elevated Eye Pressure</h3>
+        <p>The single most important, and the only modifiable, risk factor.</p>
+      </div>
+      <div class="sign-card">
+        <div class="sign-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-moon"/></svg></div>
+        <h3>Sleep Apnea &amp; Other Factors</h3>
+        <p>Obstructive sleep apnea, high nearsightedness, and certain ethnic backgrounds also raise risk.</p>
+      </div>
+    </div>
+
+    <div class="expect-note reveal reveal-delay-1">
+      <h4><svg width="20" height="20" aria-hidden="true"><use href="#i-loop"/></svg> Managed, not cured</h4>
+      <p>Eye pressure (IOP) is the only risk factor we can currently modify &mdash; which is why every glaucoma treatment, from drops to surgery, focuses on lowering it. There is no cure, and vision already lost cannot be recovered, but consistently controlling IOP is what slows or stops further damage.</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-mid" id="drainage">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">How Glaucoma Develops</span>
+      <h2 class="display display-lg">The importance of the drainage system</h2>
+      <p>Your eye continuously produces a clear fluid called aqueous humor. It flows through the pupil and exits through a drainage angle, where the iris meets the cornea. When that drainage slows or stops, pressure builds inside the eye.</p>
+      <p>This is a completely internal system, separate from the tear film on the surface of your eye &mdash; so it has nothing to do with external eye watering or tearing.</p>
+    </div>
+
+    <div class="compare-eyes reveal reveal-delay-1">
+      <div class="eye-col">
+        <svg class="eye-diagram" viewBox="0 0 220 170" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M28 92 C 34 46, 78 16, 168 20" stroke="#0a7e8c" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <path d="M28 92 L 150 128" stroke="#0d1f2d" stroke-width="2.2" stroke-linecap="round"/>
+          <ellipse cx="158" cy="118" rx="20" ry="26" fill="#e0f2f4" stroke="#0d1f2d" stroke-width="1.3" opacity="0.9"/>
+          <g stroke="#0a7e8c" stroke-width="2" stroke-linecap="round">
+            <path d="M30 84 L38 92"/><path d="M34 76 L44 86"/><path d="M39 69 L50 80"/>
+          </g>
+          <path d="M110 78 C 78 92, 48 90, 33 87" stroke="#0a7e8c" stroke-width="1.5" stroke-linecap="round" fill="none" marker-end="url(#gArrow)"/>
+          <defs><marker id="gArrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#0a7e8c"/></marker></defs>
+          <text x="45" y="63" font-family="DM Sans, sans-serif" font-size="9" fill="#3a5060">cornea</text>
+          <text x="112" y="140" font-family="DM Sans, sans-serif" font-size="9" fill="#3a5060">iris</text>
+          <text x="8" y="105" font-family="DM Sans, sans-serif" font-size="8.5" fill="#065f6b">meshwork</text>
+        </svg>
+        <h3>Open Angle</h3>
+        <p class="eye-sub">Normal drainage angle</p>
+        <p class="eye-note">The angle is wide, so fluid reaches the drainage tissue (trabecular meshwork) freely. In open-angle glaucoma, that meshwork develops resistance or buildup &mdash; like a drain that's slowly clogging &mdash; so fluid can't exit as easily, and pressure rises over time.</p>
+      </div>
+      <div class="eye-col is-warn">
+        <svg class="eye-diagram" viewBox="0 0 220 170" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M28 92 C 34 46, 78 16, 168 20" stroke="#a85d3e" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <path d="M33 75 C 26 92, 40 108, 150 128" stroke="#0d1f2d" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <ellipse cx="158" cy="118" rx="20" ry="26" fill="#f5e9e3" stroke="#0d1f2d" stroke-width="1.3" opacity="0.9"/>
+          <g stroke="#a85d3e" stroke-width="2.2" stroke-linecap="round">
+            <path d="M25 66 L39 80"/><path d="M39 66 L25 80"/>
+          </g>
+          <path d="M105 82 C 82 90, 55 85, 39 73" stroke="#a85d3e" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="1 5" fill="none"/>
+          <text x="68" y="16" font-family="DM Sans, sans-serif" font-size="9" fill="#3a5060">cornea</text>
+          <text x="112" y="140" font-family="DM Sans, sans-serif" font-size="9" fill="#3a5060">iris</text>
+          <text x="4" y="58" font-family="DM Sans, sans-serif" font-size="8.5" fill="#a85d3e">blocked</text>
+        </svg>
+        <h3>Closed Angle</h3>
+        <p class="eye-sub">Narrow or blocked angle</p>
+        <p class="eye-note">The iris crowds or touches the cornea, physically blocking the drainage angle. Pressure can rise quickly, sometimes within hours &mdash; a presentation that can be a medical emergency.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="subtypes">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Types &amp; Related Conditions</span>
+      <h2 class="display display-lg">What are the subtypes of glaucoma?</h2>
+      <p>Not everything that looks like glaucoma is glaucoma yet &mdash; and among the true glaucomas, the underlying cause of the drainage problem varies.</p>
+    </div>
+
+    <h3 class="signs-title reveal" style="margin-top:0;">Not (yet) glaucoma</h3>
+    <div class="signs three reveal">
+      <div class="sign-card">
+        <h4>Glaucoma Suspect</h4>
+        <p>The optic nerve or eye pressure looks slightly unusual, but there's no confirmed damage &mdash; watched closely over time.</p>
+      </div>
+      <div class="sign-card">
+        <h4>Ocular Hypertension</h4>
+        <p>Eye pressure runs higher than average, but the optic nerve and visual field remain healthy.</p>
+      </div>
+      <div class="sign-card">
+        <h4>Narrow Angle</h4>
+        <p>The drainage angle is anatomically narrow and at risk of closing, even though it hasn't caused damage.</p>
+      </div>
+    </div>
+
+    <h3 class="signs-title reveal" style="margin-top:3rem;">The glaucomas</h3>
+    <div class="lens-list reveal">
+      <article class="lens-card">
+        <div class="lens-badge">1</div>
+        <div>
+          <h3>Primary Open-Angle Glaucoma <span>&amp; Low-Tension Glaucoma</span></h3>
+          <ul class="lens-features">
+            <li>The most common form &mdash; the drainage angle looks normal, but the meshwork itself drains too slowly</li>
+            <li>Low-tension (normal-tension) glaucoma causes the same optic nerve damage at pressures usually considered normal</li>
+            <li>Develops silently, typically over years</li>
+          </ul>
+        </div>
+      </article>
+      <article class="lens-card">
+        <div class="lens-badge">2</div>
+        <div>
+          <h3>Angle-Closure Glaucoma</h3>
+          <ul class="lens-features">
+            <li>The iris blocks the drainage angle, either gradually or suddenly</li>
+            <li>An acute attack causes eye pain, headache, blurred vision, and halos around lights &mdash; a medical emergency</li>
+            <li>More common in far-sighted eyes and certain ethnic backgrounds</li>
+          </ul>
+        </div>
+      </article>
+      <article class="lens-card">
+        <div class="lens-badge">3</div>
+        <div>
+          <h3>Secondary Glaucoma</h3>
+          <ul class="lens-features">
+            <li>Caused by another eye condition or event, rather than developing on its own</li>
+            <li>Common triggers: previous eye surgery, a retinal vein occlusion ("eye stroke") causing neovascular glaucoma, or severe diabetic eye disease</li>
+            <li>Treatment addresses both the glaucoma and its underlying cause</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="bg-mid" id="diagnosis">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Diagnosis &amp; Monitoring</span>
+      <h2 class="display display-lg">How am I diagnosed, and how are my eyes monitored?</h2>
+      <p>Glaucoma is identified and tracked through a combination of in-office exam findings and specialized imaging, repeated at regular intervals to watch for any change.</p>
+    </div>
+
+    <h3 class="signs-title reveal" style="margin-top:0;">The eye exam</h3>
+    <div class="expect-grid cols-3 reveal">
+      <div class="expect-card">
+        <div class="expect-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-gauge"/></svg></div>
+        <h3>Eye Pressure</h3>
+        <p>Tonometry measures the pressure inside your eye &mdash; the main modifiable risk factor.</p>
+      </div>
+      <div class="expect-card">
+        <div class="expect-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-target"/></svg></div>
+        <h3>Optic Nerve Exam</h3>
+        <p>A dilated look at the optic nerve, checking its color, shape, and any pattern suggesting damage.</p>
+      </div>
+      <div class="expect-card">
+        <div class="expect-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-angle"/></svg></div>
+        <h3>Gonioscopy</h3>
+        <p>A specialized mirrored lens lets your doctor directly view the drainage angle to see if it's open or narrow.</p>
+      </div>
+    </div>
+
+    <h3 class="signs-title reveal" style="margin-top:3rem;">Specialized testing</h3>
+    <div class="expect-grid cols-2 reveal">
+      <div class="expect-card">
+        <div class="expect-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-grid"/></svg></div>
+        <h3>Visual Field Test</h3>
+        <p>Maps your peripheral vision to detect and track the specific pattern of vision loss glaucoma causes.</p>
+      </div>
+      <div class="expect-card">
+        <div class="expect-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-layers"/></svg></div>
+        <h3>OCT of the Optic Nerve</h3>
+        <p>A quick, painless scan measuring the thickness of nerve fiber layers &mdash; often catching change before you'd ever notice it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="treatment">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Treatment Options</span>
+      <h2 class="display display-lg">Treatment options</h2>
+      <p>Every treatment works toward the same goal &mdash; lowering eye pressure, the only proven way to slow glaucoma. Most patients start with the least invasive option and step up only if needed.</p>
+    </div>
+
+    <div class="lens-list reveal">
+      <article class="lens-card">
+        <div class="lens-badge">1</div>
+        <div>
+          <h3>Eye Drops</h3>
+          <ul class="lens-features">
+            <li>Daily prescription drops lower pressure by reducing fluid production or improving its drainage</li>
+            <li>Effectiveness depends on consistent daily use &mdash; several classes can be combined if one isn't enough on its own</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="lens-card">
+        <div class="lens-badge">2</div>
+        <div>
+          <h3>Laser <span>&mdash; SLT or LPI</span></h3>
+          <ul class="lens-features">
+            <li><strong>SLT</strong> (Selective Laser Trabeculoplasty) improves drainage in open-angle glaucoma &mdash; quick, done in the office, and can be repeated</li>
+            <li><strong>LPI</strong> (Laser Peripheral Iridotomy) creates a small opening in the iris to relieve or prevent angle closure</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="lens-card">
+        <div class="lens-badge">3</div>
+        <div>
+          <h3>Surgery</h3>
+          <p class="lens-sub">Considered when laser and drops aren't enough to control pressure on their own</p>
+          <div class="surgery-grid">
+            <div class="surgery-col">
+              <h4>Cataract Surgery</h4>
+              <p>Removing a cataract alone modestly lowers eye pressure, and is often combined with a MIGS procedure at little added recovery time.</p>
+            </div>
+            <div class="surgery-col">
+              <h4>MIGS</h4>
+              <p>Minimally Invasive Glaucoma Surgery &mdash; small incisions and fast recovery, with a modest pressure-lowering effect.</p>
+              <div class="device-grid">
+                <div class="device-tile">
+                  <svg width="34" height="34" aria-hidden="true"><use href="#i-dev-istent"/></svg>
+                  <div class="device-name">iStent</div>
+                  <a href="https://www.glaukos.com/glaucoma/products/istent-inject-w/" target="_blank" rel="noopener">Learn more &#8599;</a>
+                </div>
+                <div class="device-tile">
+                  <svg width="34" height="34" aria-hidden="true"><use href="#i-dev-hydrus"/></svg>
+                  <div class="device-name">Hydrus</div>
+                  <a href="https://www.myalcon.com/professional/cataract-surgery/hydrus-microstent/videos/" target="_blank" rel="noopener">Learn more &#8599;</a>
+                </div>
+                <div class="device-tile">
+                  <svg width="34" height="34" aria-hidden="true"><use href="#i-dev-itrack"/></svg>
+                  <div class="device-name">iTrack Canaloplasty</div>
+                  <a href="https://glaucoma-itrack.com/" target="_blank" rel="noopener">Learn more &#8599;</a>
+                </div>
+                <div class="device-tile">
+                  <svg width="34" height="34" aria-hidden="true"><use href="#i-dev-kdb"/></svg>
+                  <div class="device-name">KDB Goniotomy</div>
+                  <a href="https://www.nwmscience.com/surgical-videos-kahook-dual-blade/" target="_blank" rel="noopener">Learn more &#8599;</a>
+                </div>
+                <div class="device-tile">
+                  <svg width="34" height="34" aria-hidden="true"><use href="#i-dev-alloflo"/></svg>
+                  <div class="device-name">AlloFlo</div>
+                  <a href="https://www.iantrekmed.com/" target="_blank" rel="noopener">Learn more &#8599;</a>
+                </div>
+              </div>
+            </div>
+            <div class="surgery-col">
+              <h4>Incisional Surgery</h4>
+              <p>A larger pressure-lowering effect for more advanced or harder-to-control glaucoma, with a longer recovery.</p>
+              <div class="device-grid">
+                <div class="device-tile">
+                  <svg width="34" height="34" aria-hidden="true"><use href="#i-dev-tube"/></svg>
+                  <div class="device-name">Tube Shunt</div>
+                  <a href="https://www.nwmscience.com/surgical-videos-ahmed-glaucoma-valve/" target="_blank" rel="noopener">Learn more &#8599;</a>
+                </div>
+                <div class="device-tile">
+                  <svg width="34" height="34" aria-hidden="true"><use href="#i-dev-xen"/></svg>
+                  <div class="device-name">Xen Gel Stent</div>
+                  <a href="https://www.xengelstent.com/" target="_blank" rel="noopener">Learn more &#8599;</a>
+                </div>
+                <div class="device-tile">
+                  <svg width="34" height="34" aria-hidden="true"><use href="#i-dev-trab"/></svg>
+                  <div class="device-name">Trabeculectomy</div>
+                  <a href="https://www.aao.org/eye-health/diseases/trabeculectomy-12" target="_blank" rel="noopener">Learn more &#8599;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="cat-cta bg-mid">
+  <div class="wrap">
+    <span class="eyebrow reveal">Next Steps</span>
+    <h2 class="display display-lg reveal reveal-delay-1">Ready to talk through your options?</h2>
+    <p class="reveal reveal-delay-2">Whether you're newly diagnosed, a glaucoma suspect, or looking into surgical options, we'll walk through where you stand and what makes sense next.</p>
+    <a class="link-arrow reveal reveal-delay-3" href="index.html#contact">Get in touch &rarr;</a>
   </div>
 </section>
 
@@ -190,6 +700,45 @@
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
+  (function(){
+    const upper = document.getElementById('bgEyeUpper');
+    const lower = document.getElementById('bgEyeLower');
+    const clip  = document.getElementById('bgEyeClipPath');
+    const hero  = document.getElementById('pageHero');
+    if (!upper || !lower || !clip || !hero) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const UPPER_OPEN = 60,  UPPER_SHUT = 250;
+    const LOWER_OPEN = 440, LOWER_SHUT = 250;
+    const FINISH_AT = 0.55;
+
+    let pending = false, lastProgress = -1;
+
+    function compute() {
+      const rect = hero.getBoundingClientRect();
+      const raw    = 1 - (rect.bottom / window.innerHeight);
+      const scaled = Math.min(1, Math.max(0, raw / FINISH_AT));
+      return scaled < 0.5 ? 2 * scaled * scaled : 1 - Math.pow(-2 * scaled + 2, 2) / 2;
+    }
+
+    function render() {
+      pending = false;
+      const p = compute();
+      if (Math.abs(p - lastProgress) < 0.002) return;
+      lastProgress = p;
+      const uy = UPPER_OPEN + (UPPER_SHUT - UPPER_OPEN) * p;
+      const ly = LOWER_OPEN + (LOWER_SHUT - LOWER_OPEN) * p;
+      upper.setAttribute('d', 'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250');
+      lower.setAttribute('d', 'M 80 250 Q 500 ' + ly.toFixed(1) + ' 920 250');
+      clip.setAttribute('d',  'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250 Q 500 ' + ly.toFixed(1) + ' 80 250 Z');
+    }
+
+    function onScroll() { if (pending) return; pending = true; requestAnimationFrame(render); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    render();
+  })();
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
@@ -200,6 +749,22 @@
 
   function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
   function closeMobileNav()  { document.getElementById('mobileNav').classList.remove('open'); }
+
+  (function(){
+    const tocLinks = Array.from(document.querySelectorAll('.toc a'));
+    if (!tocLinks.length) return;
+    const tocSections = tocLinks.map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
+    const tocObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const idx = tocSections.indexOf(entry.target);
+        if (idx === -1) return;
+        tocLinks.forEach(a => a.classList.remove('active'));
+        tocLinks[idx].classList.add('active');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    tocSections.forEach(s => tocObserver.observe(s));
+  })();
 </script>
 </body>
 </html>
