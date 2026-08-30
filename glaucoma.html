@@ -1695,11 +1695,13 @@
       const HEAT_R0 = HEAT_DISC_R + 5; // wings start just outside the fixed disc margin
       const HEAT_TILT = 22; // real NFL bundles arc diagonally, not straight up/down
       const HEAT_CLUSTERS = [
-        { pole: 'S', center: -90 + HEAT_TILT }, // superior wing, angled up and to the right
-        { pole: 'I', center: 90 - HEAT_TILT }   // inferior wing, angled down and to the right
+        { pole: 'S', center: -90 - HEAT_TILT }, // superior wing, angled up and to the left
+        { pole: 'I', center: 90 + HEAT_TILT }   // inferior wing, angled down and to the left
       ];
       const HEAT_PETALS_PER_WING = 9;
       const HEAT_SPREAD = 74; // degrees each butterfly wing fans across, leaving clear blue gaps left and right
+      const HEAT_TISSUE = '#c7cbd1';      // disc tissue grey — shared by the rim and the cup
+      const HEAT_TISSUE_EDGE = '#9aa2a6'; // slightly darker edge so the cup outline still reads against the rim
 
       function buildOctHeat(){
         const svg = document.getElementById('octHeatMap');
@@ -1711,8 +1713,8 @@
           for (let i = 0; i < HEAT_PETALS_PER_WING; i++) {
             const t = (i / (HEAT_PETALS_PER_WING - 1)) - 0.5; // -0.5 .. 0.5 across the wing
             const angle = cl.center + t * HEAT_SPREAD;
-            const edgeFactor = 1 - Math.abs(t) * 0.55; // petals nearer the wing's centerline reach further
-            const petal = petalPath(HEAT_CX, HEAT_CY, angle, HEAT_R0, 46 * edgeFactor, 7 * edgeFactor + 3);
+            const edgeFactor = 1 - Math.pow(Math.abs(t) * 2, 1.7) * 0.62; // sharp central whisp, tapering fast toward the wing's edges
+            const petal = petalPath(HEAT_CX, HEAT_CY, angle, HEAT_R0, 54 * edgeFactor, 7 * edgeFactor + 3);
             const gradId = 'octWingGrad' + cl.pole + i;
             const grad = svgEl('linearGradient', {
               id: gradId, gradientUnits: 'userSpaceOnUse',
@@ -1729,10 +1731,12 @@
           }
         });
 
-        // fixed disc margin — constant diameter regardless of stage
-        svg.appendChild(svgEl('circle', { cx: HEAT_CX, cy: HEAT_CY, r: HEAT_DISC_R, fill: 'none', stroke: '#7a9aaa', 'stroke-width': 1, opacity: 0.6 }));
+        // fixed disc margin — constant diameter regardless of stage. Filled with
+        // the same tissue grey as the cup so the neuroretinal rim (the annulus
+        // between cup and margin) reads as tissue, not as blue background.
+        svg.appendChild(svgEl('circle', { cx: HEAT_CX, cy: HEAT_CY, r: HEAT_DISC_R, fill: HEAT_TISSUE, stroke: HEAT_TISSUE_EDGE, 'stroke-width': 1, opacity: 0.95 }));
 
-        heatCupPath = svgEl('path', { fill: '#c7cbd1', stroke: '#9aa2a6', 'stroke-width': 1 });
+        heatCupPath = svgEl('path', { fill: HEAT_TISSUE, stroke: HEAT_TISSUE_EDGE, 'stroke-width': 1.4 });
         heatCupPath.style.transition = 'd 0.9s ease';
         svg.appendChild(heatCupPath);
 
@@ -1747,7 +1751,7 @@
           const severity = w.pole === 'S' ? s.S : s.I; // 0..2
           const frac = severity / 2;
           const jitter = 0.9 + w.noise * 0.2;
-          const fullLen = 46 * w.edgeFactor, fullWidth = 7 * w.edgeFactor + 3;
+          const fullLen = 54 * w.edgeFactor, fullWidth = 7 * w.edgeFactor + 3;
           const length = (fullLen - (fullLen - 8) * frac) * jitter;
           const halfWidth = fullWidth - Math.min(fullWidth - 3, 4 * frac);
           const petal = petalPath(HEAT_CX, HEAT_CY, w.angle, HEAT_R0, length, halfWidth);
