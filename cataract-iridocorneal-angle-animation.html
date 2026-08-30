@@ -1,0 +1,223 @@
+<title>Phacomorphic Angle Closure, Animated</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#f0f4f5; --bg-mid:#e4edf0; --bg-dark:#d4e3e8;
+    --ink:#0d1f2d; --ink-mid:#3a5060; --ink-light:#7a9aaa;
+    --rule: rgba(13,31,45,0.13);
+    --accent:#0a7e8c; --accent-dark:#065f6b; --accent-light:#e0f2f4;
+    --warn:#a85d3e; --warn-tint:#f5e9e3;
+    --f-serif:'Cormorant Garamond', Georgia, serif;
+    --f-sans:'DM Sans', system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0d1a20; --bg-mid:#132630; --bg-dark:#1a323f;
+      --ink:#eaf1f3; --ink-mid:#b7c9d1; --ink-light:#6f8b98;
+      --rule: rgba(234,241,243,0.12);
+      --accent:#3fb8c4; --accent-dark:#6fd0d9; --accent-light:#173842;
+      --warn:#e0916d; --warn-tint:#2c1f19;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d1a20; --bg-mid:#132630; --bg-dark:#1a323f;
+    --ink:#eaf1f3; --ink-mid:#b7c9d1; --ink-light:#6f8b98;
+    --rule: rgba(234,241,243,0.12);
+    --accent:#3fb8c4; --accent-dark:#6fd0d9; --accent-light:#173842;
+    --warn:#e0916d; --warn-tint:#2c1f19;
+  }
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--f-sans);
+    display:flex; flex-direction:column; align-items:center;
+    padding:clamp(1.5rem,4vw,3rem); gap:1.25rem;
+  }
+  .wrap{ width:100%; max-width:760px; display:flex; flex-direction:column; gap:1rem; }
+  .eyebrow{ font-size:0.7rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); text-align:center; }
+  h1{ font-family:var(--f-serif); font-weight:400; font-style:italic; font-size:clamp(1.4rem,3.2vw,1.9rem); text-align:center; margin:0; }
+  .stage{ position:relative; width:100%; background:var(--bg); border:1px solid var(--rule); }
+  .stage svg{ display:block; width:100%; height:auto; }
+  .note{ font-size:0.85rem; color:var(--ink-mid); line-height:1.6; text-align:center; max-width:60ch; margin:0 auto; }
+  .sources{ font-size:0.75rem; color:var(--ink-light); line-height:1.7; border-top:1px solid var(--rule); padding-top:0.9rem; }
+  .sources summary{ cursor:pointer; font-size:0.75rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-mid); }
+  .sources ul{ margin:0.6rem 0 0; padding-left:1.1rem; }
+  .sources li{ margin-bottom:0.25rem; }
+
+  /* ---------- animation ---------- */
+  .lens-anim{
+    animation: lensChange 12s ease-in-out infinite;
+  }
+  @keyframes lensChange{
+    0%, 6%    { rx:112px; cx:500px; fill:var(--bg-mid); }
+    26%       { rx:120px; cx:508px; fill:var(--warn); }
+    74%       { rx:120px; cx:508px; fill:var(--warn); }
+    94%, 100% { rx:112px; cx:500px; fill:var(--bg-mid); }
+  }
+
+  .state-open{ animation: fadeOutMid 12s ease-in-out infinite; }
+  .state-closed{ animation: fadeInMid 12s ease-in-out infinite; }
+  @keyframes fadeOutMid{
+    0%, 34%   { opacity:1; }
+    54%, 74%  { opacity:0; }
+    94%, 100% { opacity:1; }
+  }
+  @keyframes fadeInMid{
+    0%, 34%   { opacity:0; }
+    54%, 74%  { opacity:1; }
+    94%, 100% { opacity:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .lens-anim{ animation:none; }
+    .state-open{ animation:none; opacity:1; }
+    .state-closed{ animation:none; opacity:0; }
+  }
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Concept animation &mdash; mechanism, not real-time speed</p>
+  <h1>Phacomorphic angle closure</h1>
+
+  <div class="stage">
+    <svg viewBox="0 -90 1000 1250" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="tmArrowHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--ink)"/>
+        </marker>
+      </defs>
+
+      <!-- sclera -->
+      <path d="M 615 137 C 520 90, 380 60, 250 70" fill="none" stroke="var(--ink-light)" stroke-width="30" stroke-linecap="round"/>
+      <path d="M 615 983 C 520 1030, 380 1060, 250 1050" fill="none" stroke="var(--ink-light)" stroke-width="30" stroke-linecap="round"/>
+
+      <!-- cornea -->
+      <path d="M 615 137 Q 880 250 900 560 Q 880 870 615 983
+               L 605 970 Q 845 860 860 560 Q 845 260 605 150 Z"
+            fill="var(--accent-light)" fill-opacity="0.55" stroke="var(--accent-dark)" stroke-width="2"/>
+
+      <!-- anterior chamber -->
+      <path d="M 622 469 Q 696 300 570 132 L 605 150 Q 845 260 860 560 Q 845 860 605 970 L 570 988 Q 696 820 622 651 L 622 469 Z"
+            fill="var(--accent-light)" opacity="0.4"/>
+
+      <!-- lens: equator 9.5mm / axial 4.5mm at rest -- grows axially and browns as it cataracts -->
+      <ellipse class="lens-anim" cx="500" cy="560" rx="112" ry="238" fill="var(--bg-mid)" stroke="var(--ink-light)" stroke-width="2.5"/>
+
+      <!-- lens zonules -->
+      <g stroke="var(--ink-light)" stroke-width="1.3" opacity="0.75">
+        <line x1="558" y1="118" x2="510" y2="324"/>
+        <line x1="568" y1="133" x2="519" y2="326"/>
+        <line x1="580" y1="142" x2="529" y2="330"/>
+        <line x1="558" y1="1002" x2="510" y2="796"/>
+        <line x1="568" y1="987" x2="519" y2="794"/>
+        <line x1="580" y1="978" x2="529" y2="790"/>
+      </g>
+
+      <!-- ciliary body (pars plicata) -->
+      <path d="M 617 140 C 600 118, 575 108, 558 118
+               Q 550 124 557 134 Q 547 140 557 149
+               Q 566 156 578 148 Q 594 154 604 142 Z"
+            fill="var(--accent)" opacity="0.85"/>
+      <path d="M 617 980 C 600 1002, 575 1012, 558 1002
+               Q 550 996 557 986 Q 547 980 557 971
+               Q 566 964 578 972 Q 594 966 604 978 Z"
+            fill="var(--accent)" opacity="0.85"/>
+      <g stroke="var(--accent-dark)" stroke-width="1" opacity="0.55">
+        <path d="M 560 122 L 566 136"/>
+        <path d="M 571 133 L 576 146"/>
+        <path d="M 584 138 L 588 150"/>
+        <path d="M 560 998 L 566 984"/>
+        <path d="M 571 987 L 576 974"/>
+        <path d="M 584 982 L 588 970"/>
+      </g>
+
+      <!-- scleral spur -->
+      <path d="M 613 133 L 630 143 L 611 152 Z" fill="var(--ink-light)" opacity="0.9"/>
+      <path d="M 613 987 L 630 977 L 611 968 Z" fill="var(--ink-light)" opacity="0.9"/>
+
+      <!-- trabecular meshwork: open state (teal, functioning) fades out as the angle closes -->
+      <g class="state-open" stroke="var(--accent-dark)" stroke-width="1.8" stroke-linecap="round">
+        <path d="M 604 133 L 615 145"/>
+        <path d="M 611 131 L 622 143"/>
+        <path d="M 618 131 L 629 143"/>
+        <path d="M 604 144 L 615 134"/>
+        <path d="M 611 142 L 622 132"/>
+        <path d="M 618 142 L 629 132"/>
+        <path d="M 604 987 L 615 975"/>
+        <path d="M 611 989 L 622 977"/>
+        <path d="M 618 989 L 629 977"/>
+        <path d="M 604 976 L 615 986"/>
+        <path d="M 611 978 L 622 988"/>
+        <path d="M 618 978 L 629 988"/>
+      </g>
+
+      <!-- trabecular meshwork: closed/obstructed state (warm tone) fades in as the iris root apposes it -->
+      <g class="state-closed" stroke="var(--warn)" stroke-width="1.8" stroke-linecap="round">
+        <path d="M 604 133 L 615 145"/>
+        <path d="M 611 131 L 622 143"/>
+        <path d="M 618 131 L 629 143"/>
+        <path d="M 604 144 L 615 134"/>
+        <path d="M 611 142 L 622 132"/>
+        <path d="M 618 142 L 629 132"/>
+        <path d="M 604 987 L 615 975"/>
+        <path d="M 611 989 L 622 977"/>
+        <path d="M 618 989 L 629 977"/>
+        <path d="M 604 976 L 615 986"/>
+        <path d="M 611 978 L 622 988"/>
+        <path d="M 618 978 L 629 988"/>
+      </g>
+
+      <!-- iris: open state, mild physiologic convexity, root well clear of the meshwork -->
+      <g class="state-open">
+        <path d="M 570 132 Q 696 300 622 469 Q 631 300 570 132 Z" fill="var(--accent)" opacity="0.94"/>
+        <path d="M 610 200 Q 675 300 630 420" fill="none" stroke="var(--accent-dark)" stroke-width="1" opacity="0.35"/>
+        <path d="M 570 988 Q 696 820 622 651 Q 631 820 570 988 Z" fill="var(--accent)" opacity="0.94"/>
+        <path d="M 610 920 Q 675 820 630 700" fill="none" stroke="var(--accent-dark)" stroke-width="1" opacity="0.35"/>
+      </g>
+
+      <!-- iris: closed state, bowed (iris bombe) -- root pushed peripherally onto the meshwork -->
+      <g class="state-closed">
+        <path d="M 598 136 Q 710 300 626 469 Q 640 300 598 136 Z" fill="var(--accent)" opacity="0.94"/>
+        <path d="M 636 205 Q 690 300 645 415" fill="none" stroke="var(--accent-dark)" stroke-width="1" opacity="0.35"/>
+        <path d="M 598 984 Q 710 820 626 651 Q 640 820 598 984 Z" fill="var(--accent)" opacity="0.94"/>
+        <path d="M 636 915 Q 690 820 645 705" fill="none" stroke="var(--accent-dark)" stroke-width="1" opacity="0.35"/>
+      </g>
+
+      <text x="928" y="565" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="16" fill="var(--ink-mid)">Cornea</text>
+
+      <path d="M 665 800 L 770 740" fill="none" stroke="var(--ink-light)" stroke-width="1"/>
+      <text x="776" y="745" text-anchor="start" font-family="DM Sans, sans-serif" font-size="16" fill="var(--ink)" font-weight="500">Iris</text>
+
+      <text x="500" y="565" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="17" fill="var(--ink-mid)">Lens</text>
+
+      <!-- trabecular meshwork arrow + crossfading label -->
+      <line x1="742" y1="-14" x2="632" y2="128" fill="none" stroke="var(--ink)" stroke-width="1.6" marker-end="url(#tmArrowHead)"/>
+      <text class="state-open" x="742" y="-32" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="19" font-weight="500" fill="var(--accent-dark)">Open drainage system</text>
+      <text class="state-closed" x="742" y="-32" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="19" font-weight="500" fill="var(--warn)">Closed drainage system</text>
+
+      <!-- scale bar: 1mm = 50 units -->
+      <g>
+        <line x1="120" y1="1090" x2="170" y2="1090" stroke="var(--ink)" stroke-width="2"/>
+        <line x1="120" y1="1083" x2="120" y2="1097" stroke="var(--ink)" stroke-width="2"/>
+        <line x1="170" y1="1083" x2="170" y2="1097" stroke="var(--ink)" stroke-width="2"/>
+        <text x="145" y="1115" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="13" fill="var(--ink-mid)">1 mm</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="note">As a cataractous lens swells and opacifies (phacomorphic change), it thickens axially and pushes forward, meeting the iris at the pupil margin. Once apposed, aqueous can no longer pass forward easily, so pressure bows the iris (iris bombe) and drives its root peripherally until it covers the trabecular meshwork &mdash; closing the eye's drainage angle. Proportions follow the same biometry as the static diagram; the pace of the animation is illustrative, not a real-time timeline.</p>
+
+  <details class="sources">
+    <summary>Sources</summary>
+    <ul>
+      <li>Anterior chamber depth ~3.0mm &mdash; Measurements of white-to-white corneal diameter, PMC11970417</li>
+      <li>Lens equatorial diameter 9&ndash;10mm, axial thickness 4.5&ndash;5mm &mdash; Intraoperative Measurement of Crystalline Lens Diameter, PMC8857670; AJO intraoperative OCT biometry study</li>
+      <li>Ciliary body: pars plicata ~2mm (70 processes, 0.5&ndash;0.8mm tall), pars plana ~4mm &mdash; Anatomy of Ciliary Body, IntechOpen ch.41830</li>
+      <li>Trabecular meshwork ~104&mu;m thick; Schlemm&rsquo;s canal ~233&times;44&mu;m &mdash; Age-related SC/TM morphology, Nature Eye 2018</li>
+      <li>Iris thickness ~0.43mm near pupil, thinner at root &mdash; Iris thickness in children, PMC6538171</li>
+      <li>Sclera ~0.5&ndash;0.7mm at the limbus &mdash; Scleral Thickness in Human Eyes, PMC3253100</li>
+      <li>Corneal diameter 11.7mm, thickness 0.5&ndash;1.0mm &mdash; Anatomy of cornea and ocular surface, Indian J Ophthalmol</li>
+      <li>Phacomorphic glaucoma mechanism (lens-induced pupillary block and angle closure) &mdash; standard glaucoma pathophysiology references</li>
+    </ul>
+  </details>
+</div>
