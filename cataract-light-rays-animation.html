@@ -1,0 +1,247 @@
+<title>Cataract Light Rays Animation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#f0f4f5; --bg-mid:#e4edf0; --bg-dark:#d4e3e8;
+    --ink:#0d1f2d; --ink-mid:#3a5060; --ink-light:#7a9aaa;
+    --rule: rgba(13,31,45,0.13);
+    --accent:#0a7e8c; --accent-dark:#065f6b; --accent-light:#e0f2f4;
+    --warn:#a85d3e; --warn-tint:#f5e9e3;
+    --ray:#065f6b; --ray-soft:#0a7e8c;
+    --cataract-dark:#8a6636;
+    --f-serif:'Cormorant Garamond', Georgia, serif;
+    --f-sans:'DM Sans', system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--f-sans);
+    display:flex; flex-direction:column; align-items:center;
+    padding:clamp(1.5rem,4vw,3rem); gap:1.25rem;
+  }
+  .wrap{ width:100%; max-width:900px; display:flex; flex-direction:column; gap:1rem; }
+  .eyebrow{ font-size:0.7rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); text-align:center; }
+  h1{ font-family:var(--f-serif); font-weight:400; font-style:italic; font-size:clamp(1.4rem,3.2vw,1.9rem); text-align:center; margin:0; }
+  .stage{ position:relative; width:100%; background:var(--bg); border:1px solid var(--rule); }
+  .stage svg{ display:block; width:100%; height:auto; }
+  .note{ font-size:0.85rem; color:var(--ink-mid); line-height:1.6; text-align:center; max-width:64ch; margin:0 auto; }
+
+  .sclera{ fill:none; stroke:var(--ink-light); stroke-width:28; stroke-linecap:round; }
+  .retina{ fill:none; stroke:var(--warn); stroke-width:9; opacity:0.45; stroke-linecap:butt; }
+  .fovea{ fill:none; stroke:var(--warn); stroke-width:9; opacity:0.8; stroke-linecap:butt; }
+  .vitreous{ fill:var(--bg-mid); opacity:0.55; }
+
+  /* rays draw themselves in, then the whole screen clears before the next set */
+  .ray-in, .ray-out{
+    fill:none; stroke:var(--ray); stroke-width:1.8;
+    stroke-dasharray:100; stroke-dashoffset:100;
+  }
+  .ray-in { animation:drawIn  3.6s linear infinite; }
+  .ray-out{ animation:drawOut 3.6s linear infinite; }
+  @keyframes drawIn{
+    0%   { stroke-dashoffset:100; opacity:0.45; }
+    30%  { stroke-dashoffset:0;   opacity:0.45; }
+    58%  { stroke-dashoffset:0;   opacity:0.45; }
+    64%  { stroke-dashoffset:0;   opacity:0; }
+    100% { stroke-dashoffset:0;   opacity:0; }
+  }
+  @keyframes drawOut{
+    0%   { stroke-dashoffset:100; opacity:0; }
+    30%  { stroke-dashoffset:100; opacity:0.45; }
+    58%  { stroke-dashoffset:0;   opacity:0.45; }
+    64%  { stroke-dashoffset:0;   opacity:0; }
+    100% { stroke-dashoffset:0;   opacity:0; }
+  }
+
+  .flow-in, .flow-out{ fill:var(--ray); offset-rotate:auto; }
+  .flow-in { animation:flowIn  3.6s linear infinite; }
+  .flow-out{ animation:flowOut 3.6s linear infinite; }
+  @keyframes flowIn{
+    0%   { offset-distance:0%;   opacity:0; }
+    4%   { opacity:0.95; }
+    28%  { offset-distance:100%; opacity:0.95; }
+    32%  { offset-distance:100%; opacity:0; }
+    100% { offset-distance:100%; opacity:0; }
+  }
+  @keyframes flowOut{
+    0%,30% { offset-distance:0%;   opacity:0; }
+    34%    { opacity:0.9; }
+    56%    { offset-distance:100%; opacity:0.9; }
+    62%    { offset-distance:100%; opacity:0; }
+    100%   { offset-distance:100%; opacity:0; }
+  }
+
+  /* a soft flare where the cloudy lens breaks the beam apart */
+  .scatter-burst{ animation:burst 3.6s ease-out infinite; transform-box:fill-box; transform-origin:center; }
+  @keyframes burst{
+    0%,26%   { opacity:0; transform:scale(0.3); }
+    34%      { opacity:0.45; transform:scale(1.5); }
+    50%,100% { opacity:0; transform:scale(2.2); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .flow-in, .flow-out, .scatter-burst{ animation:none; opacity:0; }
+    .ray-in, .ray-out{ animation:none; stroke-dashoffset:0; opacity:0.55; }
+  }
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Concept preview &mdash; animated ray diagram</p>
+  <h1>How a cataract scatters light</h1>
+
+  <div class="stage">
+    <!-- same scale as the normal-eye version: 1 mm = 40 units, optical axis y=500,
+         globe centre (510,500) inner r=420, cornea x=970, retina x=90 -> 22 mm axial -->
+    <svg viewBox="-40 0 1500 1000" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- a clouded, yellow-brown lens rather than a clear one -->
+        <radialGradient id="cloudy" cx="50%" cy="50%" r="62%">
+          <stop offset="0%"   stop-color="#e3cca8"/>
+          <stop offset="45%"  stop-color="#d0ad7d"/>
+          <stop offset="100%" stop-color="#b0854e"/>
+        </radialGradient>
+        <clipPath id="lensClip"><ellipse cx="734" cy="500" rx="90" ry="190"/></clipPath>
+        <!-- blurs the mottling into diffuse clouding rather than hard-edged blobs -->
+        <filter id="soften" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="18"/>
+        </filter>
+      </defs>
+
+      <circle class="vitreous" cx="510" cy="500" r="420"/>
+
+      <!-- retina, interrupted at the fovea (1.5 mm wide, 0.17 mm deep) -->
+      <path class="retina" d="M 862 290 A 410 410 0 0 0 101 470"/>
+      <path class="retina" d="M 101 530 A 410 410 0 0 0 862 710"/>
+      <path class="fovea"  d="M 101 470 C 96 478, 93 488, 93 500 C 93 512, 96 522, 101 530"/>
+
+      <path class="sclera" d="M 876 266 A 434 434 0 1 0 876 734"/>
+
+      <!-- optic nerve, 3 mm nasal to the fovea -->
+      <path d="M 95 558 L -49 601 L -11 726 L 133 682 Z" fill="var(--bg-dark)"/>
+      <g stroke="var(--warn)" stroke-width="2.2" stroke-linecap="round" opacity="0.6">
+        <path d="M 103 583 L -41 626"/>
+        <path d="M 110 608 L -33 651"/>
+        <path d="M 118 632 L -26 676"/>
+        <path d="M 125 657 L -18 701"/>
+      </g>
+      <path d="M 95 558 L -49 601" fill="none" stroke="var(--ink-light)" stroke-width="7" stroke-linecap="round"/>
+      <path d="M 133 682 L -11 726" fill="none" stroke="var(--ink-light)" stroke-width="7" stroke-linecap="round"/>
+
+      <path d="M 876 266 Q 950 296 948 500 Q 950 704 876 734
+               L 866 720 Q 828 650 816 580 Q 826 500 816 420
+               Q 828 350 866 280 Z"
+            fill="var(--accent-light)" opacity="0.55"/>
+
+      <!-- the cataract: a clouded, tan lens -->
+      <ellipse cx="734" cy="500" rx="90" ry="190" fill="url(#cloudy)" stroke="var(--cataract-dark)" stroke-width="2.5"/>
+      <g clip-path="url(#lensClip)" filter="url(#soften)" fill="#9c7442" opacity="0.3">
+        <ellipse cx="708" cy="402" rx="48" ry="62"/>
+        <ellipse cx="762" cy="576" rx="44" ry="70"/>
+        <ellipse cx="722" cy="516" rx="58" ry="52"/>
+      </g>
+
+      <g stroke="var(--ink-light)" stroke-width="1.4" opacity="0.75">
+        <line x1="834" y1="286" x2="742" y2="318"/>
+        <line x1="842" y1="298" x2="746" y2="326"/>
+        <line x1="849" y1="310" x2="750" y2="334"/>
+        <line x1="834" y1="714" x2="742" y2="682"/>
+        <line x1="842" y1="702" x2="746" y2="674"/>
+        <line x1="849" y1="690" x2="750" y2="666"/>
+      </g>
+
+      <path d="M 874 272 C 862 254, 838 248, 824 258
+               Q 815 265 824 275 Q 813 281 823 291
+               Q 833 298 845 290 Q 861 296 869 284 Z"
+            fill="var(--accent)" opacity="0.85"/>
+      <path d="M 874 728 C 862 746, 838 752, 824 742
+               Q 815 735 824 725 Q 813 719 823 709
+               Q 833 702 845 710 Q 861 704 869 716 Z"
+            fill="var(--accent)" opacity="0.85"/>
+      <g stroke="var(--accent-dark)" stroke-width="1" opacity="0.5">
+        <path d="M 828 262 L 833 275"/><path d="M 840 271 L 844 283"/><path d="M 852 277 L 855 288"/>
+        <path d="M 828 738 L 833 725"/><path d="M 840 729 L 844 717"/><path d="M 852 723 L 855 712"/>
+      </g>
+
+      <path d="M 872 278 Q 828 348 816 420 Q 854 352 866 280 Z" fill="var(--accent)" opacity="0.94"/>
+      <path d="M 872 722 Q 828 652 816 580 Q 854 648 866 720 Z" fill="var(--accent)" opacity="0.94"/>
+
+      <path d="M 876 266 Q 972 296 970 500 Q 972 704 876 734
+               Q 950 704 948 500 Q 950 296 876 266 Z"
+            fill="var(--accent-light)" fill-opacity="0.5" stroke="var(--accent-dark)" stroke-width="2"/>
+
+      <path d="M 874 262 L 889 272 L 872 281 Z" fill="var(--ink-light)" opacity="0.9"/>
+      <path d="M 874 738 L 889 728 L 872 719 Z" fill="var(--ink-light)" opacity="0.9"/>
+
+      <text x="734" y="742" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="20" fill="var(--cataract-dark)" font-weight="500">Cataract</text>
+
+      <!-- fovea marker: nothing focuses here any more -->
+      <circle cx="99" cy="500" r="4" fill="var(--ink-light)"/>
+
+      <!-- light enters straight, as normal -->
+      <g>
+        <path class="ray-in" pathLength="100" d="M 1460 428 L 734 428"/>
+        <path class="ray-in" pathLength="100" d="M 1460 452 L 734 452"/>
+        <path class="ray-in" pathLength="100" d="M 1460 476 L 734 476"/>
+        <path class="ray-in" pathLength="100" d="M 1460 500 L 734 500"/>
+        <path class="ray-in" pathLength="100" d="M 1460 524 L 734 524"/>
+        <path class="ray-in" pathLength="100" d="M 1460 548 L 734 548"/>
+        <path class="ray-in" pathLength="100" d="M 1460 572 L 734 572"/>
+      </g>
+
+      <!-- then the cloudy lens throws each ray off in its own direction -->
+      <g>
+        <path class="ray-out" pathLength="100" d="M 734 428 L 166 288"/>
+        <path class="ray-out" pathLength="100" d="M 734 428 L 110 446"/>
+        <path class="ray-out" pathLength="100" d="M 734 452 L 227 788"/>
+        <path class="ray-out" pathLength="100" d="M 734 452 L 107 525"/>
+        <path class="ray-out" pathLength="100" d="M 734 476 L 140 339"/>
+        <path class="ray-out" pathLength="100" d="M 734 476 L 154 691"/>
+        <path class="ray-out" pathLength="100" d="M 734 500 L 114 580"/>
+        <path class="ray-out" pathLength="100" d="M 734 500 L 271 826"/>
+        <path class="ray-out" pathLength="100" d="M 734 524 L 204 236"/>
+        <path class="ray-out" pathLength="100" d="M 734 524 L 244 196"/>
+        <path class="ray-out" pathLength="100" d="M 734 548 L 131 639"/>
+        <path class="ray-out" pathLength="100" d="M 734 548 L 186 741"/>
+        <path class="ray-out" pathLength="100" d="M 734 572 L 288 163"/>
+        <path class="ray-out" pathLength="100" d="M 734 572 L 121 392"/>
+      </g>
+
+      <circle class="scatter-burst" cx="734" cy="500" r="60" fill="#e3cca8"/>
+
+      <g>
+        <path class="flow-in" d="M -10,-9 L 10,0 L -10,9 L -4,0 Z" style="offset-path:path('M 1460 428 L 734 428');"/>
+        <path class="flow-in" d="M -10,-9 L 10,0 L -10,9 L -4,0 Z" style="offset-path:path('M 1460 452 L 734 452');"/>
+        <path class="flow-in" d="M -10,-9 L 10,0 L -10,9 L -4,0 Z" style="offset-path:path('M 1460 476 L 734 476');"/>
+        <path class="flow-in" d="M -10,-9 L 10,0 L -10,9 L -4,0 Z" style="offset-path:path('M 1460 500 L 734 500');"/>
+        <path class="flow-in" d="M -10,-9 L 10,0 L -10,9 L -4,0 Z" style="offset-path:path('M 1460 524 L 734 524');"/>
+        <path class="flow-in" d="M -10,-9 L 10,0 L -10,9 L -4,0 Z" style="offset-path:path('M 1460 548 L 734 548');"/>
+        <path class="flow-in" d="M -10,-9 L 10,0 L -10,9 L -4,0 Z" style="offset-path:path('M 1460 572 L 734 572');"/>
+      </g>
+      <g>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 428 L 166 288');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 428 L 110 446');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 452 L 227 788');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 452 L 107 525');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 476 L 140 339');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 476 L 154 691');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 500 L 114 580');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 500 L 271 826');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 524 L 204 236');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 524 L 244 196');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 548 L 131 639');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 548 L 186 741');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 572 L 288 163');"/>
+        <path class="flow-out" d="M -9,-8 L 9,0 L -9,8 L -4,0 Z" style="offset-path:path('M 734 572 L 121 392');"/>
+      </g>
+
+      <g>
+        <line x1="120" y1="905" x2="320" y2="905" stroke="var(--ink)" stroke-width="2"/>
+        <line x1="120" y1="897" x2="120" y2="913" stroke="var(--ink)" stroke-width="2"/>
+        <line x1="320" y1="897" x2="320" y2="913" stroke="var(--ink)" stroke-width="2"/>
+        <text x="220" y="936" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="17" fill="var(--ink-mid)">5 mm</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="note">Same eye, same scale &mdash; but the lens has clouded. Light still enters straight through the pupil, then the cataract throws each ray off in its own direction instead of bending them all to one point. Nothing lands in the fovea, so the image never comes together sharply.</p>
+</div>

@@ -176,12 +176,44 @@
     /* ---------- Diagnosis icon grids ---------- */
     .expect-grid { margin-top: 1.5rem; display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
     .expect-grid.cols-3 { grid-template-columns: repeat(3,1fr); }
-    .expect-grid.cols-2 { grid-template-columns: repeat(2,1fr); }
+    .expect-grid.cols-2 { grid-template-columns: repeat(2,1fr); gap: 1.75rem; border: none; }
+    .expect-grid.cols-2 .expect-card { border: none; }
     .expect-card { padding: 1.75rem 1.5rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); transition: background 0.2s; }
     .expect-card:hover { background: var(--bg-mid); }
     .expect-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--accent-light); color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 0.9rem; }
     .expect-card h3 { font-family: var(--f-serif); font-weight: 400; font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--ink); }
     .expect-card p { margin: 0; font-size: 0.85rem; color: var(--ink-mid); line-height: 1.6; }
+    .testing-hint { margin-top: 0.75rem; font-size: 0.82rem; color: var(--ink-light); }
+
+    /* ---------- Flip cards ---------- */
+    .expect-card.flip-card {
+      padding: 0; cursor: pointer; perspective: 1400px; border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(13,31,45,0.08), 0 6px 16px rgba(13,31,45,0.06);
+      transition: box-shadow 0.35s ease, transform 0.35s ease;
+    }
+    .expect-card.flip-card:hover { background: none; transform: translateY(-4px); box-shadow: 0 10px 24px rgba(13,31,45,0.14), 0 3px 8px rgba(13,31,45,0.08); }
+    .expect-card.flip-card.is-flipped { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(13,31,45,0.16), 0 4px 10px rgba(13,31,45,0.09); }
+    .expect-card.flip-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .flip-inner { position: relative; width: 100%; min-height: 320px; transition: transform 0.7s cubic-bezier(0.4,0.2,0.2,1); transform-style: preserve-3d; }
+    .flip-card.is-flipped .flip-inner { transform: rotateY(180deg); }
+    .flip-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: var(--bg); border-radius: 4px; padding: 1.75rem 1.5rem; display: flex; flex-direction: column; }
+    .flip-front { }
+    .flip-hint { margin-top: auto; padding-top: 1rem; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+    .flip-back { transform: rotateY(180deg); align-items: center; text-align: center; justify-content: center; }
+    .mini-eyebrow { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.7rem; }
+    .mini-map { width: 128px; height: 128px; display: block; flex-shrink: 0; }
+    .oct-maps-row { display: flex; gap: 1.1rem; justify-content: center; align-items: flex-start; }
+    .oct-map-col { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+    .mini-map-sm { width: 112px; height: 112px; }
+    .oct-map-label { font-size: 0.58rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-light); }
+    .mini-caption { margin-top: 0.75rem; font-size: 0.78rem; color: var(--ink-mid); line-height: 1.5; }
+    .mini-caption strong { display: block; font-family: var(--f-serif); font-weight: 500; font-size: 0.92rem; color: var(--ink); margin-bottom: 0.15rem; }
+    .mini-stat { margin-top: 0.6rem; font-size: 0.68rem; color: var(--ink-light); }
+    .mini-stat .v { font-weight: 500; color: var(--accent-dark); font-variant-numeric: tabular-nums; }
+    .mini-dots { margin-top: 0.7rem; display: flex; justify-content: center; gap: 0.35rem; }
+    .mini-dots button { width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--ink-light); background: var(--bg); padding: 0; cursor: pointer; transition: all 0.2s; }
+    .mini-dots button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .mini-dots button.is-active { background: var(--accent); border-color: var(--accent); width: 7px; height: 7px; }
 
     /* ---------- Numbered list cards (subtypes / treatment) ---------- */
     .lens-list { margin-top: 1rem; display: flex; flex-direction: column; }
@@ -219,9 +251,10 @@
     /* looping narrative: normal drainage <-> cataract / angle closure / trapped fluid */
     .ac-lens-anim{ animation: acLensChange 16s ease-in-out infinite; }
     @keyframes acLensChange{
+      /* the cataract tan here matches the lens in the cataract ray animation */
       0%, 6%    { rx:112px; cx:500px; fill:var(--bg-mid); }
-      26%       { rx:170px; cx:463px; fill:#bd8965; }
-      74%       { rx:170px; cx:463px; fill:#bd8965; }
+      26%       { rx:170px; cx:463px; fill:#d0ad7d; }
+      74%       { rx:170px; cx:463px; fill:#d0ad7d; }
       94%, 100% { rx:112px; cx:500px; fill:var(--bg-mid); }
     }
 
@@ -467,6 +500,7 @@
       <div class="nav-dropdown">
         <a href="cataracts.html">Cataracts</a>
         <a href="glaucoma.html" class="active">Glaucoma</a>
+        <a href="office-hours.html">Office Hours</a>
       </div>
     </div>
     <a href="index.html#faq">FAQs</a>
@@ -482,6 +516,7 @@
   <span class="mobile-nav-heading">Patient Education</span>
   <a href="cataracts.html" onclick="closeMobileNav()" class="sub-link">Cataracts</a>
   <a href="glaucoma.html" onclick="closeMobileNav()" class="sub-link active">Glaucoma</a>
+  <a href="office-hours.html" onclick="closeMobileNav()" class="sub-link">Office Hours</a>
   <a href="index.html#faq" onclick="closeMobileNav()">FAQs</a>
   <a href="index.html#contact" onclick="closeMobileNav()">Contact</a>
 </div>
@@ -1102,16 +1137,50 @@
     </div>
 
     <h3 class="signs-title reveal" style="margin-top:3rem;">Specialized testing</h3>
+    <p class="testing-hint reveal">Hover, tap, or focus either card to see a simulated progression.</p>
     <div class="expect-grid cols-2 reveal">
-      <div class="expect-card">
-        <div class="expect-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-grid"/></svg></div>
-        <h3>Visual Field Test</h3>
-        <p>Maps your peripheral vision to detect and track the specific pattern of vision loss glaucoma causes.</p>
+      <div class="expect-card flip-card" id="vfFlipCard" tabindex="0" aria-label="Visual Field Test. Flip to see a simulated progression.">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="expect-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-grid"/></svg></div>
+            <h3>Visual Field Test</h3>
+            <p>Maps your peripheral vision to detect and track the specific pattern of vision loss glaucoma causes.</p>
+            <span class="flip-hint">See it progress &#8635;</span>
+          </div>
+          <div class="flip-face flip-back">
+            <span class="mini-eyebrow">Simulated Progression</span>
+            <svg class="mini-map" id="vfMiniMap" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+            <p class="mini-caption"><strong id="vfStageName">Baseline</strong><span id="vfStageDesc">Full peripheral vision; sensitivity is even throughout.</span></p>
+            <div class="mini-stat"><span class="k">MD</span> <span class="v" id="vfStageStat">+0.1 dB</span></div>
+            <div class="mini-dots" id="vfDots"></div>
+          </div>
+        </div>
       </div>
-      <div class="expect-card">
-        <div class="expect-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-layers"/></svg></div>
-        <h3>OCT of the Optic Nerve</h3>
-        <p>A quick, painless scan measuring the thickness of nerve fiber layers &mdash; often catching change before you'd ever notice it.</p>
+      <div class="expect-card flip-card" id="octFlipCard" tabindex="0" aria-label="OCT of the Optic Nerve. Flip to see a simulated progression.">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="expect-icon"><svg width="18" height="18" aria-hidden="true"><use href="#i-layers"/></svg></div>
+            <h3>OCT of the Optic Nerve</h3>
+            <p>A quick, painless scan measuring the thickness of nerve fiber layers &mdash; often catching change before you'd ever notice it.</p>
+            <span class="flip-hint">See it progress &#8635;</span>
+          </div>
+          <div class="flip-face flip-back">
+            <span class="mini-eyebrow">Simulated Progression</span>
+            <div class="oct-maps-row">
+              <div class="oct-map-col">
+                <svg class="mini-map mini-map-sm" id="octQuadMap" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+                <span class="oct-map-label">Quadrant Map</span>
+              </div>
+              <div class="oct-map-col">
+                <svg class="mini-map mini-map-sm" id="octHeatMap" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+                <span class="oct-map-label">Thickness Map</span>
+              </div>
+            </div>
+            <p class="mini-caption"><strong id="octStageName">Baseline</strong><span id="octStageDesc">All four quadrants are healthy and even.</span></p>
+            <div class="mini-stat"><span class="k">Avg RNFL</span> <span class="v" id="octStageStat">96 &micro;m</span></div>
+            <div class="mini-dots" id="octDots"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1237,7 +1306,7 @@
       </div>
       <nav class="footer-links">
         <a href="index.html">Home</a><a href="index.html#about">About</a><a href="index.html#expertise">Expertise</a>
-        <a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="index.html#faq">FAQs</a><a href="index.html#contact">Contact</a>
+        <a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="office-hours.html">Office Hours</a><a href="index.html#faq">FAQs</a><a href="index.html#contact">Contact</a>
       </nav>
     </div>
     <div class="footer-copy">
@@ -1390,6 +1459,328 @@
       });
     }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
     tocSections.forEach(s => tocObserver.observe(s));
+  })();
+
+  /* ---------- Diagnosis flip-card progressions ---------- */
+  (function(){
+    const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const TICK_MS = 1900;
+
+    function svgEl(tag, attrs){
+      const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for (const k in attrs) el.setAttribute(k, attrs[k]);
+      return el;
+    }
+
+    function makeController({ stages, buildPoints, renderStage, nameEl, descEl, statEl, dotsEl }){
+      let timer = null, current = 0;
+      const dots = stages.map((s, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.tabIndex = -1;
+        b.setAttribute('aria-label', 'Stage ' + (i + 1) + ': ' + s.name);
+        b.addEventListener('click', (e) => { e.stopPropagation(); stop(); show(i); });
+        dotsEl.appendChild(b);
+        return b;
+      });
+
+      function show(idx){
+        current = idx;
+        const s = stages[idx];
+        renderStage(idx);
+        nameEl.textContent = s.name;
+        descEl.textContent = s.desc;
+        statEl.textContent = s.stat;
+        dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+      }
+
+      function stop(){ if (timer) { clearInterval(timer); timer = null; } }
+
+      function start(){
+        stop();
+        if (REDUCE_MOTION) { show(Math.min(3, stages.length - 1)); return; }
+        show(0);
+        timer = setInterval(() => show((current + 1) % stages.length), TICK_MS);
+      }
+
+      buildPoints();
+      show(0);
+      return { start, stop, dots };
+    }
+
+    function setupFlipCard(card, controller){
+      // Flipped whenever hovering, pinned (via click/tap), or keyboard-focused —
+      // tracked separately so a click while hovering pins it rather than closing it.
+      // A click also fires native focus, so we only treat *keyboard* focus (no
+      // preceding mousedown) as its own trigger — otherwise "focused" would never
+      // clear after a click, leaving the card stuck open once the mouse moves away.
+      let hovering = false, pinned = false, focused = false, open = false, viaMouse = false;
+      function apply(){
+        const next = hovering || pinned || focused;
+        if (next === open) return;
+        open = next;
+        card.classList.toggle('is-flipped', open);
+        controller.dots.forEach(d => { d.tabIndex = open ? 0 : -1; });
+        if (open) controller.start(); else controller.stop();
+      }
+      card.addEventListener('mouseenter', () => { hovering = true; apply(); });
+      card.addEventListener('mouseleave', () => { hovering = false; apply(); });
+      card.addEventListener('mousedown', () => { viaMouse = true; });
+      card.addEventListener('focusin', () => { if (!viaMouse) { focused = true; apply(); } viaMouse = false; });
+      card.addEventListener('focusout', (e) => { if (!card.contains(e.relatedTarget)) { focused = false; apply(); } });
+      card.addEventListener('click', () => { pinned = !pinned; apply(); });
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pinned = !pinned; apply(); }
+      });
+    }
+
+    /* ----- Visual field mini map ----- */
+    const vfCard = document.getElementById('vfFlipCard');
+    if (vfCard) {
+      const ROWS = [4,6,8,8,8,8,6,4], YS = [40,74,108,142,176,210,244,278], CX = 150, CY = 159;
+      const VF_COLORS = ['#fbfbfb','#d7dbdd','#9aa2a6','#555d61','#101314'];
+      const points = [];
+
+      function seeded(i){ const v = Math.sin(i * 12.9898) * 43758.5453; return v - Math.floor(v); }
+
+      const VF_STAGES = [
+        { name: 'Baseline',          desc: 'Full peripheral vision; sensitivity is even throughout.',    stat: '+0.1 dB', threshold: 1.05 },
+        { name: 'Early Loss',        desc: 'The far periphery just begins to dim.',                      stat: '-2.1 dB', threshold: 0.88 },
+        { name: 'Mild-Moderate',     desc: 'Peripheral sensitivity keeps fading, moving inward.',         stat: '-5.8 dB', threshold: 0.68 },
+        { name: 'Moderate-Advanced', desc: 'Only a narrowing ring of usable field remains.',              stat: '-12.4 dB', threshold: 0.50 },
+        { name: 'Severe',            desc: 'The field has constricted to a small central island.',        stat: '-19.6 dB', threshold: 0.34 },
+        { name: 'End-Stage',         desc: 'A single small island of vision remains; the rest is gone.',  stat: '-27.3 dB', threshold: 0.20 }
+      ];
+
+      function buildVfPoints(){
+        const svg = document.getElementById('vfMiniMap');
+        svg.appendChild(svgEl('circle', { cx: CX, cy: CY, r: 5, fill: 'none', stroke: '#0a7e8c', 'stroke-width': 1.4 }));
+        ROWS.forEach((n, ri) => {
+          const y = YS[ri];
+          const startX = 150 - (n - 1) * 15;
+          for (let i = 0; i < n; i++) {
+            const x = startX + i * 30;
+            const blind = (n === 8 && i === 6 && (ri === 3 || ri === 4));
+            const r = svgEl('rect', { x: x - 8, y: y - 8, width: 16, height: 16, fill: blind ? '#0d1f2d' : VF_COLORS[0] });
+            r.style.transition = 'fill 0.8s ease';
+            svg.appendChild(r);
+            points.push({ x, y, blind, el: r });
+          }
+        });
+        const maxEcc = Math.max(...points.map(p => Math.hypot(p.x - CX, p.y - CY)));
+        points.forEach((p, i) => { p.ecc = Math.hypot(p.x - CX, p.y - CY) / maxEcc; p.noise = seeded(i); });
+      }
+
+      function renderVfStage(idx){
+        const thresh = VF_STAGES[idx].threshold;
+        points.forEach(p => {
+          if (p.blind) return;
+          const adj = p.ecc + (p.noise - 0.5) * 0.14;
+          const over = adj - thresh;
+          const lvl = over <= 0 ? 0 : Math.min(4, Math.max(1, Math.ceil(over / 0.15)));
+          p.el.style.transitionDelay = ((1 - p.ecc) * 220) + 'ms';
+          p.el.style.fill = VF_COLORS[lvl];
+        });
+      }
+
+      setupFlipCard(vfCard, makeController({
+        stages: VF_STAGES,
+        buildPoints: buildVfPoints,
+        renderStage: renderVfStage,
+        nameEl: document.getElementById('vfStageName'),
+        descEl: document.getElementById('vfStageDesc'),
+        statEl: document.getElementById('vfStageStat'),
+        dotsEl: document.getElementById('vfDots')
+      }));
+    }
+
+    /* ----- OCT mini map: S/T/I/N quadrant map -----
+       Nasal and temporal (left/right) stay healthy; superior and inferior
+       (top/bottom) are the quadrants that thin in glaucoma. */
+    const octCard = document.getElementById('octFlipCard');
+    if (octCard) {
+      const OCT_COLORS = ['#4CAF50', '#FFD400', '#E53935']; // green, yellow, red — matched to real HFA/HRT sector-map report colors
+      const QUADS = [
+        { key: 'S', a0: -135, a1: -45 }, // top
+        { key: 'N', a0: -45,  a1: 45  }, // right
+        { key: 'I', a0: 45,   a1: 135 }, // bottom
+        { key: 'T', a0: 135,  a1: 225 }  // left
+      ];
+      const quadEls = {};
+
+      const OCT_STAGES = [
+        { name: 'Baseline',        desc: 'All four quadrants are healthy and even.',            stat: '96 µm', S: 0, I: 0 },
+        { name: 'Early Loss',      desc: 'The inferior rim just begins to thin.',                stat: '85 µm', S: 0, I: 1 },
+        { name: 'Moderate',        desc: 'Thinning now involves both top and bottom.',           stat: '71 µm', S: 1, I: 1 },
+        { name: 'Moderate-Severe', desc: 'The inferior rim is now significantly thinned.',       stat: '58 µm', S: 1, I: 2 },
+        { name: 'Severe',          desc: 'Both the superior and inferior rim are severely thin.', stat: '42 µm', S: 2, I: 2 }
+      ];
+
+      function sectorPath(cx, cy, r, a0, a1){
+        const rad0 = a0 * Math.PI / 180, rad1 = a1 * Math.PI / 180;
+        const x0 = cx + r * Math.cos(rad0), y0 = cy + r * Math.sin(rad0);
+        const x1 = cx + r * Math.cos(rad1), y1 = cy + r * Math.sin(rad1);
+        return 'M' + cx + ',' + cy + ' L' + x0 + ',' + y0 + ' A' + r + ',' + r + ' 0 0 1 ' + x1 + ',' + y1 + ' Z';
+      }
+
+      function buildOctPoints(){
+        const svg = document.getElementById('octQuadMap');
+        const cx = 90, cy = 90, r = 76;
+        QUADS.forEach(q => {
+          const path = svgEl('path', { d: sectorPath(cx, cy, r, q.a0, q.a1), fill: OCT_COLORS[0], stroke: '#f0f4f5', 'stroke-width': 2.5 });
+          path.style.transition = 'fill 0.8s ease';
+          svg.appendChild(path);
+          quadEls[q.key] = path;
+
+          const mid = (q.a0 + q.a1) / 2 * Math.PI / 180;
+          const lx = cx + r * 0.6 * Math.cos(mid), ly = cy + r * 0.6 * Math.sin(mid);
+          const label = svgEl('text', {
+            x: lx, y: ly, fill: '#ffffff', stroke: '#0d1f2d', 'stroke-width': 2, 'paint-order': 'stroke',
+            'font-family': 'DM Sans, sans-serif', 'font-size': 15, 'font-weight': 500,
+            'text-anchor': 'middle', 'dominant-baseline': 'central'
+          });
+          label.textContent = q.key;
+          svg.appendChild(label);
+        });
+        svg.appendChild(svgEl('circle', { cx, cy, r, fill: 'none', stroke: '#7a9aaa', 'stroke-width': 1.5 }));
+      }
+
+      function renderOctStage(idx){
+        const s = OCT_STAGES[idx];
+        quadEls.S.style.fill = OCT_COLORS[s.S];
+        quadEls.I.style.fill = OCT_COLORS[s.I];
+      }
+
+      /* ----- Associated RNFL "wing" heat map -----
+         Blue is the resting background. Warm red-to-yellow "wings" radiate
+         outward from the disc wherever nerve fiber tissue is intact — long,
+         hot wings mean healthy tissue. As a quadrant thins (yellow/red on
+         the quadrant map), its wings shorten and cool back to blue, and the
+         central cup visibly excavates toward that same pole — mirroring
+         how real optic nerve cupping notches toward the thinned rim. */
+      function heatSeeded(i){ const v = Math.sin(i * 78.233 + 12.9898) * 43758.5453; return v - Math.floor(v); }
+
+      function petalPath(cx, cy, angleDeg, rInner, length, halfWidth){
+        const rad = angleDeg * Math.PI / 180;
+        const dx = Math.cos(rad), dy = Math.sin(rad);
+        const px = -dy, py = dx;
+        const base = [cx + dx * rInner, cy + dy * rInner];
+        const tip  = [cx + dx * (rInner + length), cy + dy * (rInner + length)];
+        const mid  = [cx + dx * (rInner + length * 0.42), cy + dy * (rInner + length * 0.42)];
+        const c1 = [mid[0] + px * halfWidth, mid[1] + py * halfWidth];
+        const c2 = [mid[0] - px * halfWidth, mid[1] - py * halfWidth];
+        return {
+          d: 'M' + base.join(',') + ' Q' + c1.join(',') + ' ' + tip.join(',') + ' Q' + c2.join(',') + ' ' + base.join(',') + ' Z',
+          base, tip
+        };
+      }
+
+      function smoothBlobPath(points){
+        const n = points.length;
+        const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+        let d = 'M' + mid(points[n - 1], points[0]).join(',');
+        for (let i = 0; i < n; i++) {
+          const p = points[i], next = points[(i + 1) % n], m = mid(p, next);
+          d += ' Q' + p.join(',') + ' ' + m.join(',');
+        }
+        return d + ' Z';
+      }
+
+      const heatWings = [];
+      let heatCupPath;
+      const HEAT_CX = 90, HEAT_CY = 90;
+      const HEAT_DISC_R = 34;      // optic disc margin — fixed, never changes
+      const HEAT_CUP_BASE = 14;    // healthy cup radius
+      const HEAT_CUP_MAX = 30;     // worst-case cup radius — still inside HEAT_DISC_R, so a sliver of rim always remains
+      const HEAT_R0 = HEAT_DISC_R + 5; // wings start just outside the fixed disc margin
+      const HEAT_TILT = 22; // real NFL bundles arc diagonally, not straight up/down
+      const HEAT_CLUSTERS = [
+        { pole: 'S', center: -90 + HEAT_TILT }, // superior wing, angled up and to the right
+        { pole: 'I', center: 90 - HEAT_TILT }   // inferior wing, angled down and to the right
+      ];
+      const HEAT_PETALS_PER_WING = 9;
+      const HEAT_SPREAD = 74; // degrees each butterfly wing fans across, leaving clear blue gaps left and right
+
+      function buildOctHeat(){
+        const svg = document.getElementById('octHeatMap');
+        svg.appendChild(svgEl('rect', { x: 0, y: 0, width: 180, height: 180, fill: '#2979FF' }));
+        const defs = svgEl('defs', {});
+        svg.appendChild(defs);
+
+        HEAT_CLUSTERS.forEach(cl => {
+          for (let i = 0; i < HEAT_PETALS_PER_WING; i++) {
+            const t = (i / (HEAT_PETALS_PER_WING - 1)) - 0.5; // -0.5 .. 0.5 across the wing
+            const angle = cl.center + t * HEAT_SPREAD;
+            const edgeFactor = 1 - Math.abs(t) * 0.55; // petals nearer the wing's centerline reach further
+            const petal = petalPath(HEAT_CX, HEAT_CY, angle, HEAT_R0, 46 * edgeFactor, 7 * edgeFactor + 3);
+            const gradId = 'octWingGrad' + cl.pole + i;
+            const grad = svgEl('linearGradient', {
+              id: gradId, gradientUnits: 'userSpaceOnUse',
+              x1: petal.base[0], y1: petal.base[1], x2: petal.tip[0], y2: petal.tip[1]
+            });
+            grad.appendChild(svgEl('stop', { offset: '0%', 'stop-color': '#E53935' }));
+            grad.appendChild(svgEl('stop', { offset: '100%', 'stop-color': '#FFD400' }));
+            defs.appendChild(grad);
+
+            const path = svgEl('path', { d: petal.d, fill: 'url(#' + gradId + ')' });
+            path.style.transition = 'd 0.9s ease';
+            svg.appendChild(path);
+            heatWings.push({ el: path, gradEl: grad, angle, pole: cl.pole, edgeFactor, noise: heatSeeded(i + (cl.pole === 'S' ? 0 : 100)) });
+          }
+        });
+
+        // fixed disc margin — constant diameter regardless of stage
+        svg.appendChild(svgEl('circle', { cx: HEAT_CX, cy: HEAT_CY, r: HEAT_DISC_R, fill: 'none', stroke: '#7a9aaa', 'stroke-width': 1, opacity: 0.6 }));
+
+        heatCupPath = svgEl('path', { fill: '#c7cbd1', stroke: '#9aa2a6', 'stroke-width': 1 });
+        heatCupPath.style.transition = 'd 0.9s ease';
+        svg.appendChild(heatCupPath);
+
+        svg.appendChild(svgEl('rect', { x: 0.75, y: 0.75, width: 178.5, height: 178.5, fill: 'none', stroke: 'rgba(13,31,45,0.15)', 'stroke-width': 1.5 }));
+      }
+
+      function renderOctHeat(idx){
+        const s = OCT_STAGES[idx];
+
+        // wings shorten and cool back toward the disc as their pole thins
+        heatWings.forEach(w => {
+          const severity = w.pole === 'S' ? s.S : s.I; // 0..2
+          const frac = severity / 2;
+          const jitter = 0.9 + w.noise * 0.2;
+          const fullLen = 46 * w.edgeFactor, fullWidth = 7 * w.edgeFactor + 3;
+          const length = (fullLen - (fullLen - 8) * frac) * jitter;
+          const halfWidth = fullWidth - Math.min(fullWidth - 3, 4 * frac);
+          const petal = petalPath(HEAT_CX, HEAT_CY, w.angle, HEAT_R0, length, halfWidth);
+          w.el.setAttribute('d', petal.d);
+          w.gradEl.setAttribute('x1', petal.base[0]); w.gradEl.setAttribute('y1', petal.base[1]);
+          w.gradEl.setAttribute('x2', petal.tip[0]);  w.gradEl.setAttribute('y2', petal.tip[1]);
+        });
+
+        // cup grows toward whichever pole is damaged — rim (the gap to the
+        // fixed disc margin) thins there, while the disc margin itself never moves
+        const cupPts = [];
+        const N = 28;
+        for (let i = 0; i < N; i++) {
+          const rad = (360 / N) * i * Math.PI / 180;
+          const sinA = Math.sin(rad);
+          const proxS = Math.max(0, -sinA), proxI = Math.max(0, sinA);
+          const frac = (s.S * proxS + s.I * proxI) / 2;
+          const r = HEAT_CUP_BASE + frac * (HEAT_CUP_MAX - HEAT_CUP_BASE);
+          cupPts.push([HEAT_CX + r * Math.cos(rad), HEAT_CY + r * Math.sin(rad)]);
+        }
+        heatCupPath.setAttribute('d', smoothBlobPath(cupPts));
+      }
+
+      setupFlipCard(octCard, makeController({
+        stages: OCT_STAGES,
+        buildPoints: () => { buildOctPoints(); buildOctHeat(); },
+        renderStage: (idx) => { renderOctStage(idx); renderOctHeat(idx); },
+        nameEl: document.getElementById('octStageName'),
+        descEl: document.getElementById('octStageDesc'),
+        statEl: document.getElementById('octStageStat'),
+        dotsEl: document.getElementById('octDots')
+      }));
+    }
   })();
 </script>
 </body>

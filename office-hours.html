@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Office Hours — Patient Education | Siddharth Bhargava, MD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Ask a question about cataracts or glaucoma anonymously. Selected questions are answered in general terms by Siddharth Bhargava, MD, and published here for everyone to learn from." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #f0f4f5;
+      --bg-mid:       #e4edf0;
+      --bg-dark:      #d4e3e8;
+      --ink:          #0d1f2d;
+      --ink-mid:      #3a5060;
+      --ink-light:    #7a9aaa;
+      --rule:         rgba(13,31,45,0.13);
+      --accent:       #0a7e8c;
+      --accent-dark:  #065f6b;
+      --accent-light: #e0f2f4;
+      --warn:         #a85d3e;
+      --warn-tint:    #f5e9e3;
+      --f-serif: 'Cormorant Garamond', Georgia, serif;
+      --f-sans:  'DM Sans', system-ui, sans-serif;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --nav-h: 68px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); -webkit-font-smoothing: antialiased; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 1rem; line-height: 1.65; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul, ol { list-style: none; }
+    button { cursor: pointer; background: none; border: none; font: inherit; }
+    ::selection { background: rgba(10,126,140,0.18); }
+
+    .reveal { opacity: 0; transform: translateY(60px); transition: opacity 1s var(--ease-out), transform 1s var(--ease-out); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+    /* ---------- Nav ---------- */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem,5vw,4rem); background: var(--bg); border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
+    .nav.scrolled { border-color: var(--rule); background: rgba(240,244,245,0.96); backdrop-filter: blur(10px); }
+    .nav-logo { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 400; display: flex; flex-direction: column; line-height: 1.2; }
+    .nav-logo span { font-family: var(--f-sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-top: 1px; }
+    .nav-links { display: flex; align-items: center; gap: 2.25rem; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .nav-links a, .nav-links button { color: var(--ink-mid); position: relative; transition: color 0.2s; }
+    .nav-links a::after, .nav-links button::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.25s var(--ease-out); }
+    .nav-links a:hover, .nav-links a.active, .nav-links button:hover { color: var(--accent); }
+    .nav-links a:hover::after, .nav-links a.active::after, .nav-links button:hover::after { width: 100%; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--ink); }
+    .mobile-nav { display: none; position: fixed; inset: 0; z-index: 99; background: var(--bg); padding: calc(var(--nav-h) + 2rem) 2rem 2rem; flex-direction: column; gap: 2rem; overflow-y: auto; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a, .mobile-nav-heading { font-family: var(--f-serif); font-size: clamp(1.6rem,7vw,2.2rem); font-weight: 300; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; min-height: 44px; display: flex; align-items: center; }
+    .mobile-nav-heading { color: var(--ink-light); }
+    .mobile-nav a.sub-link { font-family: var(--f-sans); font-size: 0.95rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); padding: 0.6rem 0 0.6rem 1.5rem; min-height: 40px; }
+    .mobile-nav a.active { color: var(--accent); }
+
+    /* Dropdown */
+    .nav-item { position: relative; }
+    .nav-item > a, .nav-item > button { display: inline-flex; align-items: center; gap: 0.3rem; }
+    .nav-caret { font-size: 0.6rem; color: var(--ink-light); transition: transform 0.2s, color 0.2s; }
+    .nav-item:hover .nav-caret, .nav-item:focus-within .nav-caret { color: var(--accent); }
+    .nav-dropdown { position: absolute; top: 100%; left: 50%; min-width: 168px; padding: 0.5rem 0; background: var(--bg); border: 1px solid var(--rule); box-shadow: 0 16px 36px rgba(13,31,45,0.14); opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(-50%) translateY(4px); transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out), visibility 0.2s; z-index: 20; }
+    .nav-item:hover .nav-dropdown, .nav-item:focus-within .nav-dropdown { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown a { display: block; padding: 0.65rem 1.25rem; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); white-space: nowrap; }
+    .nav-dropdown a::after { content: none; }
+    .nav-dropdown a:hover, .nav-dropdown a.active { color: var(--accent); background: var(--bg-mid); }
+
+    .wrap { max-width: 1140px; margin: 0 auto; padding: 0 clamp(1rem,5vw,4rem); }
+    .eyebrow { display: inline-block; font-family: var(--f-sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+    .display { font-family: var(--f-serif); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
+    .display-xl { font-size: clamp(3.2rem,7vw,6.5rem); }
+    .display-lg { font-size: clamp(2rem,5vw,4.2rem); }
+    .display em { font-style: italic; color: var(--accent); }
+
+    .bg-eye { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; opacity: var(--eye-opacity,1); transition: opacity 0.4s var(--ease-out); }
+    .bg-eye svg { position: absolute; left: 50%; top: 42%; width: min(120vw,1600px); height: auto; transform: translate(-50%,-50%); overflow: visible; }
+    @media (prefers-reduced-motion: reduce) { .bg-eye { opacity: 0.5; } }
+
+    /* ---------- Floating table of contents ---------- */
+    .toc { position: fixed; left: clamp(1rem, 2.5vw, 2.5rem); top: 50%; transform: translateY(-50%); z-index: 15; display: flex; flex-direction: column; gap: 1rem; }
+    .toc::before { content: ''; position: absolute; left: 3px; top: 5px; bottom: 5px; width: 1px; background: var(--rule); z-index: -1; }
+    .toc a { position: relative; padding-left: 1.15rem; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-light); white-space: nowrap; transition: color 0.25s; }
+    .toc a::before { content: ''; position: absolute; left: 0; top: 50%; width: 7px; height: 7px; border-radius: 50%; background: var(--bg); border: 1px solid var(--ink-light); transform: translateY(-50%); transition: all 0.25s; }
+    .toc a:hover { color: var(--ink); }
+    .toc a.active { color: var(--accent); }
+    .toc a.active::before { background: var(--accent); border-color: var(--accent); width: 9px; height: 9px; }
+    @media (max-width: 1400px) { .toc { display: none; } }
+
+    .page-hero { background: transparent; position: relative; z-index: 1; padding-top: calc(var(--nav-h) + clamp(4rem,8vw,7rem)); padding-bottom: clamp(2.5rem,6vw,4rem); border-bottom: 1px solid var(--rule); }
+    .page-hero p { font-size: 1.05rem; color: var(--ink-mid); line-height: 1.75; max-width: 58ch; margin-top: 1.5rem; }
+
+    section { position: relative; z-index: 2; padding: clamp(4rem,10vw,8rem) 0; background: var(--bg); }
+    section.bg-mid { background: var(--bg-mid); }
+    .disclaimer, footer { position: relative; z-index: 2; background: var(--bg); }
+
+    .section-head { max-width: 660px; margin-bottom: 2.5rem; }
+    .section-head p { color: var(--ink-mid); font-size: 1rem; line-height: 1.75; margin-top: 1rem; }
+
+    /* ---------- How it works ---------- */
+    .steps { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
+    .step { padding: 1.9rem 1.6rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .step-num { font-family: var(--f-serif); font-size: 2rem; font-weight: 400; color: var(--accent-dark); line-height: 1; }
+    .step h3 { margin: 0.7rem 0 0.5rem; font-family: var(--f-serif); font-weight: 400; font-size: 1.2rem; color: var(--ink); }
+    .step p { font-size: 0.88rem; color: var(--ink-mid); line-height: 1.65; }
+
+    .rules { margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem,4vw,3rem); }
+    .rules h4 { font-family: var(--f-serif); font-weight: 400; font-size: 1.1rem; margin-bottom: 1rem; color: var(--ink); }
+    .rules li { position: relative; padding-left: 1.4rem; margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--ink-mid); line-height: 1.6; }
+    .rules li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 6px; height: 1px; background: var(--accent); }
+
+    /* ---------- Ask form ---------- */
+    .ask-grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: clamp(2rem,6vw,6rem); align-items: start; }
+    .ask-note { font-size: 0.85rem; color: var(--ink-mid); line-height: 1.7; padding: 1.25rem; border: 1px solid var(--accent); background: var(--accent-light); margin-top: 1.75rem; }
+    .ask-note strong { color: var(--accent-dark); }
+    .ask-urgent { font-size: 0.85rem; color: var(--warn); line-height: 1.7; padding: 1.25rem; border-left: 2px solid var(--warn); background: var(--warn-tint); margin-top: 1.25rem; }
+    .ask-urgent strong { display: block; margin-bottom: 0.3rem; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.72rem; }
+
+    .form-field { margin-bottom: 1.5rem; }
+    .form-field label { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .form-field label .opt { text-transform: none; letter-spacing: 0; font-size: 0.78rem; color: var(--ink-light); font-style: italic; }
+    .form-field input, .form-field textarea, .form-field select { width: 100%; padding: 0.75rem 0; font-family: var(--f-sans); font-size: 1rem; color: var(--ink); background: transparent; border: none; border-bottom: 1px solid var(--rule); outline: none; transition: border-color 0.2s; border-radius: 0; }
+    .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--accent); }
+    .form-field textarea { min-height: 150px; resize: vertical; }
+    .form-hint { margin-top: 0.5rem; font-size: 0.78rem; color: var(--ink-light); line-height: 1.55; }
+    .form-consent { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: var(--ink-mid); line-height: 1.6; }
+    .form-consent input { width: 16px; height: 16px; flex-shrink: 0; margin-top: 0.25rem; accent-color: var(--accent); }
+    .btn-submit { display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; transition: color 0.2s, border-color 0.2s; min-height: 44px; }
+    .btn-submit:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
+    .form-msg { margin-top: 1.25rem; font-size: 0.88rem; line-height: 1.65; color: var(--accent-dark); display: none; padding: 0.9rem 1.1rem; background: var(--accent-light); border-left: 2px solid var(--accent); }
+    .form-msg.show { display: block; }
+    .form-msg.error { color: var(--warn); background: var(--warn-tint); border-color: var(--warn); }
+
+    /* ---------- Answered questions ---------- */
+    .qa-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .qa-filter { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); padding: 0.5rem 1rem; border: 1px solid var(--rule); background: var(--bg); transition: all 0.2s; min-height: 38px; }
+    .qa-filter:hover { border-color: var(--accent); color: var(--accent); }
+    .qa-filter.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .qa-list { display: flex; flex-direction: column; }
+    .qa-item { border-bottom: 1px solid var(--rule); }
+    .qa-item:first-child { border-top: 1px solid var(--rule); }
+    .qa-item[hidden] { display: none; }
+    .qa-btn { width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; padding: 1.4rem 0; text-align: left; color: var(--ink); cursor: pointer; transition: color 0.2s; min-height: 44px; }
+    .qa-btn:hover { color: var(--accent); }
+    .qa-q { font-family: var(--f-serif); font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 300; line-height: 1.35; }
+    .qa-meta { display: flex; gap: 0.75rem; align-items: center; margin-top: 0.5rem; font-family: var(--f-sans); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+    .qa-tag { color: var(--accent); }
+    .qa-icon { width: 20px; height: 20px; flex-shrink: 0; position: relative; color: var(--accent); margin-top: 0.35rem; }
+    .qa-icon::before, .qa-icon::after { content: ''; position: absolute; background: currentColor; transition: transform 0.3s var(--ease-out), opacity 0.3s; }
+    .qa-icon::before { top: 50%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); }
+    .qa-icon::after  { top: 0; left: 50%; width: 1px; height: 100%; transform: translateX(-50%); }
+    .qa-item.open .qa-icon::after { opacity: 0; transform: translateX(-50%) rotate(90deg); }
+    .qa-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s var(--ease-out); }
+    .qa-item.open .qa-answer { grid-template-rows: 1fr; }
+    .qa-answer-inner { overflow: hidden; }
+    .qa-answer-inner p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.8; padding-bottom: 1.1rem; max-width: 68ch; }
+    .qa-answer-inner p:last-child { padding-bottom: 1.75rem; }
+    .qa-empty { padding: 2.5rem 0; font-size: 0.92rem; color: var(--ink-light); }
+
+    /* ---------- Closing CTA ---------- */
+    .oh-cta p { color: var(--ink-mid); max-width: 60ch; margin-bottom: 1.5rem; }
+    .link-arrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+    .link-arrow:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
+    .cta-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+
+    .disclaimer { padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-light); line-height: 1.65; background: var(--bg-mid); }
+    footer { padding: 3rem 0; border-top: 1px solid var(--rule); }
+    .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    .footer-name { font-family: var(--f-serif); font-size: 1.4rem; font-weight: 300; margin-bottom: 0.25rem; }
+    .footer-sub { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+    .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mid); }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 0.75rem; color: var(--ink-light); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+    @media (max-width: 900px) {
+      .ask-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .steps { grid-template-columns: 1fr; }
+      .rules { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    @media (max-width: 640px) {
+      :root { --nav-h: 60px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-logo { font-size: 1rem; }
+      .qa-btn { padding: 1.1rem 0; }
+      .footer-links { gap: 0.75rem; }
+      .footer-inner { flex-direction: column; gap: 1.5rem; }
+      .bg-eye svg { top: 50%; }
+      .bg-eye { --eye-opacity: 0.72; }
+      .bg-eye #bgEyeUpper, .bg-eye #bgEyeLower { stroke: rgba(10,126,140,0.2); }
+      .bg-eye circle[cx="500"][cy="250"][r="105"] { stroke: rgba(10,126,140,0.14); }
+      .bg-eye circle[cx="500"][cy="250"][r="44"]  { fill: rgba(10,126,140,0.11); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-eye" id="bgEye" aria-hidden="true">
+  <svg viewBox="0 0 1000 500" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <defs><clipPath id="bgEyeLidClip"><path id="bgEyeClipPath" d="M 80 250 Q 500 60 920 250 Q 500 440 80 250 Z"/></clipPath></defs>
+    <g clip-path="url(#bgEyeLidClip)">
+      <circle cx="500" cy="250" r="105" fill="none" stroke="rgba(10,126,140,0.07)" stroke-width="1.2"/>
+      <circle cx="500" cy="250" r="44" fill="rgba(10,126,140,0.06)"/>
+      <circle cx="484" cy="234" r="9" fill="rgba(255,255,255,0.28)"/>
+      <circle cx="481" cy="231" r="3.5" fill="rgba(255,255,255,0.55)"/>
+    </g>
+    <path id="bgEyeUpper" d="M 80 250 Q 500 60 920 250" stroke="rgba(10,126,140,0.11)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    <path id="bgEyeLower" d="M 80 250 Q 500 440 920 250" stroke="rgba(10,126,140,0.11)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+  </svg>
+</div>
+
+<header class="nav" id="siteNav">
+  <a href="index.html" class="nav-logo">
+    Siddharth Bhargava, MD
+    <span>Cataracts &middot; Glaucoma &middot; Patient Education</span>
+  </a>
+  <nav class="nav-links" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#expertise">Expertise</a>
+    <div class="nav-item">
+      <button type="button" class="active">Patient Education <span class="nav-caret" aria-hidden="true">&#9662;</span></button>
+      <div class="nav-dropdown">
+        <a href="cataracts.html">Cataracts</a>
+        <a href="glaucoma.html">Glaucoma</a>
+        <a href="office-hours.html" class="active">Office Hours</a>
+      </div>
+    </div>
+    <a href="index.html#faq">FAQs</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+  <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="closeMobileNav()">Home</a>
+  <a href="index.html#about" onclick="closeMobileNav()">About</a>
+  <a href="index.html#expertise" onclick="closeMobileNav()">Expertise</a>
+  <span class="mobile-nav-heading">Patient Education</span>
+  <a href="cataracts.html" onclick="closeMobileNav()" class="sub-link">Cataracts</a>
+  <a href="glaucoma.html" onclick="closeMobileNav()" class="sub-link">Glaucoma</a>
+  <a href="office-hours.html" onclick="closeMobileNav()" class="sub-link active">Office Hours</a>
+  <a href="index.html#faq" onclick="closeMobileNav()">FAQs</a>
+  <a href="index.html#contact" onclick="closeMobileNav()">Contact</a>
+</div>
+
+<nav class="toc" id="pageToc" aria-label="Page sections">
+  <a href="#ask" data-toc="ask">Ask a Question</a>
+  <a href="#answered" data-toc="answered">Answered</a>
+  <a href="#how" data-toc="how">How This Works</a>
+</nav>
+
+<section class="page-hero" id="pageHero">
+  <div class="wrap">
+    <span class="eyebrow reveal">Patient Education &middot; Office Hours</span>
+    <h1 class="display display-xl reveal reveal-delay-1">Office <em>Hours</em></h1>
+    <p class="reveal reveal-delay-2">Most people leave an eye appointment with a question they thought of ten minutes too late &mdash; or one they felt embarrassed to ask. Ask it here instead, anonymously. I answer selected questions in general terms and publish them below, so the next person wondering the same thing finds an answer already waiting.</p>
+  </div>
+</section>
+
+<section id="ask">
+  <div class="wrap">
+    <div class="ask-grid">
+      <div>
+        <span class="eyebrow reveal">Ask</span>
+        <h2 class="display display-lg reveal reveal-delay-1">Ask a question</h2>
+        <div class="ask-note reveal reveal-delay-2">
+          <strong>This is general education, not medical advice.</strong> Questions are answered in general terms only &mdash; I cannot tell you what to do about your own eye, review your results, or comment on care you are receiving elsewhere. Nothing here creates a physician&ndash;patient relationship. For anything about <em>your</em> eyes specifically, please speak with your own eye care provider.
+        </div>
+        <div class="ask-urgent reveal reveal-delay-2">
+          <strong>Do not use this for urgent problems</strong>
+          Questions are reviewed periodically, not continuously. If you have sudden vision loss, eye pain, new flashes or floaters, or an eye injury, contact an emergency eye care provider or go to your nearest emergency department now.
+        </div>
+      </div>
+
+      <form class="reveal reveal-delay-2" id="askForm" onsubmit="submitQuestion(event)">
+        <div class="form-field">
+          <label for="qTopic">Topic</label>
+          <select id="qTopic" name="topic">
+            <option value="General">General eye health</option>
+            <option value="Cataracts">Cataracts</option>
+            <option value="Glaucoma">Glaucoma</option>
+            <option value="Surgery">Surgery &amp; recovery</option>
+            <option value="Drops">Eye drops &amp; medications</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="qText">Your question</label>
+          <textarea id="qText" name="question" maxlength="1200" placeholder="For example: why do I still need drops after glaucoma surgery?" required></textarea>
+          <p class="form-hint">Please keep it general and leave out names, dates of birth, and anything else that could identify you. Questions are edited for length and clarity before publishing.</p>
+        </div>
+
+        <div class="form-field">
+          <label for="qEmail">Email <span class="opt">&mdash; optional</span></label>
+          <input id="qEmail" type="email" name="email" placeholder="you@example.com" />
+          <p class="form-hint">Only used to let you know if your question is answered. Never published, never shared, and not required &mdash; leave it blank to stay fully anonymous.</p>
+        </div>
+
+        <label class="form-consent">
+          <input type="checkbox" id="qConsent" name="consent" required />
+          <span>I understand this is general education, not medical advice, and that my question may be edited and published anonymously.</span>
+        </label>
+
+        <button type="submit" class="btn-submit">Send question <span>&rarr;</span></button>
+        <p class="form-msg" id="askMsg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="answered" class="bg-mid">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow reveal">Answered</span>
+      <h2 class="display display-lg reveal reveal-delay-1">Answered questions</h2>
+      <p class="reveal reveal-delay-2">Real questions from patients and visitors, rewritten to remove identifying details and answered in general terms.</p>
+    </div>
+
+    <div class="qa-filters reveal reveal-delay-2" id="qaFilters">
+      <button class="qa-filter active" data-filter="all" onclick="filterQa(this)">All</button>
+      <button class="qa-filter" data-filter="Cataracts" onclick="filterQa(this)">Cataracts</button>
+      <button class="qa-filter" data-filter="Glaucoma" onclick="filterQa(this)">Glaucoma</button>
+      <button class="qa-filter" data-filter="Surgery" onclick="filterQa(this)">Surgery</button>
+      <button class="qa-filter" data-filter="Drops" onclick="filterQa(this)">Drops</button>
+    </div>
+
+    <div class="qa-list reveal reveal-delay-3" id="qaList">
+
+      <!-- ============================================================
+           TO ADD A NEW ANSWER: copy one .qa-item block, change the
+           data-topic, the question text, the date, and the answer
+           paragraphs. Newest at the top.
+           ============================================================ -->
+
+      <div class="qa-item" data-topic="Cataracts">
+        <button class="qa-btn" onclick="toggleQa(this)">
+          <span>
+            <span class="qa-q">Can a cataract come back after surgery?</span>
+            <span class="qa-meta"><span class="qa-tag">Cataracts</span><span>Answered</span></span>
+          </span>
+          <span class="qa-icon" aria-hidden="true"></span>
+        </button>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          <p>No &mdash; not the cataract itself. A cataract is your eye&rsquo;s natural lens becoming cloudy, and once that lens is removed and replaced with an artificial one, it cannot become cloudy again. The implant does not age the way a natural lens does.</p>
+          <p>What can happen is something that feels very similar. The lens implant sits inside a thin, clear membrane called the capsule, which is left in place during surgery to hold it. In a meaningful proportion of people, that capsule gradually becomes hazy over months to years &mdash; this is called posterior capsule opacification. Vision slowly becomes dimmer or more glare-prone, and people often describe it as &ldquo;the cataract coming back.&rdquo;</p>
+          <p>It is treated with a brief laser procedure called a YAG capsulotomy, which opens a small clear window in the hazy capsule. It is done in the office, takes a few minutes, needs no incision, and generally does not need to be repeated.</p>
+        </div></div>
+      </div>
+
+      <div class="qa-item" data-topic="Glaucoma">
+        <button class="qa-btn" onclick="toggleQa(this)">
+          <span>
+            <span class="qa-q">If my vision seems fine, why do I have to keep using glaucoma drops?</span>
+            <span class="qa-meta"><span class="qa-tag">Glaucoma</span><span>Answered</span></span>
+          </span>
+          <span class="qa-icon" aria-hidden="true"></span>
+        </button>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          <p>This is probably the single most important thing to understand about glaucoma, and it is the reason so many people stop their drops without realizing what they are risking.</p>
+          <p>Glaucoma damages the optic nerve from the periphery inward, and the brain is remarkably good at filling in the missing edges using the other eye and your own eye movements. By the time a person actually notices a gap in their vision, a substantial amount of nerve tissue has usually already been lost &mdash; and that loss is permanent. There is no treatment that restores it.</p>
+          <p>So the drops are not treating a symptom. They are lowering eye pressure, which is the only intervention proven to slow the disease, and the vision they are protecting is the vision you have right now. Feeling fine is the expected state of someone whose glaucoma is being managed well &mdash; it is evidence the plan is working, not evidence the plan is unnecessary.</p>
+        </div></div>
+      </div>
+
+      <div class="qa-item" data-topic="Surgery">
+        <button class="qa-btn" onclick="toggleQa(this)">
+          <span>
+            <span class="qa-q">Why is cataract surgery usually done one eye at a time?</span>
+            <span class="qa-meta"><span class="qa-tag">Surgery</span><span>Answered</span></span>
+          </span>
+          <span class="qa-icon" aria-hidden="true"></span>
+        </button>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          <p>Staging the two eyes, usually by a few weeks, is standard practice in most of the world for a few connected reasons.</p>
+          <p>The first is safety. Serious complications after cataract surgery are rare, but operating on separate days means an unexpected problem can never affect both eyes at once &mdash; you always have a functioning eye while the other heals.</p>
+          <p>The second is refinement. Choosing the power of a lens implant involves measurement and prediction, and the actual result in the first eye is useful information. If the outcome lands slightly differently than expected, that can be accounted for when planning the second eye.</p>
+          <p>The third is simply practical: recovery in the first eye tells you and your surgeon how your eyes respond &mdash; how much inflammation, how quickly vision settles &mdash; before committing the second eye to the same plan.</p>
+        </div></div>
+      </div>
+
+      <div class="qa-item" data-topic="Drops">
+        <button class="qa-btn" onclick="toggleQa(this)">
+          <span>
+            <span class="qa-q">Does it matter if I miss a dose of my eye drops?</span>
+            <span class="qa-meta"><span class="qa-tag">Drops</span><span>Answered</span></span>
+          </span>
+          <span class="qa-icon" aria-hidden="true"></span>
+        </button>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          <p>An occasional missed dose is not a crisis. In general, take it when you remember, and if it is nearly time for the next dose, skip the missed one rather than doubling up &mdash; more drops at once does not produce more effect, since the eye can only hold a fraction of a single drop.</p>
+          <p>The part worth taking seriously is the pattern. Pressure-lowering drops work by being present continuously, so frequent gaps mean the pressure is high for stretches of time that never show up on a single reading in the office. A pressure that looks acceptable at every visit can coexist with a disease that keeps progressing, and missed doses are one of the common explanations.</p>
+          <p>If you are missing doses often, it is far more useful to say so than to hide it. Difficulty aiming the bottle, stinging, cost, and complicated schedules are all common and all fixable &mdash; but only if your provider knows. There are usually alternatives, and a regimen you actually take beats a better one you do not.</p>
+        </div></div>
+      </div>
+
+      <p class="qa-empty" id="qaEmpty" hidden>No answered questions in this topic yet.</p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow reveal">Process</span>
+      <h2 class="display display-lg reveal reveal-delay-1">How this works</h2>
+    </div>
+
+    <div class="steps reveal reveal-delay-2">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>You ask</h3>
+        <p>Send a question through the form above. No account, no name required. An email address is optional and exists only so you can be told when an answer is posted.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>I review</h3>
+        <p>Questions come to me privately. I answer the ones that are general enough to help more than one person, rewriting them to remove any identifying detail.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>It gets published</h3>
+        <p>The edited question and its answer are posted above, anonymously, where anyone can read them. Not every question is published &mdash; the archive is curated, not a feed.</p>
+      </div>
+    </div>
+
+    <div class="rules reveal reveal-delay-3">
+      <div>
+        <h4>What works well here</h4>
+        <ul>
+          <li>&ldquo;What is actually happening in the eye when someone has glaucoma?&rdquo;</li>
+          <li>&ldquo;What does a lens implant do, and how is one chosen?&rdquo;</li>
+          <li>&ldquo;What should I expect in the weeks after cataract surgery?&rdquo;</li>
+          <li>&ldquo;Why does my doctor keep repeating the same test?&rdquo;</li>
+          <li>Anything you meant to ask at your last visit and forgot.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>What cannot be answered here</h4>
+        <ul>
+          <li>Questions about your own eye, your test results, or your specific treatment plan.</li>
+          <li>Requests for a second opinion on care you are receiving elsewhere.</li>
+          <li>Anything urgent &mdash; sudden vision change, pain, injury, new flashes or floaters.</li>
+          <li>Prescription, refill, appointment, or billing requests.</li>
+          <li>Photographs, scans, or records &mdash; please do not send them.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="oh-cta bg-mid">
+  <div class="wrap">
+    <span class="eyebrow reveal">Keep reading</span>
+    <h2 class="display display-lg reveal reveal-delay-1" style="margin-bottom:1.5rem;">Start with the basics</h2>
+    <p class="reveal reveal-delay-2">Many questions are answered more fully in the condition guides &mdash; both walk through the anatomy, the diagnosis, and the full range of treatment options.</p>
+    <div class="cta-links reveal reveal-delay-3">
+      <a href="cataracts.html" class="link-arrow">Cataracts <span aria-hidden="true">&rarr;</span></a>
+      <a href="glaucoma.html" class="link-arrow">Glaucoma <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="disclaimer"><div class="wrap"><strong>Medical disclaimer:</strong> The questions and answers on this page are provided for general educational purposes only and are not a substitute for professional medical advice, diagnosis, or treatment. They are general in nature, are not tailored to any individual, and must not be relied upon to make decisions about your own care. Submitting a question or reading an answer does not create a physician&ndash;patient relationship. Always seek the advice of your physician or qualified eye care provider with any questions about your eye health, and never disregard or delay seeking professional advice because of something you have read here. If you think you may have a medical emergency, contact an emergency eye care provider or your nearest emergency department immediately.</div></div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-name">Siddharth Bhargava, MD</div>
+        <div class="footer-sub">Cataracts &middot; Glaucoma &middot; Patient Education</div>
+      </div>
+      <nav class="footer-links">
+        <a href="index.html">Home</a><a href="index.html#about">About</a><a href="index.html#expertise">Expertise</a>
+        <a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="office-hours.html">Office Hours</a><a href="index.html#faq">FAQs</a><a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-copy">
+      <p>&copy; <span id="yr"></span> Dr. Siddharth Bhargava, MD. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ==============================================================
+     QUESTION SUBMISSION
+     --------------------------------------------------------------
+     No backend yet. Set QUESTION_ENDPOINT to a form endpoint that
+     accepts a POST (Formspree, Basin, Netlify Forms, a Worker, etc.)
+     and the form starts submitting for real — nothing else needs to
+     change. While it is empty, the form stays visible but tells the
+     visitor submissions are not open yet instead of pretending to
+     have sent something.
+     ============================================================== */
+  const QUESTION_ENDPOINT = '';
+
+  async function submitQuestion(e) {
+    e.preventDefault();
+    const form = e.target;
+    const msg  = document.getElementById('askMsg');
+
+    if (!QUESTION_ENDPOINT) {
+      msg.className = 'form-msg show';
+      msg.textContent = 'Office Hours is opening soon — question submissions are not live on this site yet. Please check back shortly.';
+      return;
+    }
+
+    const btn = form.querySelector('.btn-submit');
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(QUESTION_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      if (!res.ok) throw new Error(res.status);
+      msg.className = 'form-msg show';
+      msg.textContent = 'Thank you — your question has been received. Not every question can be answered, but each one is read. If you left an email address, you will hear from us only if your question is published.';
+      form.reset();
+    } catch (err) {
+      msg.className = 'form-msg show error';
+      msg.textContent = 'Something went wrong sending your question. Please try again in a few moments.';
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  /* ---------- Answered questions: accordion + topic filter ---------- */
+  function toggleQa(btn) {
+    const item = btn.parentElement;
+    const open = item.classList.contains('open');
+    item.parentElement.querySelectorAll('.qa-item.open').forEach(i => i.classList.remove('open'));
+    if (!open) item.classList.add('open');
+  }
+
+  function filterQa(btn) {
+    const topic = btn.dataset.filter;
+    document.querySelectorAll('.qa-filter').forEach(b => b.classList.toggle('active', b === btn));
+    let shown = 0;
+    document.querySelectorAll('.qa-item').forEach(item => {
+      const match = topic === 'all' || item.dataset.topic === topic;
+      item.hidden = !match;
+      item.classList.remove('open');
+      if (match) shown++;
+    });
+    document.getElementById('qaEmpty').hidden = shown > 0;
+  }
+
+  /* ---------- Background eye: closes as the hero scrolls away ---------- */
+  (function(){
+    const upper  = document.getElementById('bgEyeUpper');
+    const lower  = document.getElementById('bgEyeLower');
+    const clip   = document.getElementById('bgEyeClipPath');
+    const hero   = document.getElementById('pageHero');
+    const eyeSvg = document.querySelector('.bg-eye svg');
+    if (!upper || !lower || !clip || !hero || !eyeSvg) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const UPPER_OPEN = 60,  UPPER_SHUT = 250;
+    const LOWER_OPEN = 440, LOWER_SHUT = 250;
+    const CLOSE_BUFFER = 40;
+
+    let pending = false, lastProgress = -1;
+
+    function compute() {
+      const heroDocBottom = hero.offsetTop + hero.offsetHeight;
+      const eyeRect = eyeSvg.getBoundingClientRect();
+      const eyeY = eyeRect.top + eyeRect.height / 2;
+      const span = heroDocBottom - eyeY - CLOSE_BUFFER;
+      const raw    = span > 0 ? window.scrollY / span : 1;
+      const scaled = Math.min(1, Math.max(0, raw));
+      return scaled < 0.5 ? 2 * scaled * scaled : 1 - Math.pow(-2 * scaled + 2, 2) / 2;
+    }
+
+    function render() {
+      pending = false;
+      const p = compute();
+      if (Math.abs(p - lastProgress) < 0.002) return;
+      lastProgress = p;
+      const uy = UPPER_OPEN + (UPPER_SHUT - UPPER_OPEN) * p;
+      const ly = LOWER_OPEN + (LOWER_SHUT - LOWER_OPEN) * p;
+      upper.setAttribute('d', 'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250');
+      lower.setAttribute('d', 'M 80 250 Q 500 ' + ly.toFixed(1) + ' 920 250');
+      clip.setAttribute('d',  'M 80 250 Q 500 ' + uy.toFixed(1) + ' 920 250 Q 500 ' + ly.toFixed(1) + ' 80 250 Z');
+    }
+
+    function onScroll() { if (pending) return; pending = true; requestAnimationFrame(render); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    render();
+  })();
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const nav = document.getElementById('siteNav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
+
+  function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+  function closeMobileNav()  { document.getElementById('mobileNav').classList.remove('open'); }
+
+  (function(){
+    const tocLinks = Array.from(document.querySelectorAll('.toc a'));
+    if (!tocLinks.length) return;
+    const tocSections = tocLinks.map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
+    const tocObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const idx = tocSections.indexOf(entry.target);
+        if (idx === -1) return;
+        tocLinks.forEach(a => a.classList.remove('active'));
+        tocLinks[idx].classList.add('active');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    tocSections.forEach(s => tocObserver.observe(s));
+  })();
+</script>
+</body>
+</html>
