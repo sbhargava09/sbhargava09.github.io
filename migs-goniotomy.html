@@ -41,8 +41,13 @@
     font-size:clamp(1.5rem,3.4vw,2rem); text-align:center; margin:0; text-wrap:balance; }
 
   .stage{ position:relative; width:100%; aspect-ratio:1000/1160; overflow:hidden;
-    background:var(--bg-mid); border:1px solid var(--rule); }
+    background:var(--bg-mid); border:1px solid var(--rule);
+    transition:opacity .45s ease; }
+  .stage.dim{ opacity:0; }
   .stage svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+  /* snap the scene back to its opening state between loops, with no visible tweening */
+  .nofx, .nofx *{ transition:none !important; animation:none !important; }
 
   /* ---------- scene 1: whole anterior segment ---------- */
   .label-group{ opacity:0; animation: fadeInUp .6s ease forwards; }
@@ -135,12 +140,6 @@
     line-height:1.55; display:flex; align-items:center; justify-content:center; }
   .caption span{ opacity:0; transition:opacity .5s ease; position:absolute; max-width:56ch; padding:0 1rem; }
   .caption span.active{ opacity:1; position:relative; }
-
-  .replay{ align-self:center; font-family:var(--f-sans); font-size:.78rem; letter-spacing:.08em;
-    text-transform:uppercase; color:var(--ink-mid); background:none; border:1px solid var(--rule);
-    padding:.5rem 1.1rem; cursor:pointer; opacity:0; pointer-events:none; transition:opacity .5s ease; }
-  .replay.show{ opacity:1; pointer-events:auto; }
-  .replay:hover{ color:var(--accent); border-color:var(--accent); }
 
   @media (prefers-reduced-motion: reduce){
     .label-group, .callout-line, .cornea-shape, .tm-tick{ animation-duration:.01ms !important; }
@@ -2308,7 +2307,6 @@
     <span data-c="c11">Aqueous now drains straight out through the opened angle.</span>
   </div>
 
-  <button class="replay" id="replay" type="button">Replay</button>
 </div>
 
 <script>
@@ -2318,17 +2316,26 @@
   const stage   = document.getElementById('stage');
   const ring    = document.getElementById('tmRing');
   const portalC = document.getElementById('portalCircle');
-  const replay  = document.getElementById('replay');
   const caps    = [...document.querySelectorAll('.caption span')];
   const show    = k => caps.forEach(s => s.classList.toggle('active', s.dataset.c === k));
+
+  // Every cycle runs under a generation stamp. Bumping it strands any timer or
+  // rAF loop still in flight from the previous pass, so a reset can never be
+  // scribbled over by an animation that has not noticed it is obsolete.
+  let gen = 0, timers = [];
+  function after(ms, fn){
+    const mine = gen;
+    timers.push(setTimeout(() => { if (mine === gen) fn(); }, ms));
+  }
 
   const R_MAX = 1260;                       // covers the frame from the ring's centre
   const ease  = t => t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
 
   function openPortal(ms){
     ring.style.strokeDasharray = 'none';    // fully drawn by now; let it grow cleanly
-    const t0 = performance.now();
+    const t0 = performance.now(), mine = gen;
     requestAnimationFrame(function step(now){
+      if (mine !== gen) return;
       const t = Math.min(1, (now-t0)/ms), e = ease(t);
       const r = 56 + (R_MAX-56)*e;
       portalC.setAttribute('r', r.toFixed(1));
@@ -2343,8 +2350,9 @@
   const cam = document.getElementById('gonioCam');
   const K0 = 0.3052, K1 = 1, CY0 = 1228, CY1 = 580, CXW = 500;
   function zoomCamera(ms){
-    const t0 = performance.now();
+    const t0 = performance.now(), mine = gen;
     requestAnimationFrame(function step(now){
+      if (mine !== gen) return;
       const t = Math.min(1, (now-t0)/ms);
       const u = t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2;
       const k = K0*Math.pow(K1/K0, u);
@@ -2375,8 +2383,9 @@
     stripR.setAttribute('width', Math.max(0, XR - x).toFixed(1));
   }
   function anim(ms, fn, done){
-    const t0 = performance.now();
+    const t0 = performance.now(), mine = gen;
     requestAnimationFrame(function step(now){
+      if (mine !== gen) return;
       const t = Math.min(1, (now-t0)/ms);
       fn(t);
       if (t < 1) requestAnimationFrame(step); else if (done) done();
@@ -2389,7 +2398,7 @@
     setStrip(XR);
     stage.classList.add('is-operating');
     anim(1300, t => setBlade(XR, 1290 + (YR-1290)*easeOut(t), TH_R), () => {
-      setTimeout(() => {
+      after(500, () => {
         show('c9');
         anim(3400, t => {                       // sweep right to left, stripping behind
           const e = ease(t), th = TH_R + (TH_L-TH_R)*e, p = tipAt(th);
@@ -2397,13 +2406,13 @@
           setStrip(p[0]);
         }, () => {
           show('c10');
-          setTimeout(() => anim(900, t => {     // withdraw
+          after(600, () => anim(900, t => {     // withdraw
             const e = easeIn(t);
             setBlade(XL - 30*e, YL + 950*e, TH_L);
             blade.style.opacity = 1 - Math.max(0, (t-.7)/.3);
-          }), 600);
+          }));
         });
-      }, 500);
+      });
     });
   }
 
@@ -2421,9 +2430,46 @@
     { at: 13200, run: () => { show('c7'); goniotomy(); } },
     { at: 14600, run: () => show('c8') },
     { at: 20200, run: () => { show('c11'); stage.classList.add('is-draining'); } },
-    { at: 22400, run: () => replay.classList.add('show') },
   ];
-  timeline.forEach(s => setTimeout(s.run, s.at));
 
-  replay.addEventListener('click', () => location.reload());
+  const HOLD  = 4200;                       // dwell on the draining angle
+  const FADE  = 450;                        // matches .stage's opacity transition
+  const END   = timeline[timeline.length-1].at;
+
+  const SCENE_CLASSES = ['is-circled','is-portal','is-close',
+                         'is-labeled','is-operating','is-draining'];
+
+  // Put every element the timeline touched back the way the markup left it.
+  // Runs behind .nofx so none of it tweens, and the reflow in between is what
+  // makes the one-shot CSS entrance animations play again on the next pass.
+  function rewind(){
+    timers.forEach(clearTimeout);
+    timers = [];
+    gen++;
+
+    stage.classList.add('nofx');
+    stage.classList.remove(...SCENE_CLASSES);
+
+    ring.style.strokeDasharray = '';
+    ring.style.opacity = '';
+    ring.setAttribute('r', 56);
+    portalC.setAttribute('r', 0);
+    cam.style.transform = '';
+    blade.style.opacity = '';
+    blade.setAttribute('transform', 'translate(794,1290) rotate(-21)');
+    stripR.setAttribute('x', 794);
+    stripR.setAttribute('width', 0);
+    show('c1');
+
+    void stage.offsetWidth;                 // flush, so the animations restart
+    stage.classList.remove('nofx');
+  }
+
+  function play(){
+    timeline.forEach(s => after(s.at, s.run));
+    after(END + HOLD,        () => stage.classList.add('dim'));
+    after(END + HOLD + FADE, () => { rewind(); stage.classList.remove('dim'); play(); });
+  }
+
+  play();
 </script>
