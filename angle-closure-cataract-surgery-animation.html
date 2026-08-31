@@ -517,6 +517,71 @@
   const capEls = [...document.querySelectorAll('.caption span')];
   const pips   = [...document.querySelectorAll('.pip')];
 
+  // Safari doesn't support the CSS `d` property, so the [data-angle]/[data-cap]
+  // rules below that animate shape via `d:` never take effect there, leaving
+  // the iris/capsule/zonules frozen at their initial d attribute regardless of
+  // scene state. Mirror the same state in JS by writing the d/cx/rx attributes
+  // directly on every step. Browsers that do support the CSS `d` property give
+  // that stylesheet rule precedence over the plain attribute, so they keep
+  // animating the change smoothly exactly as before; Safari instead gets a
+  // correct (if unanimated) jump to the right shape.
+  const shapeEls = {
+    acTint:      document.querySelector('.ac-tint'),
+    irisTop:     document.querySelector('.iris-top'),
+    irisBot:     document.querySelector('.iris-bot'),
+    irisLineTop: document.querySelector('.iris-line-top'),
+    irisLineBot: document.querySelector('.iris-line-bot'),
+    capPost:     document.querySelector('.cap-post'),
+    capAntTop:   document.querySelector('.cap-ant-top'),
+    capAntBot:   document.querySelector('.cap-ant-bot'),
+    capFill:     document.querySelector('.cap-fill'),
+    z1: document.querySelector('.z1'), z2: document.querySelector('.z2'), z3: document.querySelector('.z3'),
+    z4: document.querySelector('.z4'), z5: document.querySelector('.z5'), z6: document.querySelector('.z6')
+  };
+
+  const geo = {
+    acTint:      { def:'M 622 469 Q 696 300 570 132 L 605 150 Q 845 260 860 560 Q 845 860 605 970 L 570 988 Q 696 820 622 651 L 622 469 Z',
+                   open:'M 530 469 Q 556 300 570 132 L 605 150 Q 845 260 860 560 Q 845 860 605 970 L 570 988 Q 556 820 530 651 L 530 469 Z' },
+    irisTop:     { def:'M 570 132 Q 605 136 612 148 Q 696 300 622 469 Q 631 300 570 132 Z',
+                   open:'M 570 132 Q 572 136 571 147 Q 556 300 530 469 Q 492 300 570 132 Z' },
+    irisBot:     { def:'M 570 988 Q 605 984 612 972 Q 696 820 622 651 Q 631 820 570 988 Z',
+                   open:'M 570 988 Q 572 984 571 973 Q 556 820 530 651 Q 492 820 570 988 Z' },
+    irisLineTop: { def:'M 610 200 Q 675 300 630 420', open:'M 566 200 Q 558 300 540 420' },
+    irisLineBot: { def:'M 610 920 Q 675 820 630 700', open:'M 566 920 Q 558 820 540 700' },
+    capPost:     { def:'M 463 322 A 170 238 0 0 0 463 798', collapsed:'M 345 322 A 52 238 0 0 0 345 798' },
+    capAntTop:   { def:'M 463 322 A 170 238 0 0 1 633 560', open:'M 463 322 A 170 238 0 0 1 605 429', collapsed:'M 345 322 A 52 238 0 0 1 388 429' },
+    capAntBot:   { def:'M 463 798 A 170 238 0 0 0 633 560', open:'M 463 798 A 170 238 0 0 0 605 691', collapsed:'M 345 798 A 52 238 0 0 0 388 691' },
+    z1: { def:'M 558 118 L 510 324',  collapsed:'M 558 118 L 382 324' },
+    z2: { def:'M 568 133 L 519 326',  collapsed:'M 568 133 L 390 326' },
+    z3: { def:'M 580 142 L 529 330',  collapsed:'M 580 142 L 399 330' },
+    z4: { def:'M 558 1002 L 510 796', collapsed:'M 558 1002 L 382 796' },
+    z5: { def:'M 568 987 L 519 794',  collapsed:'M 568 987 L 390 794' },
+    z6: { def:'M 580 978 L 529 790',  collapsed:'M 580 978 L 399 790' }
+  };
+
+  function applyGeometry(s){
+    const open      = s.angle === 'open';
+    const collapsed = s.bag === 'collapsed';
+    const bagOpen   = s.bag === 'open';
+
+    shapeEls.acTint.setAttribute('d', open ? geo.acTint.open : geo.acTint.def);
+    shapeEls.irisTop.setAttribute('d', open ? geo.irisTop.open : geo.irisTop.def);
+    shapeEls.irisBot.setAttribute('d', open ? geo.irisBot.open : geo.irisBot.def);
+    shapeEls.irisLineTop.setAttribute('d', open ? geo.irisLineTop.open : geo.irisLineTop.def);
+    shapeEls.irisLineBot.setAttribute('d', open ? geo.irisLineBot.open : geo.irisLineBot.def);
+
+    shapeEls.capPost.setAttribute('d', collapsed ? geo.capPost.collapsed : geo.capPost.def);
+    shapeEls.capAntTop.setAttribute('d', collapsed ? geo.capAntTop.collapsed : bagOpen ? geo.capAntTop.open : geo.capAntTop.def);
+    shapeEls.capAntBot.setAttribute('d', collapsed ? geo.capAntBot.collapsed : bagOpen ? geo.capAntBot.open : geo.capAntBot.def);
+
+    ['z1','z2','z3','z4','z5','z6'].forEach(k => {
+      shapeEls[k].setAttribute('d', collapsed ? geo[k].collapsed : geo[k].def);
+    });
+
+    shapeEls.capFill.setAttribute('cx', collapsed ? 345 : 463);
+    shapeEls.capFill.setAttribute('rx', collapsed ? 52 : 170);
+  }
+
   const steps = [
     { p:'closed',   ms:3200, cap:0, ch:0, lens:'cataract', angle:'closed', flow:'trapped', bag:'intact'    },
     { p:'closed',   ms:3000, cap:1, ch:0, lens:'cataract', angle:'closed', flow:'trapped', bag:'intact'    },
@@ -541,6 +606,7 @@
     svg.dataset.cap   = s.bag;
     capEls.forEach((el,i) => el.classList.toggle('active', i === s.cap));
     pips.forEach((el,i) => el.classList.toggle('on', i === s.ch));
+    applyGeometry(s);
   }
 
   async function snapTo(s){
