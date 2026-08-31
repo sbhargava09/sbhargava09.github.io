@@ -1,0 +1,227 @@
+<title>Goniotomy Blade &mdash; Tip Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=DM+Sans:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#f0f4f5; --bg-mid:#e4edf0; --bg-dark:#d4e3e8;
+    --ink:#0d1f2d; --ink-mid:#3a5060; --ink-light:#7a9aaa;
+    --rule: rgba(13,31,45,0.13); --accent:#0a7e8c;
+    --f-serif:'Cormorant Garamond', Georgia, serif;
+    --f-sans:'DM Sans', system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0d1a20; --bg-mid:#132630; --bg-dark:#1a323f;
+      --ink:#eaf1f3; --ink-mid:#b7c9d1; --ink-light:#6f8b98;
+      --rule: rgba(234,241,243,0.12); --accent:#3fb8c4;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d1a20; --bg-mid:#132630; --bg-dark:#1a323f;
+    --ink:#eaf1f3; --ink-mid:#b7c9d1; --ink-light:#6f8b98;
+    --rule: rgba(234,241,243,0.12); --accent:#3fb8c4;
+  }
+  *{box-sizing:border-box;}
+  body{ background:var(--bg); color:var(--ink); font-family:var(--f-sans);
+    padding:clamp(1.5rem,4vw,3rem); margin:0; display:flex; flex-direction:column;
+    align-items:center; gap:1.6rem; }
+  .wrap{ width:100%; max-width:1000px; display:flex; flex-direction:column; gap:1.4rem; }
+  .eyebrow{ font-size:.7rem; font-weight:500; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--accent); text-align:center; margin:0; }
+  h1{ font-family:var(--f-serif); font-weight:400; font-style:italic;
+    font-size:clamp(1.5rem,3.4vw,2rem); text-align:center; margin:0; }
+  h2{ font-family:var(--f-serif); font-weight:400; font-style:italic; font-size:1.3rem;
+    margin:.8rem 0 0; text-align:center; }
+  .lede{ text-align:center; color:var(--ink-mid); max-width:62ch; margin:0 auto; line-height:1.6;
+    font-size:.96rem; }
+  .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+  @media (max-width:780px){ .grid{ grid-template-columns:1fr; } }
+  .panel, .context{ background:var(--bg-mid); border:1px solid var(--rule); padding:.9rem;
+    display:flex; flex-direction:column; gap:.7rem; }
+  .panel svg, .context svg{ width:100%; height:auto; display:block; }
+  .tag{ font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent);
+    font-weight:500; }
+  .note{ font-size:.82rem; color:var(--ink-mid); line-height:1.5; margin:0; }
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Design study &mdash; not yet in the animation</p>
+  <h1>The goniotomy tip, as one formed piece</h1>
+  <p class="lede">Rebuilt against your second photo: a round shaft swaged into a flat blade that
+  sweeps forward into a pointed toe, with the ramp notch set into the leading edge. Every version
+  below is a single closed outline &mdash; no butted-together parts.</p>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="gSteel" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%"   stop-color="#5c6672"/>
+        <stop offset="22%"  stop-color="#9fabb7"/>
+        <stop offset="42%"  stop-color="#dde4ea"/>
+        <stop offset="62%"  stop-color="#98a4b0"/>
+        <stop offset="100%" stop-color="#4e5864"/>
+      </linearGradient>
+      <linearGradient id="gSteelTip" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%"   stop-color="#7e8a96"/>
+        <stop offset="45%"  stop-color="#e6edf2"/>
+        <stop offset="100%" stop-color="#616b77"/>
+      </linearGradient>
+      <linearGradient id="gBlade" x1="0.15" y1="0" x2="0.85" y2="0.7">
+        <stop offset="0%"   stop-color="#b9c3cc"/>
+        <stop offset="26%"  stop-color="#e3e9ee"/>
+        <stop offset="52%"  stop-color="#aab5c0"/>
+        <stop offset="78%"  stop-color="#79838f"/>
+        <stop offset="100%" stop-color="#5a636f"/>
+      </linearGradient>
+
+      <!-- one continuous silhouette, toe at the origin -->
+      <path id="tipPath" d="M 0 0
+                            C 26 -16  56 -24  86 -22
+                            C 116 -20  138 -2  150 30
+                            C 160 58  164 106  165 160
+                            L 172 1500
+                            L 62 1500
+                            L 80 210
+                            C 84 156  86 116  80 88
+                            C 72 56  50 34  22 18
+                            C 14 13  6 7  0 0 Z"/>
+      <clipPath id="tipClip"><use href="#tipPath"/></clipPath>
+    </defs>
+  </svg>
+
+  <div class="grid">
+
+    <div class="panel">
+      <span class="tag">Current &mdash; two pieces</span>
+      <svg viewBox="-150 -70 340 400" xmlns="http://www.w3.org/2000/svg">
+        <path d="M -58 150 L -86 1560 L 86 1560 L 58 150 Z" fill="url(#gSteel)"/>
+        <path d="M -18 160 L -30 1560 L 4 1560 L 4 160 Z" fill="#ffffff" opacity="0.22"/>
+        <path d="M -54 156 L -27 30 L 27 12 L 54 156 Z" fill="url(#gSteelTip)"/>
+        <path d="M -27 30 L -80 10 L -87 44 L -23 58 Z" fill="url(#gSteelTip)"
+              stroke="#4a545f" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M -27 30 L -80 10" fill="none" stroke="#fbfdff" stroke-width="3.4"
+              opacity="0.9" stroke-linecap="round"/>
+        <path d="M -23 58 L -87 44" fill="none" stroke="#39424c" stroke-width="2"
+              opacity="0.6" stroke-linecap="round"/>
+      </svg>
+      <p class="note">A footplate quad butted onto a separate head, each with its own outline, so
+      the seam between them reads as a join.</p>
+    </div>
+
+    <div class="panel">
+      <span class="tag">A &mdash; formed, soft shading</span>
+      <svg viewBox="-60 -80 340 400" xmlns="http://www.w3.org/2000/svg">
+        <use href="#tipPath" fill="url(#gBlade)"/>
+        <g clip-path="url(#tipClip)">
+          <path d="M 108 1500 C 114 420 118 220 120 140 C 122 84 100 40 40 10"
+                fill="none" stroke="#ffffff" stroke-width="30" opacity="0.24" stroke-linecap="round"/>
+          <path d="M 156 1500 L 160 150 C 156 90 140 40 100 8"
+                fill="none" stroke="#39424c" stroke-width="26" opacity="0.20" stroke-linecap="round"/>
+          <path d="M 80 206 C 112 196 144 188 166 184"
+                fill="none" stroke="#39424c" stroke-width="3" opacity="0.30"/>
+        </g>
+        <use href="#tipPath" fill="none" stroke="#3c4650" stroke-width="2.4" opacity="0.85"
+             stroke-linejoin="round"/>
+        <path d="M 0 0 C 26 -16 56 -24 86 -22" fill="none" stroke="#fbfdff" stroke-width="4"
+              opacity="0.9" stroke-linecap="round"/>
+      </svg>
+      <p class="note">The outline runs shaft &rarr; swage &rarr; body &rarr; toe without a break.
+      Shading is clipped inside it, so nothing adds a second edge.</p>
+    </div>
+
+    <div class="panel">
+      <span class="tag">B &mdash; formed, faceted + ramp</span>
+      <svg viewBox="-60 -80 340 400" xmlns="http://www.w3.org/2000/svg">
+        <use href="#tipPath" fill="url(#gBlade)"/>
+        <g clip-path="url(#tipClip)">
+          <path d="M 62 1500 L 80 210 C 86 150 84 100 60 62 L 0 6 L 0 1500 Z"
+                fill="#6c7681" opacity="0.34"/>
+          <path d="M 172 1500 L 165 160 C 162 96 150 46 120 14 L 210 14 L 215 1500 Z"
+                fill="#39424c" opacity="0.26"/>
+          <path d="M 110 1500 C 116 430 120 224 122 144 C 124 88 102 42 44 12"
+                fill="none" stroke="#ffffff" stroke-width="26" opacity="0.28" stroke-linecap="round"/>
+          <path d="M 80 206 C 112 196 144 188 166 184" fill="none" stroke="#39424c"
+                stroke-width="3.4" opacity="0.42"/>
+          <path d="M 84 188 C 114 178 144 172 166 168" fill="none" stroke="#eef3f7"
+                stroke-width="2.4" opacity="0.42"/>
+          <path d="M 22 18 C 56 40 76 62 80 92" fill="none" stroke="#39424c"
+                stroke-width="2.6" opacity="0.34"/>
+        </g>
+        <path d="M 20 -8 L 56 -17 L 61 0 L 25 7 Z" fill="#f2f6fa" opacity="0.92"
+              stroke="#4a545f" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M 24 -1 L 58 -9" fill="none" stroke="#2f3841" stroke-width="3" opacity="0.7"
+              stroke-linecap="round"/>
+        <use href="#tipPath" fill="none" stroke="#3c4650" stroke-width="2.4" opacity="0.85"
+             stroke-linejoin="round"/>
+        <path d="M 0 0 C 26 -16 56 -24 86 -22" fill="none" stroke="#fbfdff" stroke-width="4"
+              opacity="0.9" stroke-linecap="round"/>
+      </svg>
+      <p class="note">Same silhouette, with the flat planes the photo shows: a lit face, a shaded
+      face, the swage line where round becomes flat, and the bright dual-blade ramp behind the toe.</p>
+    </div>
+  </div>
+
+  <h2>Both, at the size they appear in the animation</h2>
+
+  <div class="context">
+    <svg viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ctxCornea" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#dcddcb"/><stop offset="100%" stop-color="#e9e6d2"/>
+        </linearGradient>
+        <linearGradient id="ctxTM" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#9c6a3c"/><stop offset="55%" stop-color="#7a4a24"/>
+          <stop offset="100%" stop-color="#48290f"/>
+        </linearGradient>
+        <linearGradient id="ctxIris" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#c8873a"/><stop offset="100%" stop-color="#b3762c"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="1000" height="190" fill="url(#ctxCornea)"/>
+      <rect x="0" y="190" width="1000" height="130" fill="url(#ctxTM)"/>
+      <rect x="0" y="320" width="1000" height="26" fill="#c3ad8b" opacity="0.62"/>
+      <rect x="0" y="346" width="1000" height="44" fill="#6b4e34"/>
+      <rect x="0" y="390" width="1000" height="170" fill="url(#ctxIris)"/>
+
+      <!-- A -->
+      <g transform="translate(360,272) rotate(-28)">
+        <use href="#tipPath" fill="url(#gBlade)"/>
+        <g clip-path="url(#tipClip)">
+          <path d="M 108 1500 C 114 420 118 220 120 140 C 122 84 100 40 40 10"
+                fill="none" stroke="#ffffff" stroke-width="30" opacity="0.24" stroke-linecap="round"/>
+          <path d="M 156 1500 L 160 150 C 156 90 140 40 100 8"
+                fill="none" stroke="#39424c" stroke-width="26" opacity="0.20" stroke-linecap="round"/>
+        </g>
+        <use href="#tipPath" fill="none" stroke="#3c4650" stroke-width="2.4" opacity="0.85"
+             stroke-linejoin="round"/>
+        <path d="M 0 0 C 26 -16 56 -24 86 -22" fill="none" stroke="#fbfdff" stroke-width="4"
+              opacity="0.9" stroke-linecap="round"/>
+      </g>
+
+      <!-- B -->
+      <g transform="translate(760,272) rotate(-28)">
+        <use href="#tipPath" fill="url(#gBlade)"/>
+        <g clip-path="url(#tipClip)">
+          <path d="M 62 1500 L 80 210 C 86 150 84 100 60 62 L 0 6 L 0 1500 Z"
+                fill="#6c7681" opacity="0.34"/>
+          <path d="M 172 1500 L 165 160 C 162 96 150 46 120 14 L 210 14 L 215 1500 Z"
+                fill="#39424c" opacity="0.26"/>
+          <path d="M 110 1500 C 116 430 120 224 122 144 C 124 88 102 42 44 12"
+                fill="none" stroke="#ffffff" stroke-width="26" opacity="0.28" stroke-linecap="round"/>
+          <path d="M 80 206 C 112 196 144 188 166 184" fill="none" stroke="#39424c"
+                stroke-width="3.4" opacity="0.42"/>
+        </g>
+        <path d="M 20 -8 L 56 -17 L 61 0 L 25 7 Z" fill="#f2f6fa" opacity="0.92"
+              stroke="#4a545f" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M 24 -1 L 58 -9" fill="none" stroke="#2f3841" stroke-width="3" opacity="0.7"
+              stroke-linecap="round"/>
+        <use href="#tipPath" fill="none" stroke="#3c4650" stroke-width="2.4" opacity="0.85"
+             stroke-linejoin="round"/>
+        <path d="M 0 0 C 26 -16 56 -24 86 -22" fill="none" stroke="#fbfdff" stroke-width="4"
+              opacity="0.9" stroke-linecap="round"/>
+      </g>
+    </svg>
+    <p class="note">Bands are stand-ins for the real geometry. The toe sits on the meshwork at the
+    working angle; the body trails back over the stripped side, which is where it would sit during
+    an actual sweep.</p>
+  </div>
+</div>
