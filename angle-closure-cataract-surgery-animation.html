@@ -510,14 +510,9 @@
   </div>
 
   <div class="caption">
-    <span class="active">A cataract thickens the lens until it pushes the iris forward against the cornea. The drainage angle is sealed shut, fluid is trapped behind the iris, and eye pressure climbs.</span>
-    <span>A tiny, self-sealing incision is made in the clear cornea, an opening is made in the front of the capsule, and an ultrasound probe is passed through the pupil.</span>
-    <span>Ultrasound energy breaks the cataract into two halves.</span>
-    <span>Each half is gently suctioned out through the same probe.</span>
-    <span>The thin, clear capsule is deliberately left behind. With the bulky cataract gone it collapses back, the iris falls flat, and the drainage angle springs open.</span>
-    <span>A folded intraocular lens is injected through the same tiny incision and unfolds inside the capsule.</span>
-    <span>The implant is a fraction of the thickness of the cataract, so the chamber stays deep and the angle stays open.</span>
-    <span>Fluid flows freely again: behind the iris, through the pupil, across the anterior chamber and out through the trabecular meshwork. Eye pressure normalizes.</span>
+    <span class="active">When the natural lens thickens &mdash; now called a cataract &mdash; it pushes the iris forward against the eye's drainage system, the trabecular meshwork.</span>
+    <span>With the drain closed, fluid is trapped behind the iris and eye pressure climbs.</span>
+    <span>By removing the cataract and replacing it with a thinner lens, we create space to reopen the drainage system and bring the eye pressure back down.</span>
   </div>
 
   <div class="pips">
@@ -537,15 +532,16 @@
   const pips   = [...document.querySelectorAll('.pip')];
 
   const steps = [
-    { p:'closed',   ms:6000, cap:0, ch:0, lens:'cataract', angle:'closed', flow:'trapped', bag:'intact'    },
-    { p:'incision', ms:3800, cap:1, ch:1, lens:'cataract', angle:'closed', flow:'none',    bag:'open'      },
+    { p:'closed',   ms:3200, cap:0, ch:0, lens:'cataract', angle:'closed', flow:'trapped', bag:'intact'    },
+    { p:'closed',   ms:3000, cap:1, ch:0, lens:'cataract', angle:'closed', flow:'trapped', bag:'intact'    },
+    { p:'incision', ms:3800, cap:2, ch:1, lens:'cataract', angle:'closed', flow:'none',    bag:'open'      },
     { p:'chop',     ms:3200, cap:2, ch:2, lens:'split',    angle:'closed', flow:'none',    bag:'open'      },
-    { p:'asp1',     ms:2600, cap:3, ch:2, lens:'split',    angle:'closed', flow:'none',    bag:'open'      },
-    { p:'asp2',     ms:2600, cap:3, ch:2, lens:'split',    angle:'closed', flow:'none',    bag:'open'      },
-    { p:'empty',    ms:4200, cap:4, ch:3, lens:'gone',     angle:'open',   flow:'none',    bag:'collapsed' },
-    { p:'inject',   ms:3800, cap:5, ch:4, lens:'gone',     angle:'open',   flow:'none',    bag:'collapsed' },
-    { p:'settle',   ms:3000, cap:6, ch:4, lens:'iol',      angle:'open',   flow:'none',    bag:'collapsed' },
-    { p:'open',     ms:7500, cap:7, ch:5, lens:'iol',      angle:'open',   flow:'drain',   bag:'collapsed' }
+    { p:'asp1',     ms:2600, cap:2, ch:2, lens:'split',    angle:'closed', flow:'none',    bag:'open'      },
+    { p:'asp2',     ms:2600, cap:2, ch:2, lens:'split',    angle:'closed', flow:'none',    bag:'open'      },
+    { p:'empty',    ms:4200, cap:2, ch:3, lens:'gone',     angle:'open',   flow:'none',    bag:'collapsed' },
+    { p:'inject',   ms:3800, cap:2, ch:4, lens:'gone',     angle:'open',   flow:'none',    bag:'collapsed' },
+    { p:'settle',   ms:3000, cap:2, ch:4, lens:'iol',      angle:'open',   flow:'none',    bag:'collapsed' },
+    { p:'open',     ms:7500, cap:2, ch:5, lens:'iol',      angle:'open',   flow:'drain',   bag:'collapsed' }
   ];
 
   let token = 0;

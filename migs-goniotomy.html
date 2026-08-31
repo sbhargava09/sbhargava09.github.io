@@ -2294,17 +2294,10 @@
   </div>
 
   <div class="caption">
-    <span data-c="c1" class="active">Fluid is produced by the ciliary processes, behind the iris.</span>
-    <span data-c="c2">It flows forward, through a narrow gap between the iris and the lens.</span>
-    <span data-c="c3">At the iridocorneal angle, it drains outward through the trabecular meshwork.</span>
-    <span data-c="c4">That angle is where angle-based surgery does its work.</span>
-    <span data-c="c5">Through a goniolens, the surgeon looks straight into it &mdash; pupil below, angle above.</span>
-    <span data-c="c6">Closer in: cornea above, the pigmented trabecular meshwork, iris below.</span>
-    <span data-c="c7">A goniotomy blade enters the eye through a small corneal incision.</span>
-    <span data-c="c8">Its tip engages the meshwork at the right edge of the angle.</span>
-    <span data-c="c9">Gliding along the angle, it strips the trabecular meshwork away.</span>
-    <span data-c="c10">What is left behind is a clean opening into Schlemm&rsquo;s canal.</span>
-    <span data-c="c11">Aqueous now drains straight out through the opened angle.</span>
+    <span data-c="cap1" class="active">This is a close-up of the eye's drainage pathway.</span>
+    <span data-c="cap2">When the drain is clogged or develops scar tissue, fluid can't leave the eye and pressure builds up.</span>
+    <span data-c="cap3">This glaucoma procedure removes the clogged filter to let fluid drain from the eye again.</span>
+    <span data-c="cap4">We've created an unimpeded pathway for fluid to leave, improving the eye pressure.</span>
   </div>
 
 </div>
@@ -2399,13 +2392,11 @@
     stage.classList.add('is-operating');
     anim(1300, t => setBlade(XR, 1290 + (YR-1290)*easeOut(t), TH_R), () => {
       after(500, () => {
-        show('c9');
         anim(3400, t => {                       // sweep right to left, stripping behind
           const e = ease(t), th = TH_R + (TH_L-TH_R)*e, p = tipAt(th);
           setBlade(p[0], p[1], th);
           setStrip(p[0]);
         }, () => {
-          show('c10');
           after(600, () => anim(900, t => {     // withdraw
             const e = easeIn(t);
             setBlade(XL - 30*e, YL + 950*e, TH_L);
@@ -2418,18 +2409,14 @@
 
   // overview -> one round of arrows -> circle the angle -> straight through it
   const timeline = [
-    { at:     0, run: () => show('c1') },
-    { at:  2400, run: () => show('c2') },
-    { at:  4400, run: () => show('c3') },
+    { at:     0, run: () => show('cap1') },
     { at:  5000, run: () => stage.classList.add('is-circled') },
-    { at:  6100, run: () => { show('c4'); stage.classList.add('is-portal');
+    { at:  6100, run: () => { stage.classList.add('is-portal');
                               openPortal(1500); zoomCamera(5000); } },
-    { at:  7700, run: () => show('c5') },
-    { at: 10000, run: () => { show('c6'); stage.classList.add('is-close'); } },
-    { at: 11400, run: () => stage.classList.add('is-labeled') },
-    { at: 13200, run: () => { show('c7'); goniotomy(); } },
-    { at: 14600, run: () => show('c8') },
-    { at: 20200, run: () => { show('c11'); stage.classList.add('is-draining'); } },
+    { at: 10000, run: () => stage.classList.add('is-close') },
+    { at: 11400, run: () => { show('cap2'); stage.classList.add('is-labeled'); } },
+    { at: 13200, run: () => { show('cap3'); goniotomy(); } },
+    { at: 20200, run: () => { show('cap4'); stage.classList.add('is-draining'); } },
   ];
 
   const HOLD  = 4200;                       // dwell on the draining angle
@@ -2459,7 +2446,7 @@
     blade.setAttribute('transform', 'translate(794,1290) rotate(-21)');
     stripR.setAttribute('x', 794);
     stripR.setAttribute('width', 0);
-    show('c1');
+    show('cap1');
 
     void stage.offsetWidth;                 // flush, so the animations restart
     stage.classList.remove('nofx');

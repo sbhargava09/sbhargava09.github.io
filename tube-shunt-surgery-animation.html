@@ -1,0 +1,458 @@
+<title>Tube Shunt Surgery Animation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,400;1,400&family=DM+Sans:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#f0f4f5; --bg-mid:#e4edf0; --bg-dark:#d4e3e8;
+    --ink:#0d1f2d; --ink-mid:#3a5060; --ink-light:#7a9aaa;
+    --rule: rgba(13,31,45,0.13);
+    --accent:#0a7e8c; --accent-dark:#065f6b; --accent-light:#e0f2f4;
+    --f-serif:'Cormorant Garamond', Georgia, serif;
+    --f-sans:'DM Sans', system-ui, sans-serif;
+
+    /* eye-specific (anatomical, theme-independent) */
+    --sclera:#f6f2e8; --sclera-vessel:#c1786a;
+    --iris:#8d6a3e; --iris-mid:#a3803f; --iris-dark:#553c22;
+    --pupil:#141312;
+    --plate:#eaf5f6; --plate-line:#7a9aaa;
+    --tube:#eef1ef; --tube-line:#8a9a9c;
+    --graft:#c7d2d3;
+    --muscle:#a85d3e;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0d1a20; --bg-mid:#132630; --bg-dark:#1a323f;
+      --ink:#eaf1f3; --ink-mid:#b7c9d1; --ink-light:#6f8b98;
+      --rule: rgba(234,241,243,0.12);
+      --accent:#3fb8c4; --accent-dark:#6fd0d9; --accent-light:#173842;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d1a20; --bg-mid:#132630; --bg-dark:#1a323f;
+    --ink:#eaf1f3; --ink-mid:#b7c9d1; --ink-light:#6f8b98;
+    --rule: rgba(234,241,243,0.12);
+    --accent:#3fb8c4; --accent-dark:#6fd0d9; --accent-light:#173842;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--f-sans);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    min-height:100svh; padding:clamp(1.5rem,4vw,3rem); gap:1.5rem;
+  }
+
+  .wrap{ width:100%; max-width:640px; display:flex; flex-direction:column; gap:1.1rem; }
+
+  /* ---------- embedded in a narrow column (glaucoma.html) ---------- */
+  body.embed{ padding:.6rem; gap:.7rem; min-height:100vh; justify-content:center; overflow:hidden; }
+  body.embed .eyebrow, body.embed h1{ display:none; }
+  body.embed .wrap{ max-width:none; gap:.7rem; }
+  body.embed .caption{ font-size:.86rem; }
+
+  .eyebrow{
+    font-size:0.7rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--accent); text-align:center;
+  }
+  h1{
+    font-family:var(--f-serif); font-weight:400; font-style:italic; font-size:clamp(1.5rem,3.4vw,2rem);
+    text-align:center; margin:0; color:var(--ink); text-wrap:balance;
+  }
+
+  .stage{
+    position:relative; width:100%; aspect-ratio:1000/1160; overflow:hidden;
+    background:var(--bg-mid); border:1px solid var(--rule);
+  }
+  .stage svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+  .eyelid-line{ fill:none; stroke:var(--ink-mid); stroke-width:3; stroke-linecap:round; }
+  .eyelid-shadow{ fill:var(--ink); opacity:0.05; }
+  .muscle{ fill:var(--muscle); opacity:0.4; transition:opacity .3s linear; }
+  .vessel{ fill:none; stroke:var(--sclera-vessel); stroke-width:1.1; opacity:0.3; stroke-linecap:round; transition:opacity .3s linear; }
+  .limbus{ fill:none; stroke:var(--iris-dark); stroke-width:1.6; opacity:0.55; }
+  .iris-fibril{ stroke:var(--iris-dark); stroke-width:1; opacity:0.3; }
+  .eyelash{ stroke:var(--ink-mid); stroke-width:3; stroke-linecap:round; transition:opacity .4s linear; }
+
+  .plate-body{ fill:var(--plate); stroke:var(--plate-line); stroke-width:2; }
+  .tube-body{ fill:none; stroke:var(--tube-line); stroke-width:7; stroke-linecap:round; }
+  .tube-lumen{ fill:none; stroke:var(--tube); stroke-width:3; stroke-linecap:round; }
+  .suture{ fill:none; stroke:var(--ink-mid); stroke-width:1.3; opacity:0.75; }
+  .graft{ fill:var(--graft); opacity:0.7; stroke:var(--ink-light); stroke-width:1; }
+
+  .cut-line{ stroke:var(--muscle); stroke-width:1.8; stroke-dasharray:7 5; fill:none; opacity:0.85; }
+  .hinge-line{ stroke:var(--ink); stroke-width:2.4; fill:none; opacity:0.75; }
+  .flap{ fill:var(--sclera); opacity:0.72; stroke:var(--ink-light); stroke-width:1.4; }
+  .flap-vessel{ fill:none; stroke:var(--sclera-vessel); stroke-width:1; opacity:0.28; stroke-linecap:round; }
+  .bare-window{ fill:#ffffff; opacity:0.55; }
+  .forceps{ stroke:var(--ink); stroke-width:2; fill:none; stroke-linecap:round; }
+  .stitch-loop{ fill:none; stroke:var(--ink); stroke-width:1.6; }
+  .knot-mark{ fill:none; stroke:var(--ink); stroke-width:1.6; }
+
+  /* ---- overlay groups: hidden by default, revealed per data-phase ---- */
+  .ov{ opacity:0; transition:opacity .6s ease; }
+  [data-phase="expose"] .ov-traction, [data-phase="flap"] .ov-traction,
+  [data-phase="plate"] .ov-traction, [data-phase="closed"] .ov-traction{ opacity:1; }
+
+  [data-phase="flap"] .ov-window, [data-phase="plate"] .ov-window{ opacity:1; }
+  [data-phase="flap"] .ov-flapfwd, [data-phase="plate"] .ov-flapfwd{ opacity:1; }
+  [data-phase="flap"] .ov-forceps{ opacity:1; }
+
+  /* the plate body slides in from near the incision (fully visible) and travels
+     posteriorly under the intact tissue until only its front tip still shows through
+     the window; the tube only draws on once the plate has finished sliding into place */
+  /* appears fully visible right at the incision, holds briefly, then slides posteriorly
+     while dimming -- selling the sense of receding under the intact tissue rather than
+     just vanishing behind a hard clip edge */
+  @keyframes plateSlideIn{
+    0%{ opacity:0; transform:translate(-57px,82px); }
+    18%{ opacity:1; transform:translate(-57px,82px); }
+    100%{ opacity:0.4; transform:translate(0,0); }
+  }
+  .plate-slide{ opacity:0; transform:translate(-57px,82px); }
+  [data-phase="plate"] .plate-slide{ animation: plateSlideIn 1.3s cubic-bezier(.25,.6,.3,1) forwards; }
+
+  /* the intracameral segment is inside the anterior chamber, not under the flap, so once
+     the implant has seated it stays visible continuously -- through closure, through the
+     eye recentering, and into the final/flow phases -- rather than hiding and reappearing */
+  .tube-ac{ opacity:0; transition: opacity .5s ease; }
+  [data-phase="plate"] .tube-ac{ opacity:1; transition-delay:1.2s; }
+  [data-phase="closed"] .tube-ac, [data-phase="none"] .tube-ac,
+  [data-phase="final"] .tube-ac, [data-phase="flow"] .tube-ac{ opacity:1; transition-delay:0s; }
+
+  [data-phase="closed"] .ov-ghost, [data-phase="closed"] .ov-graft,
+  [data-phase="closed"] .ov-flapclosed, [data-phase="closed"] .ov-closesut{ opacity:1; }
+
+  [data-phase="flow"] .ov-flow{ opacity:1; }
+
+  /* the loop draws on first, then the knot ties itself at the top a beat later */
+  .stitch-loop{
+    stroke-dasharray:95; stroke-dashoffset:95;
+    transition: stroke-dashoffset .9s ease .35s, opacity .6s ease;
+  }
+  [data-phase="closed"] .stitch-loop{ stroke-dashoffset:0; }
+
+  .knot{ opacity:0; transition: opacity .35s ease; }
+  [data-phase="closed"] .knot{ opacity:1; transition-delay:1.2s; }
+
+  /* ---- flow arrows: aqueous entering the tube, only animate in the flow phase ---- */
+  .flow-arrow{ opacity:0; offset-rotate:auto; }
+  [data-phase="flow"] .flow-arrow{
+    offset-path: path("M 534 511 L 589 433");
+    animation: flowTube 2.6s linear infinite;
+  }
+  @keyframes flowTube{
+    0%{ offset-distance:0%; opacity:0; }
+    8%{ opacity:1; }
+    62%{ opacity:1; }
+    72%{ offset-distance:100%; opacity:0; }
+    100%{ offset-distance:100%; opacity:0; }
+  }
+
+  .caption{
+    min-height:2.8em; text-align:center; font-size:0.98rem; color:var(--ink-mid);
+    line-height:1.55; display:flex; align-items:center; justify-content:center;
+  }
+  .caption span{ opacity:0; transition:opacity .5s ease; position:absolute; max-width:56ch; padding:0 1rem; }
+  .caption span.active{ opacity:1; position:relative; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition-duration:.01ms !important; animation:none !important; }
+  }
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Concept preview &mdash; not yet on the page</p>
+  <h1>Glaucoma tube shunt (Ahmed valve) surgery</h1>
+
+  <div class="stage" data-phase="baseline" id="stage">
+    <svg viewBox="0 0 1000 1160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="eyeClip"><path id="clipPath" d="M 80 560 Q 500 370 920 560 Q 500 750 80 560 Z"/></clipPath>
+      </defs>
+
+      <path id="shadowUpper" class="eyelid-shadow" d="M 80 560 Q 500 350 920 560 Q 500 405 80 560 Z"/>
+      <path id="shadowLower" class="eyelid-shadow" d="M 80 560 Q 500 770 920 560 Q 500 715 80 560 Z"/>
+
+      <g clip-path="url(#eyeClip)">
+        <ellipse cx="500" cy="560" rx="430" ry="230" fill="var(--sclera)"/>
+
+        <!-- muscle wedges: two coordinate sets, cross-faded by JS as the corners shift -->
+        <path id="muscleN0" class="muscle" d="M 80 560 Q 130 480 190 470 Q 130 560 150 660 Q 100 610 80 560 Z"/>
+        <path id="muscleT0" class="muscle" d="M 920 560 Q 865 470 800 460 Q 875 550 850 665 Q 905 610 920 560 Z"/>
+        <path id="muscleN1" class="muscle" d="M 60 560 Q 115 470 185 458 Q 120 560 145 675 Q 85 615 60 560 Z" opacity="0"/>
+        <path id="muscleT1" class="muscle" d="M 940 560 Q 880 460 805 450 Q 890 555 860 680 Q 925 615 940 560 Z" opacity="0"/>
+
+        <path id="vessel0a" class="vessel" d="M 160 500 Q 260 470 340 500"/>
+        <path id="vessel0b" class="vessel" d="M 660 500 Q 740 470 840 500"/>
+        <path id="vessel0c" class="vessel" d="M 200 630 Q 280 660 350 640"/>
+        <path id="vessel1a" class="vessel" d="M 150 490 Q 260 455 350 485" opacity="0"/>
+        <path id="vessel1b" class="vessel" d="M 650 480 Q 760 450 850 480" opacity="0"/>
+        <path id="vessel1c" class="vessel" d="M 420 360 Q 500 335 590 355" opacity="0"/>
+
+        <circle id="irisC" cx="500" cy="560" r="125" fill="var(--iris)"/>
+        <circle id="irisRing" cx="500" cy="560" r="125" fill="none" stroke="var(--iris-mid)" stroke-width="1"/>
+        <g id="fibrils">
+          <line class="iris-fibril" data-angle="0"   x1="500" y1="560" x2="500" y2="440"/>
+          <line class="iris-fibril" data-angle="30"  x1="500" y1="560" x2="500" y2="440"/>
+          <line class="iris-fibril" data-angle="60"  x1="500" y1="560" x2="500" y2="440"/>
+          <line class="iris-fibril" data-angle="90"  x1="500" y1="560" x2="500" y2="440"/>
+          <line class="iris-fibril" data-angle="120" x1="500" y1="560" x2="500" y2="440"/>
+          <line class="iris-fibril" data-angle="150" x1="500" y1="560" x2="500" y2="440"/>
+          <line class="iris-fibril" data-angle="180" x1="500" y1="560" x2="500" y2="440"/>
+          <line class="iris-fibril" data-angle="210" x1="500" y1="560" x2="500" y2="440"/>
+          <line class="iris-fibril" data-angle="240" x1="500" y1="560" x2="500" y2="440"/>
+          <line class="iris-fibril" data-angle="270" x1="500" y1="560" x2="500" y2="440"/>
+          <line class="iris-fibril" data-angle="300" x1="500" y1="560" x2="500" y2="440"/>
+          <line class="iris-fibril" data-angle="330" x1="500" y1="560" x2="500" y2="440"/>
+        </g>
+        <circle id="limbusC" class="limbus" cx="500" cy="560" r="125"/>
+        <circle id="pupilC" cx="500" cy="560" r="52" fill="var(--pupil)"/>
+        <ellipse id="highlight" cx="472" cy="530" rx="16" ry="11" fill="#ffffff" opacity="0.55" transform="rotate(-25 472 530)"/>
+
+        <!-- inferior traction suture, fixed at the exposed (g=1) pose -->
+        <g class="ov ov-traction">
+          <path class="suture" d="M 460 762 L 430 806 M 500 770 L 500 815 M 540 762 L 570 806" opacity="0.85"/>
+          <circle cx="500" cy="768" r="3" fill="var(--ink-mid)" opacity="0.85"/>
+        </g>
+
+        <!-- bare sclera window, fixed at the exposed (g=1) pose -->
+        <g class="ov ov-window">
+          <path class="bare-window" d="M 510.9 530.5 L 517 460.7 L 676.7 572.6 L 613.3 602.2 Z"/>
+          <path class="cut-line" d="M 510.9 530.5 L 517 460.7"/>
+          <path class="cut-line" d="M 517 460.7 L 676.7 572.6"/>
+          <path class="cut-line" d="M 676.7 572.6 L 613.3 602.2"/>
+          <path class="hinge-line" d="M 510.9 530.5 Q 571.7 552.6 613.3 602.2"/>
+        </g>
+
+        <!-- conjunctival flap, reflected forward onto the cornea -->
+        <g class="ov ov-flapfwd">
+          <path class="flap" d="M 510.9 530.5 L 447.4 560.1 L 607.1 672 L 613.3 602.2 Q 571.7 552.6 510.9 530.5 Z"/>
+          <path class="flap-vessel" d="M 480 590 Q 520 580 555 590"/>
+          <path class="flap-vessel" d="M 500 620 Q 540 605 570 615"/>
+        </g>
+        <g class="ov ov-forceps">
+          <path class="forceps" d="M 400 500 L 495 600 M 415 488 L 505 590"/>
+          <path class="forceps" d="M 495 600 L 512 630 M 505 590 L 512 630"/>
+        </g>
+
+        <!-- plate + tube, real (full opacity while being placed). The plate is life-sized
+             relative to the globe (~3x the earlier schematic) and slid far enough back along
+             the meridian that its posterior half already sits behind the retracted eyelid
+             margin here -- it doesn't wait for primary gaze to disappear from view. -->
+        <g class="ov-plate">
+          <!-- plate and tube are one rigid implant: they slide in together -->
+          <g class="plate-slide">
+            <path class="tube-body" d="M 591.5 523.8 Q 580 539 571.7 552.6 L 550.8 582.5"/>
+            <path class="tube-lumen" d="M 591.5 523.8 Q 580 539 571.7 552.6 L 550.8 582.5"/>
+            <ellipse class="plate-body" cx="662" cy="423" rx="123" ry="78" transform="rotate(-55 662 423)"/>
+            <ellipse cx="662" cy="423" rx="81" ry="51" fill="none" stroke="var(--plate-line)" stroke-width="1.4" opacity="0.8" transform="rotate(-55 662 423)"/>
+            <circle cx="722" cy="405" r="8" fill="none" stroke="var(--plate-line)" stroke-width="2"/>
+            <circle cx="658" cy="360" r="8" fill="none" stroke="var(--plate-line)" stroke-width="2"/>
+            <path class="suture" d="M 722 405 L 738 392 M 722 405 L 740 412"/>
+            <path class="suture" d="M 658 360 L 650 342 M 658 360 L 668 345"/>
+          </g>
+        </g>
+
+        <!-- plate + tube, ghosted beneath the closed flap -->
+        <g class="ov ov-ghost" opacity-target="0.2">
+          <g opacity="0.2">
+            <path class="tube-body" d="M 591.5 523.8 Q 580 539 571.7 552.6 L 550.8 582.5"/>
+            <ellipse class="plate-body" cx="662" cy="423" rx="123" ry="78" transform="rotate(-55 662 423)"/>
+          </g>
+        </g>
+        <g class="ov ov-graft">
+          <path class="graft" d="M 545 555 L 585 528 L 605 560 L 565 587 Z"/>
+        </g>
+
+        <!-- the same flap, folded back down over the plate -->
+        <g class="ov ov-flapclosed">
+          <path class="flap" d="M 510.9 530.5 L 517 460.7 L 676.7 572.6 L 613.3 602.2 Z"/>
+          <path class="flap-vessel" d="M 545 500 Q 590 480 630 490"/>
+          <path class="flap-vessel" d="M 565 555 Q 610 535 645 545"/>
+        </g>
+
+        <!-- closing sutures: two already placed, one an interrupted loop with a tied knot -->
+        <g class="ov ov-closesut">
+          <path class="suture" d="M 522 500 L 512 512 M 560 470 L 550 483" opacity="0.75"/>
+          <path class="suture" d="M 660 585 L 650 597 M 630 598 L 620 610" opacity="0.75"/>
+          <path class="stitch-loop" d="M 585 500 Q 578 465 608 460 Q 638 465 631 490"/>
+          <path class="suture" d="M 585 500 L 576 508 M 631 490 L 640 484"/>
+          <g class="knot">
+            <path class="knot-mark" d="M 600 458 L 616 467 M 616 458 L 600 467"/>
+            <circle cx="608" cy="462.5" r="2" fill="var(--ink)"/>
+          </g>
+        </g>
+
+        <!-- Intracameral portion, from the limbal crossing to a tip halfway to the pupil.
+             Drawn last of the downgaze layers so the flap never paints over it. Its endpoints
+             are recomputed every frame in renderGaze() from the current iris center, so it
+             stays put on the eye continuously through placement, closure, AND the gaze
+             returning to primary position -- it never has to vanish and reappear. -->
+        <g class="tube-ac">
+          <path id="tubeACBody" class="tube-body" d="M 571.7 552.6 L 550.8 582.5"/>
+          <path id="tubeACLumen" class="tube-lumen" d="M 571.7 552.6 L 550.8 582.5"/>
+        </g>
+
+        <!-- flow arrows: aqueous entering the tube, fixed at the primary-gaze (g=0) pose -->
+        <g class="ov ov-flow">
+          <path class="flow-arrow" style="animation-delay:0s"   d="M -9 0 L 7 0 M 7 0 L 1 -5 M 7 0 L 1 5" fill="none" stroke="var(--accent-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="flow-arrow" style="animation-delay:.7s"  d="M -9 0 L 7 0 M 7 0 L 1 -5 M 7 0 L 1 5" fill="none" stroke="var(--accent-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="flow-arrow" style="animation-delay:1.4s" d="M -9 0 L 7 0 M 7 0 L 1 -5 M 7 0 L 1 5" fill="none" stroke="var(--accent-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </g>
+
+      <path id="eyeUpper" class="eyelid-line" d="M 80 560 Q 500 370 920 560"/>
+      <path id="eyeLower" class="eyelid-line" d="M 80 560 Q 500 750 920 560"/>
+
+      <g id="eyelashes">
+        <path class="eyelash" d="M 206 512 L 192 496"/><path class="eyelash" d="M 332 480 L 322 463"/><path class="eyelash" d="M 433 468 L 428 451"/>
+        <path class="eyelash" d="M 500 465 L 500 447"/><path class="eyelash" d="M 567 468 L 572 451"/><path class="eyelash" d="M 668 480 L 678 463"/>
+        <path class="eyelash" d="M 794 512 L 808 496"/><path class="eyelash" d="M 206 608 L 192 624"/><path class="eyelash" d="M 332 640 L 322 657"/>
+        <path class="eyelash" d="M 433 652 L 428 669"/><path class="eyelash" d="M 500 655 L 500 673"/><path class="eyelash" d="M 567 652 L 572 669"/>
+        <path class="eyelash" d="M 668 640 L 678 657"/><path class="eyelash" d="M 794 608 L 808 624"/>
+      </g>
+
+    </svg>
+  </div>
+
+  <div class="caption">
+    <span data-c="baseline" class="active">A glaucoma tube surgery is performed when the eye's natural drainage pathway can't be fixed.</span>
+    <span data-c="placement">A glaucoma tube is placed under a thin tissue layer and held in place by stitches.</span>
+    <span data-c="final">A small portion of the tube is visible in the eye under a microscope, but most of the device stays hidden under your eyelid.</span>
+    <span data-c="flow">Aqueous fluid now drains from the eye through the tube.</span>
+  </div>
+</div>
+
+<script>
+  if (location.hash === '#embed' || location.search.indexOf('embed') > -1)
+    document.body.classList.add('embed');
+
+  const stage = document.getElementById('stage');
+  const captions = document.querySelectorAll('.caption span');
+  const clipEl = document.getElementById('clipPath');
+  const upperEl = document.getElementById('eyeUpper');
+  const lowerEl = document.getElementById('eyeLower');
+  const shadowUpperEl = document.getElementById('shadowUpper');
+  const shadowLowerEl = document.getElementById('shadowLower');
+  const irisC = document.getElementById('irisC');
+  const irisRing = document.getElementById('irisRing');
+  const limbusC = document.getElementById('limbusC');
+  const pupilC = document.getElementById('pupilC');
+  const highlight = document.getElementById('highlight');
+  const fibrils = [...document.querySelectorAll('#fibrils .iris-fibril')];
+  const eyelashes = document.getElementById('eyelashes');
+  const muscles0 = [document.getElementById('muscleN0'), document.getElementById('muscleT0')];
+  const muscles1 = [document.getElementById('muscleN1'), document.getElementById('muscleT1')];
+  const vessels0 = [document.getElementById('vessel0a'), document.getElementById('vessel0b'), document.getElementById('vessel0c')];
+  const vessels1 = [document.getElementById('vessel1a'), document.getElementById('vessel1b'), document.getElementById('vessel1c')];
+  const tubeACBody = document.getElementById('tubeACBody');
+  const tubeACLumen = document.getElementById('tubeACLumen');
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setCaption(key){
+    captions.forEach(s => s.classList.toggle('active', s.dataset.c === key));
+  }
+  function setPhase(key){ stage.dataset.phase = key; }
+  function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
+  function easeInOut(x){ return x < 0.5 ? 2*x*x : 1 - Math.pow(-2*x+2, 2)/2; }
+
+  // g: 0 = primary gaze / normal lids, 1 = downgaze / lids widely retracted
+  function renderGaze(g){
+    const x0 = 80 - 20*g, x1 = 920 + 20*g;
+    const upperCtrl = 370 - 130*g, lowerCtrl = 750 + 60*g;
+    const shU1 = 350 - 130*g, shU2 = 405 - 125*g;
+    const shL1 = 770 + 60*g,  shL2 = 715 + 60*g;
+    const icY = 560 + 95*g;
+
+    clipEl.setAttribute('d', `M ${x0} 560 Q 500 ${upperCtrl.toFixed(1)} ${x1} 560 Q 500 ${lowerCtrl.toFixed(1)} ${x0} 560 Z`);
+    upperEl.setAttribute('d', `M ${x0} 560 Q 500 ${upperCtrl.toFixed(1)} ${x1} 560`);
+    lowerEl.setAttribute('d', `M ${x0} 560 Q 500 ${lowerCtrl.toFixed(1)} ${x1} 560`);
+    shadowUpperEl.setAttribute('d', `M ${x0} 560 Q 500 ${shU1.toFixed(1)} ${x1} 560 Q 500 ${shU2.toFixed(1)} ${x0} 560 Z`);
+    shadowLowerEl.setAttribute('d', `M ${x0} 560 Q 500 ${shL1.toFixed(1)} ${x1} 560 Q 500 ${shL2.toFixed(1)} ${x0} 560 Z`);
+
+    irisC.setAttribute('cy', icY); irisRing.setAttribute('cy', icY);
+    limbusC.setAttribute('cy', icY); pupilC.setAttribute('cy', icY);
+    highlight.setAttribute('cy', icY - 30);
+    highlight.setAttribute('transform', `rotate(-25 472 ${(icY-30).toFixed(1)})`);
+
+    fibrils.forEach(el => {
+      const a = el.dataset.angle;
+      el.setAttribute('y1', icY); el.setAttribute('y2', icY - 120);
+      el.setAttribute('transform', `rotate(${a} 500 ${icY})`);
+    });
+
+    // intracameral tube segment: limbus (r=125) to a tip halfway to the pupil (r=88.5),
+    // down the fixed -55° meridian off the current iris center -- recomputed every frame
+    // so this segment tracks the eye continuously and never has to hide/reappear.
+    const outerX = 571.7, innerX = 550.8;
+    const outerY = icY - 102.4, innerY = icY - 72.5;
+    const tubeD = `M ${outerX} ${outerY.toFixed(1)} L ${innerX} ${innerY.toFixed(1)}`;
+    tubeACBody.setAttribute('d', tubeD);
+    tubeACLumen.setAttribute('d', tubeD);
+
+    eyelashes.style.opacity = 1 - g;
+    muscles0.forEach(el => el.style.opacity = (1 - g) * 0.4);
+    muscles1.forEach(el => el.style.opacity = g * 0.4);
+    vessels0.forEach(el => el.style.opacity = (1 - g) * 0.3);
+    vessels1.forEach(el => el.style.opacity = g * 0.3);
+  }
+
+  let gaze = 0;
+  renderGaze(0);
+
+  function tweenGaze(target, duration){
+    if (reduceMotion) { gaze = target; renderGaze(gaze); return Promise.resolve(); }
+    const start = performance.now();
+    const from = gaze;
+    return new Promise(resolve => {
+      function frame(now){
+        const t = Math.min((now - start) / duration, 1);
+        gaze = from + (target - from) * easeInOut(t);
+        renderGaze(gaze);
+        if (t < 1) requestAnimationFrame(frame);
+        else resolve();
+      }
+      requestAnimationFrame(frame);
+    });
+  }
+
+  let epoch = 0;
+  async function runSequence(){
+    const my = ++epoch;
+    const alive = () => my === epoch;
+
+    gaze = 0; renderGaze(0); setPhase('baseline'); setCaption('baseline');
+    await wait(2000); if (!alive()) return;
+
+    setCaption('placement');
+    await tweenGaze(1, 1300); if (!alive()) return;
+    await wait(500); if (!alive()) return;
+
+    setPhase('flap');
+    await wait(2400); if (!alive()) return;
+
+    setPhase('plate');
+    await wait(3200); if (!alive()) return;
+
+    setPhase('closed');
+    await wait(2800); if (!alive()) return;
+
+    setPhase('none');
+    await wait(700); if (!alive()) return;
+
+    setCaption('final');
+    await tweenGaze(0, 1300); if (!alive()) return;
+
+    setPhase('final');
+    await wait(1200); if (!alive()) return;
+
+    setPhase('flow'); setCaption('flow');
+    await wait(5200); if (!alive()) return;
+
+    setPhase('none');
+    await wait(1000); if (!alive()) return;
+    runSequence();
+  }
+
+  runSequence();
+</script>
