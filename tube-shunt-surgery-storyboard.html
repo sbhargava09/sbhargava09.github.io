@@ -1,0 +1,520 @@
+<title>Tube Shunt Surgery — Storyboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,400;1,400&family=DM+Sans:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#f0f4f5; --bg-mid:#e4edf0; --bg-dark:#d4e3e8;
+    --ink:#0d1f2d; --ink-mid:#3a5060; --ink-light:#7a9aaa;
+    --rule: rgba(13,31,45,0.13);
+    --accent:#0a7e8c; --accent-dark:#065f6b; --accent-light:#e0f2f4;
+    --warn:#a85d3e; --warn-tint:#f5e9e3;
+    --f-serif:'Cormorant Garamond', Georgia, serif;
+    --f-sans:'DM Sans', system-ui, sans-serif;
+
+    /* eye-specific (anatomical, theme-independent) */
+    --sclera:#f6f2e8; --sclera-vessel:#c1786a;
+    --iris:#8d6a3e; --iris-mid:#a3803f; --iris-dark:#553c22;
+    --pupil:#141312;
+    --plate:#eaf5f6; --plate-line:#7a9aaa;
+    --tube:#eef1ef; --tube-line:#8a9a9c;
+    --graft:#c7d2d3;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0d1a20; --bg-mid:#132630; --bg-dark:#1a323f;
+      --ink:#eaf1f3; --ink-mid:#b7c9d1; --ink-light:#6f8b98;
+      --rule: rgba(234,241,243,0.12);
+      --accent:#3fb8c4; --accent-dark:#6fd0d9; --accent-light:#173842;
+      --warn:#e0916d; --warn-tint:#2c1f19;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d1a20; --bg-mid:#132630; --bg-dark:#1a323f;
+    --ink:#eaf1f3; --ink-mid:#b7c9d1; --ink-light:#6f8b98;
+    --rule: rgba(234,241,243,0.12);
+    --accent:#3fb8c4; --accent-dark:#6fd0d9; --accent-light:#173842;
+    --warn:#e0916d; --warn-tint:#2c1f19;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--f-sans);
+    display:flex; flex-direction:column; align-items:center;
+    min-height:100svh; padding:clamp(1.5rem,4vw,3rem); gap:2.4rem;
+  }
+
+  .wrap{ width:100%; max-width:1180px; display:flex; flex-direction:column; gap:1.1rem; }
+
+  .eyebrow{
+    font-size:0.7rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--accent); text-align:center;
+  }
+  h1{
+    font-family:var(--f-serif); font-weight:400; font-style:italic; font-size:clamp(1.5rem,3.4vw,2rem);
+    text-align:center; margin:0 0 .4rem; color:var(--ink); text-wrap:balance;
+  }
+  .sub{ text-align:center; color:var(--ink-mid); font-size:0.92rem; max-width:60ch; margin:0 auto 1rem; line-height:1.5; }
+
+  .grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.6rem 1.2rem;
+  }
+
+  .frame{ display:flex; flex-direction:column; gap:0.7rem; }
+  .frame-num{
+    font-family:var(--f-sans); font-size:0.68rem; font-weight:500; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--accent-dark); display:flex; align-items:center; gap:0.5rem;
+  }
+  .frame-num::before{
+    content:''; width:1.6em; height:1.6em; border-radius:50%; border:1.5px solid var(--accent-dark);
+    display:inline-flex; flex:none;
+  }
+  .frame:nth-child(1) .frame-num::before{ background:var(--accent-dark); }
+
+  .stage{
+    position:relative; width:100%; aspect-ratio:1000/1160; overflow:hidden;
+    background:var(--bg-mid); border:1px solid var(--rule);
+  }
+  .stage svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+  .frame-caption{ font-size:0.86rem; color:var(--ink-mid); line-height:1.5; }
+  .frame-caption strong{ color:var(--ink); font-weight:500; }
+
+  .eyelid-line{ fill:none; stroke:var(--ink-mid); stroke-width:3; stroke-linecap:round; }
+  .eyelid-shadow{ fill:var(--ink); opacity:0.05; }
+  .muscle{ fill:var(--warn); opacity:0.4; }
+  .vessel{ fill:none; stroke:var(--sclera-vessel); stroke-width:1.1; opacity:0.3; stroke-linecap:round; }
+  .limbus{ fill:none; stroke:var(--iris-dark); stroke-width:1.6; opacity:0.55; }
+  .iris-fibril{ stroke:var(--iris-dark); stroke-width:1; opacity:0.3; }
+  .label{ font-family:var(--f-sans); font-size:15px; fill:var(--ink-mid); }
+  .label-strong{ font-family:var(--f-sans); font-size:15px; fill:var(--ink); font-weight:500; }
+  .callout{ stroke:var(--ink-light); stroke-width:1; fill:none; }
+  .plate-body{ fill:var(--plate); stroke:var(--plate-line); stroke-width:2; }
+  .tube-body{ fill:none; stroke:var(--tube-line); stroke-width:7; stroke-linecap:round; }
+  .tube-lumen{ fill:none; stroke:var(--tube); stroke-width:3; stroke-linecap:round; }
+  .suture{ fill:none; stroke:var(--ink-mid); stroke-width:1.3; opacity:0.75; }
+  .graft{ fill:var(--graft); opacity:0.7; stroke:var(--ink-light); stroke-width:1; }
+  .conj{ fill:var(--sclera); opacity:0.5; stroke:var(--ink-light); stroke-width:1; stroke-dasharray:3 3; }
+
+  .cut-line{ stroke:var(--warn); stroke-width:1.8; stroke-dasharray:7 5; fill:none; opacity:0.85; }
+  .hinge-line{ stroke:var(--ink); stroke-width:2.4; fill:none; opacity:0.75; }
+  .flap{ fill:var(--sclera); opacity:0.72; stroke:var(--ink-light); stroke-width:1.4; }
+  .flap-vessel{ fill:none; stroke:var(--sclera-vessel); stroke-width:1; opacity:0.28; stroke-linecap:round; }
+  .bare-window{ fill:#ffffff; opacity:0.55; }
+  .forceps{ stroke:var(--ink); stroke-width:2; fill:none; stroke-linecap:round; }
+  .needle{ stroke:var(--ink); stroke-width:1.6; fill:none; }
+  .thread{ stroke:var(--ink-mid); stroke-width:1; fill:none; }
+
+  .footer-note{ text-align:center; color:var(--ink-light); font-size:0.78rem; margin-top:0.6rem; }
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Concept preview &mdash; storyboard, not yet animated</p>
+  <h1>Glaucoma tube shunt (Ahmed valve) surgery</h1>
+  <p class="sub">Five key stills mapping out the sequence, drawn on the same eye/eyelid coordinate system as the aqueous&nbsp;drainage animation so it can be tweened afterward. Review these, then we'll turn it into a timed animation.</p>
+
+  <div class="grid">
+
+    <!-- ============================================================ -->
+    <!-- FRAME 1 — baseline, primary gaze -->
+    <!-- ============================================================ -->
+    <div class="frame">
+      <div class="frame-num">Frame 1 &nbsp;&middot;&nbsp; Baseline</div>
+      <div class="stage">
+        <svg viewBox="0 0 1000 1160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="clip1"><path d="M 80 560 Q 500 370 920 560 Q 500 750 80 560 Z"/></clipPath>
+          </defs>
+          <path class="eyelid-shadow" d="M 80 560 Q 500 350 920 560 Q 500 405 80 560 Z"/>
+          <path class="eyelid-shadow" d="M 80 560 Q 500 770 920 560 Q 500 715 80 560 Z"/>
+          <g clip-path="url(#clip1)">
+            <ellipse cx="500" cy="560" rx="430" ry="230" fill="var(--sclera)"/>
+            <path class="muscle" d="M 80 560 Q 130 480 190 470 Q 130 560 150 660 Q 100 610 80 560 Z"/>
+            <path class="muscle" d="M 920 560 Q 865 470 800 460 Q 875 550 850 665 Q 905 610 920 560 Z"/>
+            <path class="vessel" d="M 160 500 Q 260 470 340 500"/>
+            <path class="vessel" d="M 660 500 Q 740 470 840 500"/>
+            <path class="vessel" d="M 200 630 Q 280 660 350 640"/>
+            <circle cx="500" cy="560" r="125" fill="var(--iris)"/>
+            <circle cx="500" cy="560" r="125" fill="none" stroke="var(--iris-mid)" stroke-width="1"/>
+            <g class="iris-fibril">
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(0 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(24 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(48 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(72 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(96 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(120 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(144 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(168 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(192 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(216 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(240 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(264 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(288 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(312 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(336 500 560)"/>
+            </g>
+            <circle class="limbus" cx="500" cy="560" r="125"/>
+            <circle cx="500" cy="560" r="52" fill="var(--pupil)"/>
+            <ellipse cx="472" cy="530" rx="16" ry="11" fill="#ffffff" opacity="0.55" transform="rotate(-25 472 530)"/>
+          </g>
+          <path class="eyelid-line" d="M 80 560 Q 500 370 920 560"/>
+          <path class="eyelid-line" d="M 80 560 Q 500 750 920 560"/>
+          <g stroke="var(--ink-mid)" stroke-width="3" stroke-linecap="round">
+            <path d="M 206 512 L 192 496"/><path d="M 332 480 L 322 463"/><path d="M 433 468 L 428 451"/>
+            <path d="M 500 465 L 500 447"/><path d="M 567 468 L 572 451"/><path d="M 668 480 L 678 463"/>
+            <path d="M 794 512 L 808 496"/><path d="M 206 608 L 192 624"/><path d="M 332 640 L 322 657"/>
+            <path d="M 433 652 L 428 669"/><path d="M 500 655 L 500 673"/><path d="M 567 652 L 572 669"/>
+            <path d="M 668 640 L 678 657"/><path d="M 794 608 L 808 624"/>
+          </g>
+        </svg>
+      </div>
+      <p class="frame-caption"><strong>Primary gaze, pre-op.</strong> Eye at rest, normal lid aperture — matches the starting pose of the aqueous drainage animation.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FRAME 2 — downgaze, lids retracted -->
+    <!-- ============================================================ -->
+    <div class="frame">
+      <div class="frame-num">Frame 2 &nbsp;&middot;&nbsp; Exposure</div>
+      <div class="stage">
+        <svg viewBox="0 0 1000 1160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="clip2"><path d="M 60 560 Q 500 240 940 560 Q 500 810 60 560 Z"/></clipPath>
+          </defs>
+          <path class="eyelid-shadow" d="M 60 560 Q 500 220 940 560 Q 500 280 60 560 Z"/>
+          <path class="eyelid-shadow" d="M 60 560 Q 500 830 940 560 Q 500 775 60 560 Z"/>
+          <g clip-path="url(#clip2)">
+            <ellipse cx="500" cy="560" rx="450" ry="270" fill="var(--sclera)"/>
+            <path class="muscle" d="M 60 560 Q 115 470 185 458 Q 120 560 145 675 Q 85 615 60 560 Z"/>
+            <path class="muscle" d="M 940 560 Q 880 460 805 450 Q 890 555 860 680 Q 925 615 940 560 Z"/>
+            <path class="vessel" d="M 150 490 Q 260 455 350 485"/>
+            <path class="vessel" d="M 650 480 Q 760 450 850 480"/>
+            <path class="vessel" d="M 420 360 Q 500 335 590 355"/>
+            <!-- superior sclera now widely exposed above the (down-rotated) iris -->
+            <circle cx="500" cy="655" r="125" fill="var(--iris)"/>
+            <circle cx="500" cy="655" r="125" fill="none" stroke="var(--iris-mid)" stroke-width="1"/>
+            <g class="iris-fibril">
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(0 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(30 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(60 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(90 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(120 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(150 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(180 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(210 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(240 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(270 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(300 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(330 500 655)"/>
+            </g>
+            <circle class="limbus" cx="500" cy="655" r="125"/>
+            <circle cx="500" cy="655" r="52" fill="var(--pupil)"/>
+            <ellipse cx="472" cy="625" rx="16" ry="11" fill="#ffffff" opacity="0.5" transform="rotate(-25 472 625)"/>
+            <!-- inferior traction suture through peripheral cornea, holding the eye down -->
+            <path class="suture" d="M 460 762 L 430 806 M 500 770 L 500 815 M 540 762 L 570 806" opacity="0.85"/>
+            <circle cx="500" cy="768" r="3" fill="var(--ink-mid)" opacity="0.85"/>
+          </g>
+          <path class="eyelid-line" d="M 60 560 Q 500 240 940 560"/>
+          <path class="eyelid-line" d="M 60 560 Q 500 810 940 560"/>
+          <g class="label">
+            <path class="callout" d="M 700 380 L 780 340"/>
+            <text x="786" y="335" class="label-strong">Exposed superior sclera</text>
+          </g>
+          <g class="label">
+            <path class="callout" d="M 500 800 L 500 850"/>
+            <text x="500" y="875" text-anchor="middle">Traction suture, inferior cornea</text>
+          </g>
+        </svg>
+      </div>
+      <p class="frame-caption"><strong>Eye rotated down, lids held wide.</strong> A speculum and an inferior traction suture bring the superior sclera into view for the conjunctival peritomy.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FRAME 3 — conjunctival flap cut on 3 sides, folded back on the 4th -->
+    <!-- ============================================================ -->
+    <div class="frame">
+      <div class="frame-num">Frame 3 &nbsp;&middot;&nbsp; Flap opened</div>
+      <div class="stage">
+        <svg viewBox="0 0 1000 1160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="clip3"><path d="M 60 560 Q 500 240 940 560 Q 500 810 60 560 Z"/></clipPath>
+          </defs>
+          <path class="eyelid-shadow" d="M 60 560 Q 500 220 940 560 Q 500 280 60 560 Z"/>
+          <path class="eyelid-shadow" d="M 60 560 Q 500 830 940 560 Q 500 775 60 560 Z"/>
+          <g clip-path="url(#clip3)">
+            <ellipse cx="500" cy="560" rx="450" ry="270" fill="var(--sclera)"/>
+            <path class="muscle" d="M 60 560 Q 115 470 185 458 Q 120 560 145 675 Q 85 615 60 560 Z"/>
+            <path class="muscle" d="M 940 560 Q 880 460 805 450 Q 890 555 860 680 Q 925 615 940 560 Z"/>
+            <path class="vessel" d="M 150 490 Q 260 455 350 485"/>
+            <path class="vessel" d="M 200 660 Q 280 690 350 670"/>
+            <circle cx="500" cy="655" r="125" fill="var(--iris)"/>
+            <circle cx="500" cy="655" r="125" fill="none" stroke="var(--iris-mid)" stroke-width="1"/>
+            <g class="iris-fibril">
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(0 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(45 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(90 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(135 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(180 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(225 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(270 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(315 500 655)"/>
+            </g>
+            <circle class="limbus" cx="500" cy="655" r="125"/>
+            <circle cx="500" cy="655" r="52" fill="var(--pupil)"/>
+            <ellipse cx="472" cy="625" rx="16" ry="11" fill="#ffffff" opacity="0.5" transform="rotate(-25 472 625)"/>
+
+            <!-- bare sclera window: conjunctiva has been reflected off this quadrilateral.
+                 Meridian is fixed at -55° off the limbus (the same meridian the plate/tube
+                 will occupy in every later frame). Hinge A-B sits ON the limbus (r=125);
+                 the free corners C-D sit further out on the sclera (r=195). -->
+            <path class="bare-window" d="M 510.9 530.5 L 517 460.7 L 676.7 572.6 L 613.3 602.2 Z"/>
+            <path class="cut-line" d="M 510.9 530.5 L 517 460.7"/>
+            <path class="cut-line" d="M 517 460.7 L 676.7 572.6"/>
+            <path class="cut-line" d="M 676.7 572.6 L 613.3 602.2"/>
+            <path class="hinge-line" d="M 510.9 530.5 Q 571.7 552.6 613.3 602.2"/>
+
+            <!-- the flap itself, folded forward over the hinge onto the cornea (a limbus-based
+                 peritomy flap is reflected anteriorly, not posteriorly) -->
+            <path class="flap" d="M 510.9 530.5 L 447.4 560.1 L 607.1 672 L 613.3 602.2 Q 571.7 552.6 510.9 530.5 Z"/>
+            <path class="flap-vessel" d="M 480 590 Q 520 580 555 590"/>
+            <path class="flap-vessel" d="M 500 620 Q 540 605 570 615"/>
+
+            <!-- forceps holding the reflected flap in place on the cornea -->
+            <path class="forceps" d="M 400 500 L 495 600 M 415 488 L 505 590"/>
+            <path class="forceps" d="M 495 600 L 512 630 M 505 590 L 512 630"/>
+          </g>
+          <path class="eyelid-line" d="M 60 560 Q 500 240 940 560"/>
+          <path class="eyelid-line" d="M 60 560 Q 500 810 940 560"/>
+          <g class="label">
+            <path class="callout" d="M 540 620 L 470 660"/>
+            <text x="464" y="655" text-anchor="end" class="label-strong">Conjunctiva reflected</text>
+            <text x="464" y="675" text-anchor="end">forward onto the cornea</text>
+          </g>
+          <g class="label">
+            <path class="callout" d="M 590 500 L 660 450"/>
+            <text x="666" y="445">Bare sclera window</text>
+            <text x="666" y="463">&mdash; plate seats here</text>
+          </g>
+        </svg>
+      </div>
+      <p class="frame-caption"><strong>Conjunctival flap raised.</strong> The conjunctiva (and Tenon's) is incised on three sides and reflected forward over the hinge at the limbus &mdash; here laid temporarily over the cornea &mdash; exposing bare sclera for the plate.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FRAME 4 — plate + tube placed, uncovered -->
+    <!-- ============================================================ -->
+    <div class="frame">
+      <div class="frame-num">Frame 4 &nbsp;&middot;&nbsp; Plate placed</div>
+      <div class="stage">
+        <svg viewBox="0 0 1000 1160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="clip4b"><path d="M 60 560 Q 500 240 940 560 Q 500 810 60 560 Z"/></clipPath>
+          </defs>
+          <path class="eyelid-shadow" d="M 60 560 Q 500 220 940 560 Q 500 280 60 560 Z"/>
+          <path class="eyelid-shadow" d="M 60 560 Q 500 830 940 560 Q 500 775 60 560 Z"/>
+          <g clip-path="url(#clip4b)">
+            <ellipse cx="500" cy="560" rx="450" ry="270" fill="var(--sclera)"/>
+            <path class="muscle" d="M 60 560 Q 115 470 185 458 Q 120 560 145 675 Q 85 615 60 560 Z"/>
+            <path class="muscle" d="M 940 560 Q 880 460 805 450 Q 890 555 860 680 Q 925 615 940 560 Z"/>
+            <path class="vessel" d="M 150 490 Q 260 455 350 485"/>
+            <!-- bare sclera window still exposed, flap still reflected out of the way on the cornea -->
+            <path class="bare-window" d="M 510.9 530.5 L 517 460.7 L 676.7 572.6 L 613.3 602.2 Z"/>
+            <path class="flap" opacity="0.5" d="M 510.9 530.5 L 447.4 560.1 L 607.1 672 L 613.3 602.2 Q 571.7 552.6 510.9 530.5 Z"/>
+            <circle cx="500" cy="655" r="125" fill="var(--iris)"/>
+            <circle cx="500" cy="655" r="125" fill="none" stroke="var(--iris-mid)" stroke-width="1"/>
+            <g class="iris-fibril">
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(0 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(45 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(90 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(135 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(180 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(225 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(270 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(315 500 655)"/>
+            </g>
+            <circle class="limbus" cx="500" cy="655" r="125"/>
+            <circle cx="500" cy="655" r="52" fill="var(--pupil)"/>
+            <ellipse cx="472" cy="625" rx="16" ry="11" fill="#ffffff" opacity="0.5" transform="rotate(-25 472 625)"/>
+
+            <!-- tube: from the plate's anterior tip, forward along the -55° meridian, across
+                 the limbus, and into the anterior chamber for half the limbus-to-pupil distance -->
+            <path class="tube-body" d="M 594.5 520.6 Q 583 537 571.7 552.6 L 550.8 582.5"/>
+            <path class="tube-lumen" d="M 594.5 520.6 Q 583 537 571.7 552.6 L 550.8 582.5"/>
+
+            <!-- Ahmed-style plate: long axis runs IN LINE with the tube (radially, down the
+                 same meridian), matching a real plate's silhouette, not crosswise to it. Its
+                 anterior tip sits on the sclera just past the limbus; it extends posterior
+                 into the sub-Tenon's pocket. -->
+            <ellipse class="plate-body" cx="618" cy="487" rx="41" ry="26" transform="rotate(-55 618 487)"/>
+            <ellipse cx="618" cy="487" rx="27" ry="17" fill="none" stroke="var(--plate-line)" stroke-width="1.4" opacity="0.8" transform="rotate(-55 618 487)"/>
+            <circle cx="638" cy="481" r="5.5" fill="none" stroke="var(--plate-line)" stroke-width="2"/>
+            <circle cx="617" cy="466" r="5.5" fill="none" stroke="var(--plate-line)" stroke-width="2"/>
+            <!-- fixation sutures through the eyelets -->
+            <path class="suture" d="M 648 472 L 657 462 M 648 472 L 660 474"/>
+            <path class="suture" d="M 607 456 L 598 446 M 607 456 L 619 450"/>
+          </g>
+          <path class="eyelid-line" d="M 60 560 Q 500 240 940 560"/>
+          <path class="eyelid-line" d="M 60 560 Q 500 810 940 560"/>
+          <g class="label">
+            <path class="callout" d="M 636 452 L 700 400"/>
+            <text x="706" y="395" class="label-strong">Plate, sutured to sclera</text>
+          </g>
+          <g class="label">
+            <path class="callout" d="M 585 545 L 660 560"/>
+            <text x="666" y="565">Tube</text>
+          </g>
+          <g class="label">
+            <path class="callout" d="M 550.8 582.5 L 460 610"/>
+            <text x="454" y="615" text-anchor="end">Tip crosses limbus into A/C</text>
+          </g>
+        </svg>
+      </div>
+      <p class="frame-caption"><strong>Plate sutured, tube inserted.</strong> The plate is long and narrow, slid back along the same meridian into a sub-Tenon's pocket well posterior to the limbus; the tube runs forward from its anterior tip and crosses the limbus, its visible segment reaching about halfway from the limbus to the pupil.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FRAME 5 — flap folded back down over the plate, mid-suture -->
+    <!-- ============================================================ -->
+    <div class="frame">
+      <div class="frame-num">Frame 5 &nbsp;&middot;&nbsp; Flap closed</div>
+      <div class="stage">
+        <svg viewBox="0 0 1000 1160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="clip4"><path d="M 60 560 Q 500 240 940 560 Q 500 810 60 560 Z"/></clipPath>
+          </defs>
+          <path class="eyelid-shadow" d="M 60 560 Q 500 220 940 560 Q 500 280 60 560 Z"/>
+          <path class="eyelid-shadow" d="M 60 560 Q 500 830 940 560 Q 500 775 60 560 Z"/>
+          <g clip-path="url(#clip4)">
+            <ellipse cx="500" cy="560" rx="450" ry="270" fill="var(--sclera)"/>
+            <path class="muscle" d="M 60 560 Q 115 470 185 458 Q 120 560 145 675 Q 85 615 60 560 Z"/>
+            <path class="muscle" d="M 940 560 Q 880 460 805 450 Q 890 555 860 680 Q 925 615 940 560 Z"/>
+            <path class="vessel" d="M 150 490 Q 260 455 350 485"/>
+            <circle cx="500" cy="655" r="125" fill="var(--iris)"/>
+            <circle cx="500" cy="655" r="125" fill="none" stroke="var(--iris-mid)" stroke-width="1"/>
+            <g class="iris-fibril">
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(0 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(45 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(90 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(135 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(180 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(225 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(270 500 655)"/>
+              <line x1="500" y1="655" x2="500" y2="535" transform="rotate(315 500 655)"/>
+            </g>
+            <circle class="limbus" cx="500" cy="655" r="125"/>
+            <circle cx="500" cy="655" r="52" fill="var(--pupil)"/>
+            <ellipse cx="472" cy="625" rx="16" ry="11" fill="#ffffff" opacity="0.5" transform="rotate(-25 472 625)"/>
+
+            <!-- ghosted plate + tube, now hidden beneath the replaced flap -->
+            <g opacity="0.2">
+              <path class="tube-body" d="M 594.5 520.6 Q 583 537 571.7 552.6 L 550.8 582.5"/>
+              <ellipse class="plate-body" cx="618" cy="487" rx="41" ry="26" transform="rotate(-55 618 487)"/>
+            </g>
+            <!-- patch graft over the tube's limbal crossing, also now beneath the flap -->
+            <path class="graft" opacity="0.55" d="M 545 555 L 585 528 L 605 560 L 565 587 Z"/>
+
+            <!-- the SAME conjunctival flap, folded back down into its original footprint,
+                 covering the plate and graft -->
+            <path class="flap" d="M 510.9 530.5 L 517 460.7 L 676.7 572.6 L 613.3 602.2 Z"/>
+            <path class="flap-vessel" d="M 545 500 Q 590 480 630 490"/>
+            <path class="flap-vessel" d="M 565 555 Q 610 535 645 545"/>
+
+            <!-- sutures already placed along two edges -->
+            <path class="suture" d="M 522 500 L 512 512 M 560 470 L 550 483" opacity="0.75"/>
+            <path class="suture" d="M 660 585 L 650 597 M 630 598 L 620 610" opacity="0.75"/>
+
+            <!-- one stitch caught mid-pass along the far (posterior) edge, before closure is finished -->
+            <path class="needle" d="M 585 500 A 24 24 0 0 1 630 490"/>
+            <path class="needle" d="M 630 490 L 642 484 L 634 496 Z" fill="var(--ink)"/>
+            <path class="thread" d="M 585 500 Q 562 490 548 468" stroke-dasharray="2 3"/>
+          </g>
+          <path class="eyelid-line" d="M 60 560 Q 500 240 940 560"/>
+          <path class="eyelid-line" d="M 60 560 Q 500 810 940 560"/>
+          <g class="label">
+            <path class="callout" d="M 625 487 L 700 445"/>
+            <text x="706" y="440" class="label-strong">Stitch being placed</text>
+          </g>
+          <g class="label">
+            <path class="callout" d="M 560 570 L 480 610"/>
+            <text x="474" y="615" text-anchor="end">Flap folded back over the plate</text>
+          </g>
+        </svg>
+      </div>
+      <p class="frame-caption"><strong>Flap replaced, closure in progress.</strong> The same conjunctival flap is folded back down over the plate and patch graft. A few interrupted sutures are already in, and one more is being placed at the margin before the eye is allowed to settle.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FRAME 6 — back to primary gaze, final result -->
+    <!-- ============================================================ -->
+    <div class="frame">
+      <div class="frame-num">Frame 6 &nbsp;&middot;&nbsp; Final result</div>
+      <div class="stage">
+        <svg viewBox="0 0 1000 1160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="clip5"><path d="M 80 560 Q 500 370 920 560 Q 500 750 80 560 Z"/></clipPath>
+          </defs>
+          <path class="eyelid-shadow" d="M 80 560 Q 500 350 920 560 Q 500 405 80 560 Z"/>
+          <path class="eyelid-shadow" d="M 80 560 Q 500 770 920 560 Q 500 715 80 560 Z"/>
+          <g clip-path="url(#clip5)">
+            <ellipse cx="500" cy="560" rx="430" ry="230" fill="var(--sclera)"/>
+            <path class="muscle" d="M 80 560 Q 130 480 190 470 Q 130 560 150 660 Q 100 610 80 560 Z"/>
+            <path class="muscle" d="M 920 560 Q 865 470 800 460 Q 875 550 850 665 Q 905 610 920 560 Z"/>
+            <path class="vessel" d="M 160 500 Q 260 470 340 500"/>
+            <path class="vessel" d="M 200 630 Q 280 660 350 640"/>
+            <!-- faint residual graft/suture mark, superotemporal, alongside the tube meridian -->
+            <path class="vessel" d="M 548 445 Q 572 428 598 438" opacity="0.4"/>
+            <circle cx="500" cy="560" r="125" fill="var(--iris)"/>
+            <circle cx="500" cy="560" r="125" fill="none" stroke="var(--iris-mid)" stroke-width="1"/>
+            <g class="iris-fibril">
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(0 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(24 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(48 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(72 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(96 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(120 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(144 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(168 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(192 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(216 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(240 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(264 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(288 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(312 500 560)"/>
+              <line x1="500" y1="560" x2="500" y2="440" transform="rotate(336 500 560)"/>
+            </g>
+            <circle class="limbus" cx="500" cy="560" r="125"/>
+            <circle cx="500" cy="560" r="52" fill="var(--pupil)"/>
+            <ellipse cx="472" cy="530" rx="16" ry="11" fill="#ffffff" opacity="0.55" transform="rotate(-25 472 530)"/>
+
+            <!-- tube segment visible crossing the supertemporal limbus, along the same -55°
+                 meridian as the plate/tube in every earlier frame. Its inner (A/C) end now
+                 reaches halfway from the limbus (r=125) to the pupil margin (r=52), i.e. r≈88.5;
+                 plate itself is out of view under the lid, further out along this same line -->
+            <path class="tube-body" d="M 580.3 445.3 L 550.8 487.5" stroke-width="6"/>
+            <path class="tube-lumen" d="M 580.3 445.3 L 550.8 487.5" stroke-width="2.5"/>
+          </g>
+          <path class="eyelid-line" d="M 80 560 Q 500 370 920 560"/>
+          <path class="eyelid-line" d="M 80 560 Q 500 750 920 560"/>
+          <g stroke="var(--ink-mid)" stroke-width="3" stroke-linecap="round">
+            <path d="M 206 512 L 192 496"/><path d="M 332 480 L 322 463"/><path d="M 433 468 L 428 451"/>
+            <path d="M 500 465 L 500 447"/><path d="M 567 468 L 572 451"/><path d="M 668 480 L 678 463"/>
+            <path d="M 794 512 L 808 496"/><path d="M 206 608 L 192 624"/><path d="M 332 640 L 322 657"/>
+            <path d="M 433 652 L 428 669"/><path d="M 500 655 L 500 673"/><path d="M 567 652 L 572 669"/>
+            <path d="M 668 640 L 678 657"/><path d="M 794 608 L 808 624"/>
+          </g>
+          <g class="label">
+            <path class="callout" d="M 571.7 457.6 L 660 440"/>
+            <text x="666" y="435">Small tube segment at limbus</text>
+          </g>
+          <g class="label">
+            <path class="callout" d="M 608.9 404.3 L 700 350"/>
+            <text x="706" y="345" class="label-strong">Plate hidden under upper lid</text>
+          </g>
+        </svg>
+      </div>
+      <p class="frame-caption"><strong>Back to primary gaze.</strong> Lids return to their resting position. Only a short stub of tube is visible crossing the superotemporal limbus &mdash; the plate itself sits far enough posterior to be covered by the upper eyelid.</p>
+    </div>
+
+  </div>
+
+  <p class="footer-note">Once these read correctly, the plan is to tween frame&nbsp;1&rarr;2 (downgaze + lid retraction), 2&rarr;3 (flap incised &amp; reflected), 3&rarr;4 (plate/tube fade&nbsp;in), 4&rarr;5 (flap folds back down + suture animates in), and 5&rarr;6 (eye recentres, lids relax) &mdash; the same blink/lid-tween machinery already used in the aqueous drainage animation.</p>
+</div>
