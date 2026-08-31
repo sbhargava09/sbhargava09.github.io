@@ -334,14 +334,14 @@
                L 605 970 Q 845 860 860 560 Q 845 260 605 150 Z"/>
 
       <!-- anterior chamber -->
-      <path class="ac-tint"/>
+      <path class="ac-tint" d="M 622 469 Q 696 300 570 132 L 605 150 Q 845 260 860 560 Q 845 860 605 970 L 570 988 Q 696 820 622 651 L 622 469 Z"/>
 
       <!-- capsular bag: stays in the eye for the whole operation -->
       <ellipse class="cap-fill" cx="463" cy="560" rx="170" ry="238"/>
       <g class="capsule">
-        <path class="cap-post"/>
-        <path class="cap-ant-top"/>
-        <path class="cap-ant-bot"/>
+        <path class="cap-post" d="M 463 322 A 170 238 0 0 0 463 798"/>
+        <path class="cap-ant-top" d="M 463 322 A 170 238 0 0 1 633 560"/>
+        <path class="cap-ant-bot" d="M 463 798 A 170 238 0 0 0 633 560"/>
       </g>
 
       <!-- the cataract, whole -->
@@ -362,8 +362,8 @@
 
       <!-- zonules -->
       <g class="zonules">
-        <path class="z1"/><path class="z2"/><path class="z3"/>
-        <path class="z4"/><path class="z5"/><path class="z6"/>
+        <path class="z1" d="M 558 118 L 510 324"/><path class="z2" d="M 568 133 L 519 326"/><path class="z3" d="M 580 142 L 529 330"/>
+        <path class="z4" d="M 558 1002 L 510 796"/><path class="z5" d="M 568 987 L 519 794"/><path class="z6" d="M 580 978 L 529 790"/>
       </g>
 
       <!-- ciliary body -->
@@ -402,10 +402,10 @@
 
       <!-- iris -->
       <g>
-        <path class="iris-body iris-top"/>
-        <path class="iris-line iris-line-top"/>
-        <path class="iris-body iris-bot"/>
-        <path class="iris-line iris-line-bot"/>
+        <path class="iris-body iris-top" d="M 570 132 Q 605 136 612 148 Q 696 300 622 469 Q 631 300 570 132 Z"/>
+        <path class="iris-line iris-line-top" d="M 610 200 Q 675 300 630 420"/>
+        <path class="iris-body iris-bot" d="M 570 988 Q 605 984 612 972 Q 696 820 622 651 Q 631 820 570 988 Z"/>
+        <path class="iris-line iris-line-bot" d="M 610 920 Q 675 820 630 700"/>
       </g>
 
       <!-- trapped fluid: circling in the pocket behind the iris -->
