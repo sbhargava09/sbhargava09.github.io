@@ -20,6 +20,8 @@
       --accent:       #0a7e8c;
       --accent-dark:  #065f6b;
       --accent-light: #e0f2f4;
+      --warn:         #a85d3e;
+      --warn-tint:    #f5e9e3;
       --f-serif: 'Cormorant Garamond', Georgia, serif;
       --f-sans:  'DM Sans', system-ui, sans-serif;
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -63,7 +65,7 @@
 
     /* Dropdown */
     .nav-item { position: relative; }
-    .nav-item > a, .nav-item > button { display: inline-flex; align-items: center; gap: 0.3rem; }
+    .nav-item > a, .nav-item > button { display: inline-flex; align-items: center; gap: 0.3rem; text-transform: uppercase; }
     .nav-caret { font-size: 0.6rem; color: var(--ink-light); transition: transform 0.2s, color 0.2s; }
     .nav-item:hover .nav-caret, .nav-item:focus-within .nav-caret { color: var(--accent); }
     .nav-dropdown { position: absolute; top: 100%; left: 50%; min-width: 168px; padding: 0.5rem 0; background: var(--bg); border: 1px solid var(--rule); box-shadow: 0 16px 36px rgba(13,31,45,0.14); opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(-50%) translateY(4px); transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out), visibility 0.2s; z-index: 20; }
@@ -142,20 +144,93 @@
     .expertise-desc { font-size: 0.9rem; color: var(--ink-mid); line-height: 1.7; max-width: 52ch; }
     .expertise-tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 0.3rem 0.75rem; white-space: nowrap; align-self: start; margin-top: 0.3rem; }
 
-    .faq-list { display: flex; flex-direction: column; }
-    .faq-item { border-bottom: 1px solid var(--rule); }
-    .faq-item:first-child { border-top: 1px solid var(--rule); }
-    .faq-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.4rem 0; text-align: left; font-family: var(--f-serif); font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 300; color: var(--ink); cursor: pointer; transition: color 0.2s; min-height: 44px; }
-    .faq-btn:hover { color: var(--accent); }
-    .faq-icon { width: 20px; height: 20px; flex-shrink: 0; position: relative; color: var(--accent); }
-    .faq-icon::before, .faq-icon::after { content: ''; position: absolute; background: currentColor; transition: transform 0.3s var(--ease-out), opacity 0.3s; }
-    .faq-icon::before { top: 50%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); }
-    .faq-icon::after  { top: 0; left: 50%; width: 1px; height: 100%; transform: translateX(-50%); }
-    .faq-item.open .faq-icon::after { opacity: 0; transform: translateX(-50%) rotate(90deg); }
-    .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s var(--ease-out); }
-    .faq-item.open .faq-answer { grid-template-rows: 1fr; }
-    .faq-answer-inner { overflow: hidden; }
-    .faq-answer-inner p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.75; padding-bottom: 1.5rem; max-width: 68ch; }
+    /* ---------- Patient education panel ---------- */
+    .link-arrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+    .link-arrow:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
+    .pe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); }
+    .pe-card { display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--rule); padding: clamp(1.5rem, 3vw, 2.25rem); }
+    .pe-visual { width: 100%; aspect-ratio: 6 / 5; background: var(--bg-dark); overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
+    .pe-visual svg { display: block; width: 100%; height: 100%; }
+    .pe-title { font-family: var(--f-serif); font-size: clamp(1.3rem, 2.4vw, 1.7rem); font-weight: 300; margin-bottom: 0.75rem; color: var(--ink); }
+    .pe-desc { font-size: 0.92rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1.5rem; flex-grow: 1; }
+
+    /* Cataract card animation: light rays scattering at a clouded lens (reused from cataracts.html) */
+    .rf-vitreous { fill: var(--bg-mid); opacity: 0.55; }
+    .rf-retina   { fill: none; stroke: var(--warn); stroke-width: 9; opacity: 0.45; stroke-linecap: butt; }
+    .rf-fovea    { fill: none; stroke: var(--warn); stroke-width: 9; opacity: 0.8;  stroke-linecap: butt; }
+    .rf-ray-in, .rf-ray-out { fill: none; stroke: var(--accent-dark); stroke-width: 5; stroke-dasharray: 100; stroke-dashoffset: 100; }
+    .rf-ray-in { animation: rfDrawIn 3.6s linear infinite; }
+    @keyframes rfDrawIn {
+      0%   { stroke-dashoffset: 100; opacity: 0.5; }
+      30%  { stroke-dashoffset: 0;   opacity: 0.5; }
+      58%  { stroke-dashoffset: 0;   opacity: 0.5; }
+      64%  { stroke-dashoffset: 0;   opacity: 0; }
+      100% { stroke-dashoffset: 0;   opacity: 0; }
+    }
+    .rf-ray-out { animation: rfDrawOut 3.6s linear infinite; }
+    @keyframes rfDrawOut {
+      0%   { stroke-dashoffset: 100; opacity: 0; }
+      30%  { stroke-dashoffset: 100; opacity: 0.5; }
+      58%  { stroke-dashoffset: 0;   opacity: 0.5; }
+      64%  { stroke-dashoffset: 0;   opacity: 0; }
+      100% { stroke-dashoffset: 0;   opacity: 0; }
+    }
+    .rf-flow-in, .rf-flow-out { fill: var(--accent-dark); offset-rotate: auto; }
+    .rf-flow-in { animation: rfFlowIn 3.6s linear infinite; }
+    @keyframes rfFlowIn {
+      0%   { offset-distance: 0%;   opacity: 0; }
+      4%   { opacity: 0.95; }
+      28%  { offset-distance: 100%; opacity: 0.95; }
+      32%  { offset-distance: 100%; opacity: 0; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+    .rf-flow-out { animation: rfFlowOut 3.6s linear infinite; }
+    @keyframes rfFlowOut {
+      0%, 30% { offset-distance: 0%;   opacity: 0; }
+      34%     { opacity: 0.9; }
+      56%     { offset-distance: 100%; opacity: 0.9; }
+      62%     { offset-distance: 100%; opacity: 0; }
+      100%    { offset-distance: 100%; opacity: 0; }
+    }
+    .rf-burst { animation: rfBurst 3.6s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+    @keyframes rfBurst {
+      0%, 26%  { opacity: 0; transform: scale(0.3); }
+      34%      { opacity: 0.45; transform: scale(1.5); }
+      50%,100% { opacity: 0; transform: scale(2.2); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .rf-flow-in, .rf-flow-out, .rf-burst { animation: none; opacity: 0; }
+      .rf-ray-in, .rf-ray-out { animation: none; stroke-dashoffset: 0; opacity: 0.6; }
+    }
+
+    /* Glaucoma card animation: aqueous fluid draining through the iridocorneal angle */
+    .pe-visual .label-group { opacity: 0; animation: peFadeInUp 0.6s ease forwards; }
+    .pe-visual .label-group text { font-family: var(--f-sans); }
+    .pe-visual .label-group.l1 { animation-delay: .3s; }
+    .pe-visual .label-group.l2 { animation-delay: .5s; }
+    .pe-visual .label-group.l3 { animation-delay: .7s; }
+    .pe-visual .label-group.l4 { animation-delay: .9s; }
+    @keyframes peFadeInUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .pe-visual .callout-line { stroke: var(--ink-light); stroke-width: 1; fill: none; stroke-dasharray: 80; stroke-dashoffset: 80; animation: peDrawLine .7s ease forwards; animation-delay: inherit; }
+    @keyframes peDrawLine { to { stroke-dashoffset: 0; } }
+    .pe-visual .cornea-shape { fill: var(--accent-light); stroke: var(--accent-dark); stroke-width: 2; fill-opacity: 0; stroke-opacity: 0; animation: peCorneaIn 1s ease forwards; animation-delay: .15s; }
+    @keyframes peCorneaIn { to { fill-opacity: 0.55; stroke-opacity: 1; } }
+    .pe-visual .tm-tick { stroke: var(--accent-dark); stroke-width: 1.8; stroke-linecap: round; opacity: 0; animation: peFadeIn .5s ease forwards; animation-delay: .45s; }
+    @keyframes peFadeIn { to { opacity: 1; } }
+    .pe-visual .flow-dot { offset-rotate: auto; }
+    .pe-visual .flow-dot-top { offset-path: path("M 595 150 Q 545 280 580 400 Q 600 450 614 475 Q 680 420 696 300 Q 660 200 615 140"); animation: peFlow 5s linear infinite; }
+    .pe-visual .flow-dot-bottom { offset-path: path("M 595 970 Q 545 840 580 720 Q 600 670 614 645 Q 680 700 696 820 Q 660 920 615 980"); animation: peFlow 5s linear infinite; }
+    @keyframes peFlow {
+      0%{ offset-distance:0%; opacity:0; }
+      6%{ opacity:1; }
+      66%{ opacity:1; }
+      72%{ offset-distance:100%; opacity:0; }
+      100%{ offset-distance:100%; opacity:0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pe-visual .label-group, .pe-visual .callout-line, .pe-visual .flow-dot, .pe-visual .cornea-shape, .pe-visual .tm-tick { animation-duration: .01ms !important; }
+      .pe-visual .flow-dot { opacity: 0 !important; }
+    }
 
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 7rem); align-items: start; }
     .contact-info p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 2rem; }
@@ -184,6 +259,7 @@
       .about-cols { grid-template-columns: 1fr; gap: clamp(2rem, 5vw, 3rem); }
       .expertise-intro { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; padding-bottom: 2rem; }
       .expertise-item { grid-template-columns: 50px 1fr; gap: 1.25rem; } .expertise-tag { display: none; }
+      .pe-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     }
     @media (max-width: 640px) {
@@ -199,7 +275,6 @@
       .expertise-item { grid-template-columns: 36px 1fr; gap: 0.75rem; padding: 1.75rem 0; }
       .expertise-num { font-size: 0.75rem; }
       .expertise-title { font-size: 1.2rem; }
-      .faq-btn { padding: 1.1rem 0; font-size: 1rem; }
       .cred-row { flex-direction: column; gap: 0.25rem; }
       .cred-label { min-width: unset; }
       .footer-links { gap: 0.75rem; }
@@ -241,14 +316,13 @@
     <a href="#about">About</a>
     <a href="#expertise">Expertise</a>
     <div class="nav-item">
-      <button type="button">Patient Education <span class="nav-caret" aria-hidden="true">&#9662;</span></button>
+      <a href="#patient-education">Patient Education <span class="nav-caret" aria-hidden="true">&#9662;</span></a>
       <div class="nav-dropdown">
         <a href="cataracts.html">Cataracts</a>
         <a href="glaucoma.html">Glaucoma</a>
         <a href="office-hours.html">Office Hours</a>
       </div>
     </div>
-    <a href="#faq">FAQs</a>
     <a href="#contact">Contact</a>
   </nav>
   <button class="nav-hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
@@ -258,11 +332,10 @@
   <a href="#home" onclick="closeMobileNav()">Home</a>
   <a href="#about" onclick="closeMobileNav()">About</a>
   <a href="#expertise" onclick="closeMobileNav()">Expertise</a>
-  <span class="mobile-nav-heading">Patient Education</span>
+  <a href="#patient-education" onclick="closeMobileNav()" class="mobile-nav-heading">Patient Education</a>
   <a href="cataracts.html" onclick="closeMobileNav()" class="sub-link">Cataracts</a>
   <a href="glaucoma.html" onclick="closeMobileNav()" class="sub-link">Glaucoma</a>
   <a href="office-hours.html" onclick="closeMobileNav()" class="sub-link">Office Hours</a>
-  <a href="#faq" onclick="closeMobileNav()">FAQs</a>
   <a href="#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
@@ -270,7 +343,7 @@
   <a href="#home" data-toc="home">Home</a>
   <a href="#about" data-toc="about">About</a>
   <a href="#expertise" data-toc="expertise">Expertise</a>
-  <a href="#faq" data-toc="faq">FAQs</a>
+  <a href="#patient-education" data-toc="patient-education">Patient Education</a>
   <a href="#contact" data-toc="contact">Contact</a>
 </nav>
 
@@ -359,31 +432,191 @@
   </div>
 </section>
 
-<section id="faq" class="bg-mid">
+<section id="patient-education" class="bg-mid">
   <div class="wrap">
-    <span class="eyebrow reveal">Frequently Asked Questions</span>
-    <h2 class="display display-lg reveal reveal-delay-1" style="margin-bottom:2.5rem;">Questions patients often ask</h2>
-    <div class="faq-list reveal reveal-delay-2">
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">What should I expect at my first visit?<span class="faq-icon" aria-hidden="true"></span></button>
-        <div class="faq-answer"><div class="faq-answer-inner"><p>A first visit typically includes a thorough history, vision testing, eye pressure measurements, slit-lamp examination, and imaging or visual field testing when indicated. The goal is to understand your eye health fully and discuss a clear, reasoned plan together.</p></div></div>
+    <div class="expertise-intro">
+      <div>
+        <span class="eyebrow reveal">Patient Education</span>
+        <h2 class="display display-lg reveal reveal-delay-1">Understanding Your Eyes</h2>
       </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">How do you decide when cataract surgery is appropriate?<span class="faq-icon" aria-hidden="true"></span></button>
-        <div class="faq-answer"><div class="faq-answer-inner"><p>Timing depends on how your cataract is affecting daily activities &mdash; reading, driving, glare at night &mdash; along with your exam findings and any other eye conditions. We will review potential benefits, risks, and alternatives before making any plan together.</p></div></div>
+      <p class="reveal reveal-delay-2">Dr. Bhargava believes every patient deserves to leave the office better informed than when they arrived. He created these guides to walk patients through what is actually happening in the eye, how a diagnosis was made, and what each treatment involves. The goal is to empower each patient with confidence to address their eye diseases.</p>
+    </div>
+    <div class="pe-grid">
+
+      <div class="pe-card section-reveal">
+        <div class="pe-visual">
+          <svg viewBox="-30 40 1210 920" xmlns="http://www.w3.org/2000/svg" role="img"
+               aria-label="Animated diagram of an eye with a cataract: light rays enter, then scatter in all directions at the clouded lens instead of focusing.">
+            <defs>
+              <radialGradient id="peCloudy" cx="50%" cy="50%" r="62%">
+                <stop offset="0%"   stop-color="#e3cca8"/>
+                <stop offset="45%"  stop-color="#d0ad7d"/>
+                <stop offset="100%" stop-color="#b0854e"/>
+              </radialGradient>
+              <clipPath id="peLensClip"><ellipse cx="734" cy="500" rx="90" ry="190"/></clipPath>
+              <filter id="peSoften" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="18"/>
+              </filter>
+            </defs>
+            <circle class="rf-vitreous" cx="510" cy="500" r="420"/>
+            <path class="rf-retina" d="M 862 290 A 410 410 0 0 0 101 470"/>
+            <path class="rf-retina" d="M 101 530 A 410 410 0 0 0 862 710"/>
+            <path class="rf-fovea"  d="M 101 470 C 96 478, 93 488, 93 500 C 93 512, 96 522, 101 530"/>
+            <path fill="none" stroke="var(--ink-light)" stroke-width="28" stroke-linecap="round" d="M 876 266 A 434 434 0 1 0 876 734"/>
+            <path d="M 95 558 L -49 601 L -11 726 L 133 682 Z" fill="var(--bg-dark)"/>
+            <path d="M 95 558 L -49 601" fill="none" stroke="var(--ink-light)" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 133 682 L -11 726" fill="none" stroke="var(--ink-light)" stroke-width="7" stroke-linecap="round"/>
+            <path d="M 876 266 Q 950 296 948 500 Q 950 704 876 734 L 866 720 Q 828 650 816 580 Q 826 500 816 420 Q 828 350 866 280 Z" fill="var(--accent-light)" opacity="0.55"/>
+            <ellipse cx="734" cy="500" rx="90" ry="190" fill="url(#peCloudy)" stroke="#8a6636" stroke-width="3"/>
+            <g clip-path="url(#peLensClip)" filter="url(#peSoften)" fill="#9c7442" opacity="0.3">
+              <ellipse cx="708" cy="402" rx="48" ry="62"/>
+              <ellipse cx="762" cy="576" rx="44" ry="70"/>
+              <ellipse cx="722" cy="516" rx="58" ry="52"/>
+            </g>
+            <path d="M 874 272 C 862 254, 838 248, 824 258 Q 815 265 824 275 Q 813 281 823 291 Q 833 298 845 290 Q 861 296 869 284 Z" fill="var(--accent)" opacity="0.85"/>
+            <path d="M 874 728 C 862 746, 838 752, 824 742 Q 815 735 824 725 Q 813 719 823 709 Q 833 702 845 710 Q 861 704 869 716 Z" fill="var(--accent)" opacity="0.85"/>
+            <path d="M 872 278 Q 828 348 816 420 Q 854 352 866 280 Z" fill="var(--accent)" opacity="0.94"/>
+            <path d="M 872 722 Q 828 652 816 580 Q 854 648 866 720 Z" fill="var(--accent)" opacity="0.94"/>
+            <path d="M 876 266 Q 972 296 970 500 Q 972 704 876 734 Q 950 704 948 500 Q 950 296 876 266 Z" fill="var(--accent-light)" fill-opacity="0.5" stroke="var(--accent-dark)" stroke-width="2.5"/>
+            <circle cx="99" cy="500" r="5" fill="var(--ink-light)"/>
+            <g>
+              <path class="rf-ray-in" pathLength="100" d="M 1460 428 L 734 428"/>
+              <path class="rf-ray-in" pathLength="100" d="M 1460 452 L 734 452"/>
+              <path class="rf-ray-in" pathLength="100" d="M 1460 476 L 734 476"/>
+              <path class="rf-ray-in" pathLength="100" d="M 1460 500 L 734 500"/>
+              <path class="rf-ray-in" pathLength="100" d="M 1460 524 L 734 524"/>
+              <path class="rf-ray-in" pathLength="100" d="M 1460 548 L 734 548"/>
+              <path class="rf-ray-in" pathLength="100" d="M 1460 572 L 734 572"/>
+            </g>
+            <g>
+              <path class="rf-ray-out" pathLength="100" d="M 734 428 L 166 288"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 428 L 110 446"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 452 L 227 788"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 452 L 107 525"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 476 L 140 339"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 476 L 154 691"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 500 L 114 580"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 500 L 271 826"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 524 L 204 236"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 524 L 244 196"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 548 L 131 639"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 548 L 186 741"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 572 L 288 163"/>
+              <path class="rf-ray-out" pathLength="100" d="M 734 572 L 121 392"/>
+            </g>
+            <circle class="rf-burst" cx="734" cy="500" r="60" fill="#e3cca8"/>
+            <g>
+              <path class="rf-flow-in" d="M -20,-18 L 20,0 L -20,18 L -8,0 Z" style="offset-path:path('M 1460 428 L 734 428');"/>
+              <path class="rf-flow-in" d="M -20,-18 L 20,0 L -20,18 L -8,0 Z" style="offset-path:path('M 1460 452 L 734 452');"/>
+              <path class="rf-flow-in" d="M -20,-18 L 20,0 L -20,18 L -8,0 Z" style="offset-path:path('M 1460 476 L 734 476');"/>
+              <path class="rf-flow-in" d="M -20,-18 L 20,0 L -20,18 L -8,0 Z" style="offset-path:path('M 1460 500 L 734 500');"/>
+              <path class="rf-flow-in" d="M -20,-18 L 20,0 L -20,18 L -8,0 Z" style="offset-path:path('M 1460 524 L 734 524');"/>
+              <path class="rf-flow-in" d="M -20,-18 L 20,0 L -20,18 L -8,0 Z" style="offset-path:path('M 1460 548 L 734 548');"/>
+              <path class="rf-flow-in" d="M -20,-18 L 20,0 L -20,18 L -8,0 Z" style="offset-path:path('M 1460 572 L 734 572');"/>
+            </g>
+            <g>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 428 L 166 288');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 428 L 110 446');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 452 L 227 788');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 452 L 107 525');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 476 L 140 339');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 476 L 154 691');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 500 L 114 580');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 500 L 271 826');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 524 L 204 236');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 524 L 244 196');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 548 L 131 639');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 548 L 186 741');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 572 L 288 163');"/>
+              <path class="rf-flow-out" d="M -18,-16 L 18,0 L -18,16 L -8,0 Z" style="offset-path:path('M 734 572 L 121 392');"/>
+            </g>
+          </svg>
+        </div>
+        <h3 class="pe-title">Cataracts</h3>
+        <p class="pe-desc">A cataract represents clouding of the eye&rsquo;s natural lens. We will guide you through symptoms of cataracts, what surgery entails, and your options for the replacement lens.</p>
+        <a href="cataracts.html" class="link-arrow">Learn more about cataracts <span aria-hidden="true">&rarr;</span></a>
       </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">Why do I need repeat glaucoma tests if my vision feels the same?<span class="faq-icon" aria-hidden="true"></span></button>
-        <div class="faq-answer"><div class="faq-answer-inner"><p>Glaucoma is a long-term condition that can progress silently before affecting central vision &mdash; most glaucoma patients are asymptomatic until it is too late. Repeating visual field tests, OCT scans, and pressure checks helps us determine whether the disease is stable or changing &mdash; and adjust treatment to minimize deterioration of vision.</p></div></div>
+
+      <div class="pe-card section-reveal reveal-delay-1">
+        <div class="pe-visual">
+          <svg viewBox="0 0 1000 1160" xmlns="http://www.w3.org/2000/svg" role="img"
+               aria-label="Animated diagram of the eye's drainage angle: fluid produced behind the iris flows forward and drains out through the trabecular meshwork.">
+            <defs>
+              <marker id="peTmArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent-dark)"/>
+              </marker>
+            </defs>
+            <g>
+              <path d="M 615 137 C 520 90, 380 60, 250 70" fill="none" stroke="var(--ink-light)" stroke-width="7" stroke-linecap="round"/>
+              <path d="M 615 983 C 520 1030, 380 1060, 250 1050" fill="none" stroke="var(--ink-light)" stroke-width="7" stroke-linecap="round"/>
+              <path class="cornea-shape"
+                    d="M 615 137 Q 880 250 900 560 Q 880 870 615 983
+                       L 605 970 Q 845 860 860 560 Q 845 260 605 150 Z"/>
+              <path d="M 622 469 Q 696 300 570 132 L 605 150 Q 845 260 860 560 Q 845 860 605 970 L 570 988 Q 696 820 622 651 L 622 469 Z"
+                    fill="var(--accent-light)" opacity="0.4"/>
+              <ellipse cx="500" cy="560" rx="112" ry="238" fill="var(--bg-mid)" stroke="var(--ink-light)" stroke-width="2.5"/>
+              <g stroke="var(--ink-light)" stroke-width="1.3" opacity="0.75">
+                <line x1="558" y1="118" x2="510" y2="324"/>
+                <line x1="568" y1="133" x2="519" y2="326"/>
+                <line x1="580" y1="142" x2="529" y2="330"/>
+                <line x1="558" y1="1002" x2="510" y2="796"/>
+                <line x1="568" y1="987" x2="519" y2="794"/>
+                <line x1="580" y1="978" x2="529" y2="790"/>
+              </g>
+              <path d="M 617 140 C 600 118, 575 108, 558 118
+                       Q 550 124 557 134 Q 547 140 557 149
+                       Q 566 156 578 148 Q 594 154 604 142 Z"
+                    fill="var(--accent)" opacity="0.85"/>
+              <path d="M 617 980 C 600 1002, 575 1012, 558 1002
+                       Q 550 996 557 986 Q 547 980 557 971
+                       Q 566 964 578 972 Q 594 966 604 978 Z"
+                    fill="var(--accent)" opacity="0.85"/>
+              <g stroke="var(--accent-dark)" stroke-width="1" opacity="0.55">
+                <path d="M 560 122 L 566 136"/>
+                <path d="M 571 133 L 576 146"/>
+                <path d="M 584 138 L 588 150"/>
+                <path d="M 560 998 L 566 984"/>
+                <path d="M 571 987 L 576 974"/>
+                <path d="M 584 982 L 588 970"/>
+              </g>
+              <path d="M 570 132 Q 696 300 622 469 Q 631 300 570 132 Z" fill="var(--accent)" opacity="0.94"/>
+              <path d="M 610 200 Q 675 300 630 420" fill="none" stroke="var(--accent-dark)" stroke-width="1" opacity="0.35"/>
+              <path d="M 570 988 Q 696 820 622 651 Q 631 820 570 988 Z" fill="var(--accent)" opacity="0.94"/>
+              <path d="M 610 920 Q 675 820 630 700" fill="none" stroke="var(--accent-dark)" stroke-width="1" opacity="0.35"/>
+              <path d="M 613 133 L 630 143 L 611 152 Z" fill="var(--ink-light)" opacity="0.9"/>
+              <path d="M 613 987 L 630 977 L 611 968 Z" fill="var(--ink-light)" opacity="0.9"/>
+              <g class="tm-tick">
+                <path d="M 604 133 L 615 145"/>
+                <path d="M 611 131 L 622 143"/>
+                <path d="M 618 131 L 629 143"/>
+                <path d="M 604 144 L 615 134"/>
+                <path d="M 611 142 L 622 132"/>
+                <path d="M 618 142 L 629 132"/>
+                <path d="M 604 987 L 615 975"/>
+                <path d="M 611 989 L 622 977"/>
+                <path d="M 618 989 L 629 977"/>
+                <path d="M 604 976 L 615 986"/>
+                <path d="M 611 978 L 622 988"/>
+                <path d="M 618 978 L 629 988"/>
+              </g>
+              <path class="flow-dot flow-dot-top" style="animation-delay:2.2s" d="M -9 0 L 7 0 M 7 0 L 1 -5 M 7 0 L 1 5" fill="none" stroke="var(--accent-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path class="flow-dot flow-dot-top" style="animation-delay:2.4s" d="M -9 0 L 7 0 M 7 0 L 1 -5 M 7 0 L 1 5" fill="none" stroke="var(--accent-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path class="flow-dot flow-dot-top" style="animation-delay:2.6s" d="M -9 0 L 7 0 M 7 0 L 1 -5 M 7 0 L 1 5" fill="none" stroke="var(--accent-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path class="flow-dot flow-dot-bottom" style="animation-delay:2.2s" d="M -9 0 L 7 0 M 7 0 L 1 -5 M 7 0 L 1 5" fill="none" stroke="var(--accent-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path class="flow-dot flow-dot-bottom" style="animation-delay:2.4s" d="M -9 0 L 7 0 M 7 0 L 1 -5 M 7 0 L 1 5" fill="none" stroke="var(--accent-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path class="flow-dot flow-dot-bottom" style="animation-delay:2.6s" d="M -9 0 L 7 0 M 7 0 L 1 -5 M 7 0 L 1 5" fill="none" stroke="var(--accent-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <g class="label-group l4">
+                <path class="callout-line" style="stroke:var(--accent-dark); stroke-width:1.5" d="M 700 72 L 624 136" fill="none" marker-end="url(#peTmArrow)"/>
+                <text x="706" y="66" text-anchor="start" font-size="32" fill="var(--accent-dark)">Drainage Pathway</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <h3 class="pe-title">Glaucoma</h3>
+        <p class="pe-desc">Glaucoma damages the optic nerve, often because fluid isn&rsquo;t draining properly from the front of the eye. We will walk you through symptoms of glaucoma, what specialized testing can be done to catch it as early as possible, and treatment options.</p>
+        <a href="glaucoma.html" class="link-arrow">Learn more about glaucoma <span aria-hidden="true">&rarr;</span></a>
       </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">What is the difference between MIGS and traditional glaucoma surgery?<span class="faq-icon" aria-hidden="true"></span></button>
-        <div class="faq-answer"><div class="faq-answer-inner"><p>Micro-invasive glaucoma surgeries (MIGS) use smaller incisions and typically have a faster recovery and a more favorable safety profile than traditional procedures such as trabeculectomy or tube shunts, but MIGS may not have the lasting effect seen with traditional surgeries. MIGS are often performed alongside cataract surgery, adding only a few minutes to the procedure. The right approach depends on the severity of your glaucoma and individual factors.</p></div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">Do you see patients in languages other than English?<span class="faq-icon" aria-hidden="true"></span></button>
-        <div class="faq-answer"><div class="faq-answer-inner"><p>Yes. Dr. Bhargava also speaks Hindi and Urdu and welcomes patients from diverse linguistic and cultural backgrounds. Interpretation services are available for all languages.</p></div></div>
-      </div>
+
     </div>
   </div>
 </section>
@@ -416,8 +649,8 @@
         <div class="footer-sub">Cataracts &middot; Glaucoma &middot; Patient Education</div>
       </div>
       <nav class="footer-links">
-        <a href="#home">Home</a><a href="#about">About</a><a href="#expertise">Expertise</a>
-        <a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="office-hours.html">Office Hours</a><a href="#faq">FAQs</a><a href="#contact">Contact</a>
+        <a href="#home">Home</a><a href="#about">About</a><a href="#expertise">Expertise</a><a href="#patient-education">Patient Education</a>
+        <a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="office-hours.html">Office Hours</a><a href="#contact">Contact</a>
       </nav>
     </div>
     <div class="footer-copy">
@@ -485,7 +718,6 @@
 
   function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
   function closeMobileNav()  { document.getElementById('mobileNav').classList.remove('open'); }
-  function toggleFaq(btn)    { btn.parentElement.classList.toggle('open'); }
   function submitForm(e)     { e.preventDefault(); document.getElementById('formMsg').style.display = 'block'; e.target.reset(); }
 
   (function(){

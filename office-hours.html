@@ -64,7 +64,7 @@
 
     /* Dropdown */
     .nav-item { position: relative; }
-    .nav-item > a, .nav-item > button { display: inline-flex; align-items: center; gap: 0.3rem; }
+    .nav-item > a, .nav-item > button { display: inline-flex; align-items: center; gap: 0.3rem; text-transform: uppercase; }
     .nav-caret { font-size: 0.6rem; color: var(--ink-light); transition: transform 0.2s, color 0.2s; }
     .nav-item:hover .nav-caret, .nav-item:focus-within .nav-caret { color: var(--accent); }
     .nav-dropdown { position: absolute; top: 100%; left: 50%; min-width: 168px; padding: 0.5rem 0; background: var(--bg); border: 1px solid var(--rule); box-shadow: 0 16px 36px rgba(13,31,45,0.14); opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(-50%) translateY(4px); transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out), visibility 0.2s; z-index: 20; }
@@ -226,14 +226,13 @@
     <a href="index.html#about">About</a>
     <a href="index.html#expertise">Expertise</a>
     <div class="nav-item">
-      <button type="button" class="active">Patient Education <span class="nav-caret" aria-hidden="true">&#9662;</span></button>
+      <a href="index.html#patient-education" class="active">Patient Education <span class="nav-caret" aria-hidden="true">&#9662;</span></a>
       <div class="nav-dropdown">
         <a href="cataracts.html">Cataracts</a>
         <a href="glaucoma.html">Glaucoma</a>
         <a href="office-hours.html" class="active">Office Hours</a>
       </div>
     </div>
-    <a href="index.html#faq">FAQs</a>
     <a href="index.html#contact">Contact</a>
   </nav>
   <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
@@ -243,11 +242,10 @@
   <a href="index.html" onclick="closeMobileNav()">Home</a>
   <a href="index.html#about" onclick="closeMobileNav()">About</a>
   <a href="index.html#expertise" onclick="closeMobileNav()">Expertise</a>
-  <span class="mobile-nav-heading">Patient Education</span>
+  <a href="index.html#patient-education" onclick="closeMobileNav()" class="mobile-nav-heading">Patient Education</a>
   <a href="cataracts.html" onclick="closeMobileNav()" class="sub-link">Cataracts</a>
   <a href="glaucoma.html" onclick="closeMobileNav()" class="sub-link">Glaucoma</a>
   <a href="office-hours.html" onclick="closeMobileNav()" class="sub-link active">Office Hours</a>
-  <a href="index.html#faq" onclick="closeMobileNav()">FAQs</a>
   <a href="index.html#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
@@ -326,6 +324,7 @@
 
     <div class="qa-filters reveal reveal-delay-2" id="qaFilters">
       <button class="qa-filter active" data-filter="all" onclick="filterQa(this)">All</button>
+      <button class="qa-filter" data-filter="General" onclick="filterQa(this)">General</button>
       <button class="qa-filter" data-filter="Cataracts" onclick="filterQa(this)">Cataracts</button>
       <button class="qa-filter" data-filter="Glaucoma" onclick="filterQa(this)">Glaucoma</button>
       <button class="qa-filter" data-filter="Surgery" onclick="filterQa(this)">Surgery</button>
@@ -398,6 +397,71 @@
           <p>An occasional missed dose is not a crisis. In general, take it when you remember, and if it is nearly time for the next dose, skip the missed one rather than doubling up &mdash; more drops at once does not produce more effect, since the eye can only hold a fraction of a single drop.</p>
           <p>The part worth taking seriously is the pattern. Pressure-lowering drops work by being present continuously, so frequent gaps mean the pressure is high for stretches of time that never show up on a single reading in the office. A pressure that looks acceptable at every visit can coexist with a disease that keeps progressing, and missed doses are one of the common explanations.</p>
           <p>If you are missing doses often, it is far more useful to say so than to hide it. Difficulty aiming the bottle, stinging, cost, and complicated schedules are all common and all fixable &mdash; but only if your provider knows. There are usually alternatives, and a regimen you actually take beats a better one you do not.</p>
+        </div></div>
+      </div>
+
+      <div class="qa-item" data-topic="General">
+        <button class="qa-btn" onclick="toggleQa(this)">
+          <span>
+            <span class="qa-q">What should I expect at my first visit?</span>
+            <span class="qa-meta"><span class="qa-tag">General</span><span>Answered</span></span>
+          </span>
+          <span class="qa-icon" aria-hidden="true"></span>
+        </button>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          <p>A first visit typically includes a thorough history, vision testing, eye pressure measurements, slit-lamp examination, and imaging or visual field testing when indicated. The goal is to understand your eye health fully and discuss a clear, reasoned plan together.</p>
+        </div></div>
+      </div>
+
+      <div class="qa-item" data-topic="Cataracts">
+        <button class="qa-btn" onclick="toggleQa(this)">
+          <span>
+            <span class="qa-q">How do you decide when cataract surgery is appropriate?</span>
+            <span class="qa-meta"><span class="qa-tag">Cataracts</span><span>Answered</span></span>
+          </span>
+          <span class="qa-icon" aria-hidden="true"></span>
+        </button>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          <p>Timing depends on how your cataract is affecting daily activities &mdash; reading, driving, glare at night &mdash; along with your exam findings and any other eye conditions. We will review potential benefits, risks, and alternatives before making any plan together.</p>
+        </div></div>
+      </div>
+
+      <div class="qa-item" data-topic="Glaucoma">
+        <button class="qa-btn" onclick="toggleQa(this)">
+          <span>
+            <span class="qa-q">Why do I need repeat glaucoma tests if my vision feels the same?</span>
+            <span class="qa-meta"><span class="qa-tag">Glaucoma</span><span>Answered</span></span>
+          </span>
+          <span class="qa-icon" aria-hidden="true"></span>
+        </button>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          <p>Glaucoma is a long-term condition that can progress silently before affecting central vision &mdash; most glaucoma patients are asymptomatic until it is too late. Repeating visual field tests, OCT scans, and pressure checks helps us determine whether the disease is stable or changing &mdash; and adjust treatment to minimize deterioration of vision.</p>
+        </div></div>
+      </div>
+
+      <div class="qa-item" data-topic="Glaucoma">
+        <button class="qa-btn" onclick="toggleQa(this)">
+          <span>
+            <span class="qa-q">What is the difference between MIGS and traditional glaucoma surgery?</span>
+            <span class="qa-meta"><span class="qa-tag">Glaucoma</span><span>Answered</span></span>
+          </span>
+          <span class="qa-icon" aria-hidden="true"></span>
+        </button>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          <p>Micro-invasive glaucoma surgeries (MIGS) use smaller incisions and typically have a faster recovery and a more favorable safety profile than traditional procedures such as trabeculectomy or tube shunts, but MIGS may not have the lasting effect seen with traditional surgeries. MIGS are often performed alongside cataract surgery, adding only a few minutes to the procedure. The right approach depends on the severity of your glaucoma and individual factors.</p>
+        </div></div>
+      </div>
+
+      <div class="qa-item" data-topic="General">
+        <button class="qa-btn" onclick="toggleQa(this)">
+          <span>
+            <span class="qa-q">Do you see patients in languages other than English?</span>
+            <span class="qa-meta"><span class="qa-tag">General</span><span>Answered</span></span>
+          </span>
+          <span class="qa-icon" aria-hidden="true"></span>
+        </button>
+        <div class="qa-answer"><div class="qa-answer-inner">
+          <p>Yes. Dr. Bhargava also speaks Hindi and Urdu and welcomes patients from diverse linguistic and cultural backgrounds. Interpretation services are available for all languages.</p>
         </div></div>
       </div>
 
@@ -478,8 +542,8 @@
         <div class="footer-sub">Cataracts &middot; Glaucoma &middot; Patient Education</div>
       </div>
       <nav class="footer-links">
-        <a href="index.html">Home</a><a href="index.html#about">About</a><a href="index.html#expertise">Expertise</a>
-        <a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="office-hours.html">Office Hours</a><a href="index.html#faq">FAQs</a><a href="index.html#contact">Contact</a>
+        <a href="index.html">Home</a><a href="index.html#about">About</a><a href="index.html#expertise">Expertise</a><a href="index.html#patient-education">Patient Education</a>
+        <a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="office-hours.html">Office Hours</a><a href="index.html#contact">Contact</a>
       </nav>
     </div>
     <div class="footer-copy">

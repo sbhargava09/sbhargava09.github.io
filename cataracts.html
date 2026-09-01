@@ -66,7 +66,7 @@
 
     /* Dropdown */
     .nav-item { position: relative; }
-    .nav-item > a, .nav-item > button { display: inline-flex; align-items: center; gap: 0.3rem; }
+    .nav-item > a, .nav-item > button { display: inline-flex; align-items: center; gap: 0.3rem; text-transform: uppercase; }
     .nav-caret { font-size: 0.6rem; color: var(--ink-light); transition: transform 0.2s, color 0.2s; }
     .nav-item:hover .nav-caret, .nav-item:focus-within .nav-caret { color: var(--accent); }
     .nav-dropdown { position: absolute; top: 100%; left: 50%; min-width: 168px; padding: 0.5rem 0; background: var(--bg); border: 1px solid var(--rule); box-shadow: 0 16px 36px rgba(13,31,45,0.14); opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(-50%) translateY(4px); transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out), visibility 0.2s; z-index: 20; }
@@ -466,14 +466,13 @@
     <a href="index.html#about">About</a>
     <a href="index.html#expertise">Expertise</a>
     <div class="nav-item">
-      <button type="button" class="active">Patient Education <span class="nav-caret" aria-hidden="true">&#9662;</span></button>
+      <a href="index.html#patient-education" class="active">Patient Education <span class="nav-caret" aria-hidden="true">&#9662;</span></a>
       <div class="nav-dropdown">
         <a href="cataracts.html" class="active">Cataracts</a>
         <a href="glaucoma.html">Glaucoma</a>
         <a href="office-hours.html">Office Hours</a>
       </div>
     </div>
-    <a href="index.html#faq">FAQs</a>
     <a href="index.html#contact">Contact</a>
   </nav>
   <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
@@ -483,11 +482,10 @@
   <a href="index.html" onclick="closeMobileNav()">Home</a>
   <a href="index.html#about" onclick="closeMobileNav()">About</a>
   <a href="index.html#expertise" onclick="closeMobileNav()">Expertise</a>
-  <span class="mobile-nav-heading">Patient Education</span>
+  <a href="index.html#patient-education" onclick="closeMobileNav()" class="mobile-nav-heading">Patient Education</a>
   <a href="cataracts.html" onclick="closeMobileNav()" class="sub-link active">Cataracts</a>
   <a href="glaucoma.html" onclick="closeMobileNav()" class="sub-link">Glaucoma</a>
   <a href="office-hours.html" onclick="closeMobileNav()" class="sub-link">Office Hours</a>
-  <a href="index.html#faq" onclick="closeMobileNav()">FAQs</a>
   <a href="index.html#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
@@ -1065,7 +1063,7 @@
       </div>
       <nav class="footer-links">
         <a href="index.html">Home</a><a href="index.html#about">About</a><a href="index.html#expertise">Expertise</a>
-        <a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="office-hours.html">Office Hours</a><a href="index.html#faq">FAQs</a><a href="index.html#contact">Contact</a>
+        <a href="index.html#patient-education">Patient Education</a><a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="office-hours.html">Office Hours</a><a href="index.html#contact">Contact</a>
       </nav>
     </div>
     <div class="footer-copy">
