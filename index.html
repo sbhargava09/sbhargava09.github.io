@@ -48,7 +48,7 @@
 
     .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem, 5vw, 4rem); background: var(--bg); border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
     .nav.scrolled { border-color: var(--rule); background: rgba(240,244,245,0.96); backdrop-filter: blur(10px); }
-    .nav-logo { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 400; display: flex; flex-direction: column; line-height: 1.2; }
+    .nav-logo { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 500; display: flex; flex-direction: column; line-height: 1.2; }
     .nav-logo span { font-family: var(--f-sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-top: 1px; }
     .nav-links { display: flex; align-items: center; gap: 2.25rem; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; }
     .nav-links a, .nav-links button { color: var(--ink-mid); position: relative; transition: color 0.2s; }
@@ -59,7 +59,7 @@
     .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--ink); }
     .mobile-nav { display: none; position: fixed; inset: 0; z-index: 99; background: var(--bg); padding: calc(var(--nav-h) + 2rem) 2rem 2rem; flex-direction: column; gap: 2rem; overflow-y: auto; }
     .mobile-nav.open { display: flex; }
-    .mobile-nav a, .mobile-nav-heading { font-family: var(--f-serif); font-size: clamp(1.6rem, 7vw, 2.2rem); font-weight: 300; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; min-height: 44px; display: flex; align-items: center; }
+    .mobile-nav a, .mobile-nav-heading { font-family: var(--f-serif); font-size: clamp(1.6rem, 7vw, 2.2rem); font-weight: 500; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; min-height: 44px; display: flex; align-items: center; }
     .mobile-nav-heading { color: var(--ink-light); }
     .mobile-nav a.sub-link { font-family: var(--f-sans); font-size: 0.95rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); padding: 0.6rem 0 0.6rem 1.5rem; min-height: 40px; }
 
@@ -88,7 +88,7 @@
     section { padding: clamp(4rem, 10vw, 9rem) 0; }
     .bg-mid { background: var(--bg-mid); }
     .eyebrow { display: inline-block; font-family: var(--f-sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
-    .display { font-family: var(--f-serif); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
+    .display { font-family: var(--f-serif); font-weight: 500; line-height: 1.1; letter-spacing: -0.01em; }
     .display-lg  { font-size: clamp(2rem, 5vw, 4.2rem); }
 
     .hero { background: transparent; padding: 0; border-bottom: 1px solid var(--rule); position: relative; z-index: 1; }
@@ -116,7 +116,7 @@
     @media (prefers-reduced-motion: reduce) { .bg-eye { opacity: 0.5; } }
 
     .hero-left { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
-    .hero-line1, .hero-line2 { font-family: var(--f-serif); font-size: clamp(2.6rem, 7vw, 6.5rem); font-weight: 300; line-height: 1.1; font-style: normal; color: var(--ink); }
+    .hero-line1, .hero-line2 { font-family: var(--f-serif); font-size: clamp(2.6rem, 7vw, 6.5rem); font-weight: 500; line-height: 1.1; font-style: normal; color: var(--ink); }
     .hero-line1 em, .hero-line2 em { font-style: italic; color: var(--accent); }
     .hero-photo-wrap { position: relative; z-index: 1; }
     .hero-photo { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: center top; border: 1px solid var(--rule); border-radius: 2px; box-shadow: 0 8px 32px rgba(13,31,45,0.10); }
@@ -125,7 +125,7 @@
     .hero-intro-band p { font-size: clamp(0.95rem, 2.5vw, 1.05rem); line-height: 1.8; color: var(--ink-mid); max-width: 72ch; }
 
     .about-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 7rem); align-items: start; }
-    .about-quote { font-family: var(--f-serif); font-size: clamp(1.25rem, 2.8vw, 2rem); font-weight: 300; font-style: italic; line-height: 1.4; color: var(--ink); margin: 2rem 0; padding-left: 1.25rem; border-left: 2px solid var(--accent); }
+    .about-quote { font-family: var(--f-serif); font-size: clamp(1.25rem, 2.8vw, 2rem); font-weight: 500; font-style: italic; line-height: 1.4; color: var(--ink); margin: 2rem 0; padding-left: 1.25rem; border-left: 2px solid var(--accent); }
     .about-body p { font-size: 1rem; line-height: 1.8; color: var(--ink-mid); margin-bottom: 1.25rem; max-width: 56ch; }
     .cred-list { margin-top: 2rem; }
     .cred-row { display: flex; align-items: baseline; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--rule); }
@@ -140,7 +140,7 @@
     .expertise-item:first-child { border-top: 1px solid var(--rule); }
     .expertise-item:hover .expertise-title { color: var(--accent); }
     .expertise-num { font-family: var(--f-serif); font-size: 0.85rem; color: var(--ink-light); padding-top: 0.2rem; }
-    .expertise-title { font-family: var(--f-serif); font-size: clamp(1.2rem, 2vw, 1.7rem); font-weight: 300; line-height: 1.25; margin-bottom: 0.75rem; transition: color 0.25s; }
+    .expertise-title { font-family: var(--f-serif); font-size: clamp(1.2rem, 2vw, 1.7rem); font-weight: 500; line-height: 1.25; margin-bottom: 0.75rem; transition: color 0.25s; }
     .expertise-desc { font-size: 0.9rem; color: var(--ink-mid); line-height: 1.7; max-width: 52ch; }
     .expertise-tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 0.3rem 0.75rem; white-space: nowrap; align-self: start; margin-top: 0.3rem; }
 
@@ -151,7 +151,7 @@
     .pe-card { display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--rule); padding: clamp(1.5rem, 3vw, 2.25rem); }
     .pe-visual { width: 100%; aspect-ratio: 6 / 5; background: var(--bg-dark); overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
     .pe-visual svg { display: block; width: 100%; height: 100%; }
-    .pe-title { font-family: var(--f-serif); font-size: clamp(1.3rem, 2.4vw, 1.7rem); font-weight: 300; margin-bottom: 0.75rem; color: var(--ink); }
+    .pe-title { font-family: var(--f-serif); font-size: clamp(1.3rem, 2.4vw, 1.7rem); font-weight: 500; margin-bottom: 0.75rem; color: var(--ink); }
     .pe-desc { font-size: 0.92rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1.5rem; flex-grow: 1; }
 
     /* Cataract card animation: light rays scattering at a clouded lens (reused from cataracts.html) */
@@ -247,7 +247,7 @@
     .disclaimer { padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-light); line-height: 1.65; }
     footer { padding: 3rem 0; border-top: 1px solid var(--rule); }
     .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
-    .footer-name { font-family: var(--f-serif); font-size: 1.4rem; font-weight: 300; margin-bottom: 0.25rem; }
+    .footer-name { font-family: var(--f-serif); font-size: 1.4rem; font-weight: 500; margin-bottom: 0.25rem; }
     .footer-sub { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
     .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mid); }
     .footer-links a:hover { color: var(--accent); }
@@ -320,7 +320,7 @@
       <div class="nav-dropdown">
         <a href="cataracts.html">Cataracts</a>
         <a href="glaucoma.html">Glaucoma</a>
-        <a href="office-hours.html">Office Hours</a>
+        <a href="office-hours.html">Ask a Question</a>
       </div>
     </div>
     <a href="#contact">Contact</a>
@@ -335,7 +335,7 @@
   <a href="#patient-education" onclick="closeMobileNav()" class="mobile-nav-heading">Patient Education</a>
   <a href="cataracts.html" onclick="closeMobileNav()" class="sub-link">Cataracts</a>
   <a href="glaucoma.html" onclick="closeMobileNav()" class="sub-link">Glaucoma</a>
-  <a href="office-hours.html" onclick="closeMobileNav()" class="sub-link">Office Hours</a>
+  <a href="office-hours.html" onclick="closeMobileNav()" class="sub-link">Ask a Question</a>
   <a href="#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
@@ -650,7 +650,7 @@
       </div>
       <nav class="footer-links">
         <a href="#home">Home</a><a href="#about">About</a><a href="#expertise">Expertise</a><a href="#patient-education">Patient Education</a>
-        <a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="office-hours.html">Office Hours</a><a href="#contact">Contact</a>
+        <a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="office-hours.html">Ask a Question</a><a href="#contact">Contact</a>
       </nav>
     </div>
     <div class="footer-copy">
