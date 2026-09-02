@@ -47,7 +47,7 @@
     .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem,5vw,4rem); background: var(--bg); border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
     .nav.scrolled { border-color: var(--rule); background: rgba(240,244,245,0.96); backdrop-filter: blur(10px); }
     .nav-logo { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 500; display: flex; flex-direction: column; line-height: 1.2; }
-    .nav-logo span { font-family: var(--f-sans); font-size: 1rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-top: 1px; }
+    .nav-logo span { font-family: var(--f-sans); font-size: 1rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mid); margin-top: 1px; }
     .nav-links { display: flex; align-items: center; gap: 2.25rem; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; }
     .nav-links a, .nav-links button { color: var(--ink-mid); position: relative; transition: color 0.2s; }
     .nav-links a::after, .nav-links button::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.25s var(--ease-out); }
@@ -58,14 +58,14 @@
     .mobile-nav { display: none; position: fixed; inset: 0; z-index: 99; background: var(--bg); padding: calc(var(--nav-h) + 2rem) 2rem 2rem; flex-direction: column; gap: 2rem; overflow-y: auto; }
     .mobile-nav.open { display: flex; }
     .mobile-nav a, .mobile-nav-heading { font-family: var(--f-serif); font-size: clamp(1.6rem,7vw,2.2rem); font-weight: 500; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; min-height: 44px; display: flex; align-items: center; }
-    .mobile-nav-heading { color: var(--ink-light); }
+    .mobile-nav-heading { color: var(--ink-mid); }
     .mobile-nav a.sub-link { font-family: var(--f-sans); font-size: 1rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); padding: 0.6rem 0 0.6rem 1.5rem; min-height: 40px; }
     .mobile-nav a.active { color: var(--accent); }
 
     /* Dropdown */
     .nav-item { position: relative; }
     .nav-item > a, .nav-item > button { display: inline-flex; align-items: center; gap: 0.3rem; text-transform: uppercase; }
-    .nav-caret { font-size: 1rem; color: var(--ink-light); transition: transform 0.2s, color 0.2s; }
+    .nav-caret { font-size: 1rem; color: var(--ink-mid); transition: transform 0.2s, color 0.2s; }
     .nav-item:hover .nav-caret, .nav-item:focus-within .nav-caret { color: var(--accent); }
     .nav-dropdown { position: absolute; top: 100%; left: 50%; min-width: 168px; padding: 0.5rem 0; background: var(--bg); border: 1px solid var(--rule); box-shadow: 0 16px 36px rgba(13,31,45,0.14); opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(-50%) translateY(4px); transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out), visibility 0.2s; z-index: 20; }
     .nav-item:hover .nav-dropdown, .nav-item:focus-within .nav-dropdown { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
@@ -87,7 +87,7 @@
     /* ---------- Floating table of contents ---------- */
     .toc { position: fixed; left: clamp(1rem, 2.5vw, 2.5rem); top: 50%; transform: translateY(-50%); z-index: 15; display: flex; flex-direction: column; gap: 1rem; }
     .toc::before { content: ''; position: absolute; left: 3px; top: 5px; bottom: 5px; width: 1px; background: var(--rule); z-index: -1; }
-    .toc a { position: relative; padding-left: 1.15rem; font-size: 1rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-light); white-space: nowrap; transition: color 0.25s; }
+    .toc a { position: relative; padding-left: 1.15rem; font-size: 1rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); white-space: nowrap; transition: color 0.25s; }
     .toc a::before { content: ''; position: absolute; left: 0; top: 50%; width: 7px; height: 7px; border-radius: 50%; background: var(--bg); border: 1px solid var(--ink-light); transform: translateY(-50%); transition: all 0.25s; }
     .toc a:hover { color: var(--ink); }
     .toc a.active { color: var(--accent); }
@@ -124,12 +124,12 @@
     .ask-urgent strong { display: block; margin-bottom: 0.3rem; letter-spacing: 0.04em; text-transform: uppercase; font-size: 1rem; }
 
     .form-field { margin-bottom: 1.5rem; }
-    .form-field label { display: block; font-size: 1rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
-    .form-field label .opt { text-transform: none; letter-spacing: 0; font-size: 1rem; color: var(--ink-light); font-style: italic; }
+    .form-field label { display: block; font-size: 1rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mid); margin-bottom: 0.5rem; }
+    .form-field label .opt { text-transform: none; letter-spacing: 0; font-size: 1rem; color: var(--ink-mid); font-style: italic; }
     .form-field input, .form-field textarea, .form-field select { width: 100%; padding: 0.75rem 0; font-family: var(--f-sans); font-size: 1rem; color: var(--ink); background: transparent; border: none; border-bottom: 1px solid var(--rule); outline: none; transition: border-color 0.2s; border-radius: 0; }
     .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--accent); }
     .form-field textarea { min-height: 150px; resize: vertical; }
-    .form-hint { margin-top: 0.5rem; font-size: 1rem; color: var(--ink-light); line-height: 1.55; }
+    .form-hint { margin-top: 0.5rem; font-size: 1rem; color: var(--ink-mid); line-height: 1.55; }
     .form-consent { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 1.5rem; font-size: 1rem; color: var(--ink-mid); line-height: 1.6; }
     .form-consent input { width: 16px; height: 16px; flex-shrink: 0; margin-top: 0.25rem; accent-color: var(--accent); }
     .btn-submit { display: inline-flex; align-items: center; gap: 0.75rem; font-size: 1rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; transition: color 0.2s, border-color 0.2s; min-height: 44px; }
@@ -150,7 +150,7 @@
     .qa-btn { width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; padding: 1.4rem 0; text-align: left; color: var(--ink); cursor: pointer; transition: color 0.2s; min-height: 44px; }
     .qa-btn:hover { color: var(--accent); }
     .qa-q { font-family: var(--f-serif); font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 500; line-height: 1.35; }
-    .qa-meta { display: flex; gap: 0.75rem; align-items: center; margin-top: 0.5rem; font-family: var(--f-sans); font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+    .qa-meta { display: flex; gap: 0.75rem; align-items: center; margin-top: 0.5rem; font-family: var(--f-sans); font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); }
     .qa-tag { color: var(--accent); }
     .qa-icon { width: 20px; height: 20px; flex-shrink: 0; position: relative; color: var(--accent); margin-top: 0.35rem; }
     .qa-icon::before, .qa-icon::after { content: ''; position: absolute; background: currentColor; transition: transform 0.3s var(--ease-out), opacity 0.3s; }
@@ -162,7 +162,7 @@
     .qa-answer-inner { overflow: hidden; }
     .qa-answer-inner p { font-size: 1rem; color: var(--ink-mid); line-height: 1.8; padding-bottom: 1.1rem; max-width: 68ch; }
     .qa-answer-inner p:last-child { padding-bottom: 1.75rem; }
-    .qa-empty { padding: 2.5rem 0; font-size: 1rem; color: var(--ink-light); }
+    .qa-empty { padding: 2.5rem 0; font-size: 1rem; color: var(--ink-mid); }
 
     /* ---------- Closing CTA ---------- */
     .oh-cta p { color: var(--ink-mid); max-width: 60ch; margin-bottom: 1.5rem; }
@@ -170,14 +170,14 @@
     .link-arrow:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
     .cta-links { display: flex; gap: 2rem; flex-wrap: wrap; }
 
-    .disclaimer { padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 1rem; color: var(--ink-light); line-height: 1.65; background: var(--bg-mid); }
+    .disclaimer { padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 1rem; color: var(--ink-mid); line-height: 1.65; background: var(--bg-mid); }
     footer { padding: 3rem 0; border-top: 1px solid var(--rule); }
     .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
     .footer-name { font-family: var(--f-serif); font-size: 1.4rem; font-weight: 500; margin-bottom: 0.25rem; }
-    .footer-sub { font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+    .footer-sub { font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); }
     .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mid); }
     .footer-links a:hover { color: var(--accent); }
-    .footer-copy { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 1rem; color: var(--ink-light); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .footer-copy { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 1rem; color: var(--ink-mid); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
     @media (max-width: 900px) {
       .ask-grid { grid-template-columns: 1fr; gap: 2.5rem; }
