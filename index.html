@@ -234,7 +234,7 @@
 
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 7rem); align-items: start; }
     .contact-info p { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 2rem; }
-    .contact-note { font-size: 0.82rem; color: var(--ink-mid); line-height: 1.6; padding: 1.25rem; border: 1px solid var(--accent); background: var(--accent-light); }
+    .contact-note { font-size: 0.82rem; color: var(--ink-mid); line-height: 1.6; padding: 1.25rem; border: 1px solid var(--accent); background: var(--accent-light); margin-bottom: 2rem; }
     .form-field { margin-bottom: 1.5rem; }
     .form-field label { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
     .form-field input, .form-field textarea { width: 100%; padding: 0.75rem 0; font-family: var(--f-sans); font-size: 1rem; color: var(--ink); background: transparent; border: none; border-bottom: 1px solid var(--rule); outline: none; transition: border-color 0.2s; }
@@ -352,7 +352,7 @@
     <div class="hero-left">
       <h1>
         <div class="hero-line1 reveal reveal-delay-1">Thoughtful <em>Eye Care,</em></div>
-        <div class="hero-line2 reveal reveal-delay-1">Centered on <em>Clarity.</em></div>
+        <div class="hero-line2 reveal reveal-delay-1">Centered on <em>Clarity</em></div>
       </h1>
     </div>
     <div class="hero-photo-wrap reveal reveal-delay-2" id="heroPhotoWrap">
@@ -361,7 +361,7 @@
     </div>
   </div></div></div>
   <div class="hero-intro-band"><div class="wrap">
-    <p class="reveal">I specialize in glaucoma and complex cataract surgeries. But my true passion lies in patient education. My practice is built on a simple idea: empower patients with an understanding of their condition to make decisions <em>with</em> them rather than <em>for</em> them.</p>
+    <p class="reveal">I specialize in glaucoma and complex cataract surgeries - but my true passion lies in patient education. My practice is built on a simple idea: empower patients with an understanding of their condition to make decisions <em>with</em> them rather than <em>for</em> them.</p>
   </div></div>
 </section>
 
@@ -401,32 +401,26 @@
       <div class="expertise-item section-reveal">
         <span class="expertise-num">01</span>
         <div><div class="expertise-title">Comprehensive Ophthalmology</div><p class="expertise-desc">Evaluation and ongoing care for a wide range of eye conditions, from routine diabetes and macular degeneration annual exams to complex medical eye disease and long-term monitoring.</p></div>
-        <span class="expertise-tag">General</span>
       </div>
       <div class="expertise-item section-reveal">
         <span class="expertise-num">02</span>
         <div><div class="expertise-title">Glaucoma Care</div><p class="expertise-desc">Screening, diagnosis, monitoring, and treatment of glaucoma &mdash; including medications, laser procedures, micro-invasive glaucoma surgery (MIGS), and conventional glaucoma surgery when appropriate.</p></div>
-        <span class="expertise-tag">Surgical</span>
       </div>
       <div class="expertise-item section-reveal">
         <span class="expertise-num">03</span>
         <div><div class="expertise-title">Cataract Surgery</div><p class="expertise-desc">Comprehensive evaluation and counseling on cataract surgery timing, what to expect from the procedure, and ethically offers only intraocular lenses that he believes would be worth your time. He is fellowship trained in <strong>all</strong> FDA-approved MIGS procedures and uniquely positioned to offer the most personalized glaucoma surgery for your eyes at the same time as cataract surgery if both conditions are present.</p></div>
-        <span class="expertise-tag">Surgical</span>
       </div>
       <div class="expertise-item section-reveal">
         <span class="expertise-num">04</span>
         <div><div class="expertise-title">Premium IOL Counseling</div><p class="expertise-desc">In-depth discussions of advanced intraocular lens options based on each patient&rsquo;s lifestyle, visual priorities, and eye health &mdash; with an honest review of tradeoffs and realistic recommendations.</p></div>
-        <span class="expertise-tag">Counseling</span>
       </div>
       <div class="expertise-item section-reveal">
         <span class="expertise-num">05</span>
         <div><div class="expertise-title">Complex Anterior Segment Care</div><p class="expertise-desc">Management of advanced anterior segment conditions such as intraocular lens repositioning, intraocular lens exchange, and iris reconstruction.</p></div>
-        <span class="expertise-tag">Surgical</span>
       </div>
       <div class="expertise-item section-reveal">
         <span class="expertise-num">06</span>
         <div><div class="expertise-title">Collaborative &amp; Coordinated Care</div><p class="expertise-desc">Close coordination with optometrists, primary care providers, and specialists to support patients with complex ocular or medical histories. He does not treat you only as a patient with an eye condition, but treats you holistically like a human being.</p></div>
-        <span class="expertise-tag">Coordination</span>
       </div>
     </div>
   </div>
@@ -628,6 +622,12 @@
       <h2 class="display display-lg reveal reveal-delay-1">Get in touch</h2>
       <p class="reveal reveal-delay-2">This form is for general professional inquiries only. Please do not use it for urgent medical questions or emergencies.</p>
       <div class="contact-note reveal reveal-delay-3">If you are experiencing a sudden change in vision, eye pain, or any acute ocular symptoms, please contact an emergency eye care provider or go to your nearest emergency department.</div>
+      <p class="reveal reveal-delay-3">Dr. Bhargava is currently seeing patients in Southern California, at the following Pacific Eye Institute locations:</p>
+      <div class="cred-list reveal reveal-delay-3">
+        <div class="cred-row"><span class="cred-label">Eastvale</span><span class="cred-value">12442 Limonite Ave, Suite 200, Eastvale, CA 91752<br>(951) 737-4000</span></div>
+        <div class="cred-row"><span class="cred-label">Upland</span><span class="cred-value">555-591 North 13th Ave, Upland, CA 91786<br>(909) 982-8846</span></div>
+        <div class="cred-row"><span class="cred-label">Apple Valley</span><span class="cred-value">15099 Kamana Rd, Apple Valley, CA 92307<br>(760) 659-3990</span></div>
+      </div>
     </div>
     <form class="reveal reveal-delay-2" onsubmit="submitForm(event)">
       <div class="form-field"><label for="fname">Name</label><input id="fname" type="text" name="name" placeholder="Your full name" required /></div>
