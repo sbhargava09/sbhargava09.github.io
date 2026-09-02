@@ -43,8 +43,8 @@
     .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem,5vw,4rem); background: var(--bg); border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
     .nav.scrolled { border-color: var(--rule); background: rgba(240,244,245,0.96); backdrop-filter: blur(10px); }
     .nav-logo { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 500; display: flex; flex-direction: column; line-height: 1.2; }
-    .nav-logo span { font-family: var(--f-sans); font-size: 1rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mid); margin-top: 1px; }
-    .nav-links { display: flex; align-items: center; gap: 2.25rem; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .nav-logo span { font-family: var(--f-sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-top: 1px; }
+    .nav-links { display: flex; align-items: center; gap: 2.25rem; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; }
     .nav-links a, .nav-links button { color: var(--ink-mid); position: relative; transition: color 0.2s; }
     .nav-links a::after, .nav-links button::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.25s var(--ease-out); }
     .nav-links a:hover, .nav-links a.active, .nav-links button:hover { color: var(--accent); }
@@ -54,22 +54,22 @@
     .mobile-nav { display: none; position: fixed; inset: 0; z-index: 99; background: var(--bg); padding: calc(var(--nav-h) + 2rem) 2rem 2rem; flex-direction: column; gap: 2rem; overflow-y: auto; }
     .mobile-nav.open { display: flex; }
     .mobile-nav a, .mobile-nav-heading { font-family: var(--f-serif); font-size: clamp(1.6rem,7vw,2.2rem); font-weight: 500; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; min-height: 44px; display: flex; align-items: center; }
-    .mobile-nav-heading { color: var(--ink-mid); }
-    .mobile-nav a.sub-link { font-family: var(--f-sans); font-size: 1rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); padding: 0.6rem 0 0.6rem 1.5rem; min-height: 40px; }
+    .mobile-nav-heading { color: var(--ink-light); }
+    .mobile-nav a.sub-link { font-family: var(--f-sans); font-size: 0.95rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); padding: 0.6rem 0 0.6rem 1.5rem; min-height: 40px; }
 
     /* Dropdown */
     .nav-item { position: relative; }
     .nav-item > a, .nav-item > button { display: inline-flex; align-items: center; gap: 0.3rem; text-transform: uppercase; }
-    .nav-caret { font-size: 1rem; color: var(--ink-mid); transition: transform 0.2s, color 0.2s; }
+    .nav-caret { font-size: 0.6rem; color: var(--ink-light); transition: transform 0.2s, color 0.2s; }
     .nav-item:hover .nav-caret, .nav-item:focus-within .nav-caret { color: var(--accent); }
     .nav-dropdown { position: absolute; top: 100%; left: 50%; min-width: 168px; padding: 0.5rem 0; background: var(--bg); border: 1px solid var(--rule); box-shadow: 0 16px 36px rgba(13,31,45,0.14); opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(-50%) translateY(4px); transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out), visibility 0.2s; z-index: 20; }
     .nav-item:hover .nav-dropdown, .nav-item:focus-within .nav-dropdown { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
-    .nav-dropdown a { display: block; padding: 0.65rem 1.25rem; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); white-space: nowrap; }
+    .nav-dropdown a { display: block; padding: 0.65rem 1.25rem; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mid); white-space: nowrap; }
     .nav-dropdown a::after { content: none; }
     .nav-dropdown a:hover, .nav-dropdown a.active { color: var(--accent); background: var(--bg-mid); }
 
     .wrap { max-width: 1140px; margin: 0 auto; padding: 0 clamp(1rem,5vw,4rem); }
-    .eyebrow { display: inline-block; font-family: var(--f-sans); font-size: 1rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+    .eyebrow { display: inline-block; font-family: var(--f-sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
     .display { font-family: var(--f-serif); font-weight: 500; line-height: 1.1; letter-spacing: -0.01em; }
     .display-xl { font-size: clamp(3.2rem,7vw,6.5rem); }
     .display em { font-style: italic; color: var(--accent); }
@@ -96,7 +96,7 @@
 
     .edu-row-1 { position: relative; z-index: 2; background: var(--bg-mid); padding: clamp(4rem,10vw,9rem) 0; }
     .edu-row-2 { position: relative; z-index: 2; background: var(--bg);     padding: clamp(4rem,10vw,9rem) 0; }
-    .disclaimer { position: relative; z-index: 2; padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 1rem; color: var(--ink-mid); line-height: 1.65; background: var(--bg-mid); }
+    .disclaimer { position: relative; z-index: 2; padding: 2rem 0; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-light); line-height: 1.65; background: var(--bg-mid); }
     footer      { position: relative; z-index: 2; padding: 3rem 0; border-top: 1px solid var(--rule); background: var(--bg); }
 
     .edu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
@@ -107,15 +107,15 @@
     .edu-row-1 .edu-card-num { color: rgba(10,126,140,0.18); }
     .edu-card h3 { font-family: var(--f-serif); font-size: 1.25rem; font-weight: 500; margin-bottom: 1rem; color: var(--ink); }
     .edu-card ul { display: flex; flex-direction: column; gap: 0.55rem; }
-    .edu-card li { font-size: 1rem; color: var(--ink-mid); padding-left: 1rem; position: relative; }
-    .edu-card li::before { content: '\2014'; position: absolute; left: 0; color: var(--accent); font-size: 1rem; }
+    .edu-card li { font-size: 0.85rem; color: var(--ink-mid); padding-left: 1rem; position: relative; }
+    .edu-card li::before { content: '\2014'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; }
 
     .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
     .footer-name { font-family: var(--f-serif); font-size: 1.4rem; font-weight: 500; margin-bottom: 0.25rem; }
-    .footer-sub { font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); }
-    .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mid); }
+    .footer-sub { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+    .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mid); }
     .footer-links a:hover { color: var(--accent); }
-    .footer-copy { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 1rem; color: var(--ink-mid); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .footer-copy { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 0.75rem; color: var(--ink-light); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
     @media (max-width: 900px) { .edu-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 640px) {
