@@ -104,18 +104,6 @@
     .section-head { max-width: 660px; margin-bottom: 2.5rem; }
     .section-head p { color: var(--ink-mid); font-size: 1rem; line-height: 1.75; margin-top: 1rem; }
 
-    /* ---------- How it works ---------- */
-    .steps { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
-    .step { padding: 1.9rem 1.6rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-    .step-num { font-family: var(--f-serif); font-size: 2rem; font-weight: 500; color: var(--accent-dark); line-height: 1; }
-    .step h3 { margin: 0.7rem 0 0.5rem; font-family: var(--f-serif); font-weight: 500; font-size: 1.2rem; color: var(--ink); }
-    .step p { font-size: 0.88rem; color: var(--ink-mid); line-height: 1.65; }
-
-    .rules { margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem,4vw,3rem); }
-    .rules h4 { font-family: var(--f-serif); font-weight: 500; font-size: 1.1rem; margin-bottom: 1rem; color: var(--ink); }
-    .rules li { position: relative; padding-left: 1.4rem; margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--ink-mid); line-height: 1.6; }
-    .rules li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 6px; height: 1px; background: var(--accent); }
-
     /* ---------- Ask form ---------- */
     .ask-grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: clamp(2rem,6vw,6rem); align-items: start; }
     .ask-note { font-size: 0.85rem; color: var(--ink-mid); line-height: 1.7; padding: 1.25rem; border: 1px solid var(--accent); background: var(--accent-light); margin-top: 1.75rem; }
@@ -181,8 +169,6 @@
 
     @media (max-width: 900px) {
       .ask-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .steps { grid-template-columns: 1fr; }
-      .rules { grid-template-columns: 1fr; gap: 2rem; }
     }
     @media (max-width: 640px) {
       :root { --nav-h: 60px; }
@@ -252,7 +238,6 @@
 <nav class="toc" id="pageToc" aria-label="Page sections">
   <a href="#ask" data-toc="ask">Ask a Question</a>
   <a href="#answered" data-toc="answered">Answered</a>
-  <a href="#how" data-toc="how">How This Works</a>
 </nav>
 
 <section class="page-hero" id="pageHero">
@@ -470,56 +455,6 @@
   </div>
 </section>
 
-<section id="how">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow reveal">Process</span>
-      <h2 class="display display-lg reveal reveal-delay-1">How this works</h2>
-    </div>
-
-    <div class="steps reveal reveal-delay-2">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>You ask</h3>
-        <p>Send a question through the form above. No account, no name required. An email address is optional and exists only so you can be told when an answer is posted.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>I review</h3>
-        <p>Questions come to me privately. I answer the ones that are general enough to help more than one person, rewriting them to remove any identifying detail.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>It gets published</h3>
-        <p>The edited question and its answer are posted above, anonymously, where anyone can read them. Not every question is published &mdash; the archive is curated, not a feed.</p>
-      </div>
-    </div>
-
-    <div class="rules reveal reveal-delay-3">
-      <div>
-        <h4>What works well here</h4>
-        <ul>
-          <li>&ldquo;What is actually happening in the eye when someone has glaucoma?&rdquo;</li>
-          <li>&ldquo;What does a lens implant do, and how is one chosen?&rdquo;</li>
-          <li>&ldquo;What should I expect in the weeks after cataract surgery?&rdquo;</li>
-          <li>&ldquo;Why does my doctor keep repeating the same test?&rdquo;</li>
-          <li>Anything you meant to ask at your last visit and forgot.</li>
-        </ul>
-      </div>
-      <div>
-        <h4>What cannot be answered here</h4>
-        <ul>
-          <li>Questions about your own eye, your test results, or your specific treatment plan.</li>
-          <li>Requests for a second opinion on care you are receiving elsewhere.</li>
-          <li>Anything urgent &mdash; sudden vision change, pain, injury, new flashes or floaters.</li>
-          <li>Prescription, refill, appointment, or billing requests.</li>
-          <li>Photographs, scans, or records &mdash; please do not send them.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="oh-cta bg-mid">
   <div class="wrap">
     <span class="eyebrow reveal">Keep reading</span>
@@ -543,7 +478,7 @@
       </div>
       <nav class="footer-links">
         <a href="index.html">Home</a><a href="index.html#about">About</a><a href="index.html#expertise">Expertise</a><a href="index.html#patient-education">Patient Education</a>
-        <a href="cataracts.html">Cataracts</a><a href="glaucoma.html">Glaucoma</a><a href="office-hours.html">Ask a Question</a><a href="index.html#contact">Contact</a>
+        <a href="index.html#contact">Contact</a>
       </nav>
     </div>
     <div class="footer-copy">
