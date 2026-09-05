@@ -44,7 +44,7 @@
   .stage.dim{ opacity:0; }
 
   /* ---------- the three reused scenes, cross-fading into one another ---------- */
-  .scene-wrap{ position:absolute; inset:0; opacity:0; transition:opacity 1.1s ease; }
+  .scene-wrap{ position:absolute; inset:0; opacity:0; transition:opacity 0.73s ease; }
   .scene-wrap.active{ opacity:1; z-index:1; }
   .scene-wrap svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 
@@ -116,16 +116,16 @@
   }
 
   /* ---------- surgery scene: one-time entrance ---------- */
-  .label-group{ opacity:0; animation: fadeInUp .6s ease forwards; }
+  .label-group{ opacity:0; animation: fadeInUp .4s ease forwards; }
   .label-group text{ font-family:var(--f-sans); }
-  .label-group.l1{ animation-delay:.3s; }
-  .label-group.l2{ animation-delay:.5s; }
+  .label-group.l1{ animation-delay:.2s; }
+  .label-group.l2{ animation-delay:.33s; }
   @keyframes fadeInUp{ from{ opacity:0; transform:translateY(4px); } to{ opacity:1; transform:none; } }
 
   .callout-line{
     stroke:var(--ink-light); stroke-width:1; fill:none;
     stroke-dasharray:180; stroke-dashoffset:180;
-    animation: drawLine .8s ease forwards; animation-delay: inherit;
+    animation: drawLine .53s ease forwards; animation-delay: inherit;
   }
   @keyframes drawLine{ to{ stroke-dashoffset:0; } }
 
@@ -138,15 +138,15 @@
   .ac-tint{
     fill:var(--accent-light); opacity:0.4;
     d: path("M 622 469 Q 696 300 570 232 L 605 250 Q 845 260 860 560 Q 845 860 605 870 L 570 888 Q 696 820 622 651 L 622 469 Z");
-    transition: d 1.6s cubic-bezier(.4,.05,.3,1);
+    transition: d 1.07s cubic-bezier(.4,.05,.3,1);
   }
   [data-angle="open"] .ac-tint{
     d: path("M 530 469 Q 556 300 570 232 L 605 250 Q 845 260 860 560 Q 845 860 605 870 L 570 888 Q 556 820 530 651 L 530 469 Z");
   }
 
   /* ---------- iris: bowed forward against the cornea while the cataract fills the eye, then falls back once it's replaced ---------- */
-  .iris-body{ fill:var(--accent); opacity:0.94; transition: d 1.6s cubic-bezier(.4,.05,.3,1); }
-  .iris-line{ fill:none; stroke:var(--accent-dark); stroke-width:1; opacity:0.35; transition: d 1.6s cubic-bezier(.4,.05,.3,1); }
+  .iris-body{ fill:var(--accent); opacity:0.94; transition: d 1.07s cubic-bezier(.4,.05,.3,1); }
+  .iris-line{ fill:none; stroke:var(--accent-dark); stroke-width:1; opacity:0.35; transition: d 1.07s cubic-bezier(.4,.05,.3,1); }
   .iris-top{ d: path("M 570 232 Q 605 236 612 248 Q 696 300 622 469 Q 631 300 570 232 Z"); }
   .iris-bot{ d: path("M 570 888 Q 605 884 612 872 Q 696 820 622 651 Q 631 820 570 888 Z"); }
   .iris-line-top{ d: path("M 610 300 Q 675 300 630 420"); }
@@ -157,7 +157,7 @@
   [data-angle="open"] .iris-line-bot{ d: path("M 566 820 Q 558 820 540 700"); }
 
   /* ---------- the cataract lens ---------- */
-  .lens-whole{ opacity:1; transition:opacity .8s ease; }
+  .lens-whole{ opacity:1; transition:opacity .53s ease; }
   [data-lens="split"] .lens-whole,
   [data-lens="gone"] .lens-whole,
   [data-lens="iol"] .lens-whole{ opacity:0; }
@@ -165,7 +165,7 @@
   .half{
     fill:url(#gCataract); stroke:var(--cataract-core); stroke-width:2;
     transform-box:view-box; transform-origin:611px 586px;
-    opacity:0; transition: opacity 0s linear, transform 0.55s cubic-bezier(.35,0,.5,1) .35s;
+    opacity:0; transition: opacity 0s linear, transform 0.37s cubic-bezier(.35,0,.5,1) .23s;
   }
   [data-lens="split"] .half{ opacity:1; }
   [data-phase="chop"] .half-top{ transform: translate(0,-34px) rotate(-2.5deg) scale(1); }
@@ -174,21 +174,21 @@
   [data-phase="asp1"] .half-top,
   [data-phase="asp2"] .half-top{
     transform: translate(0,-8px) rotate(0deg) scale(0.02); opacity:0;
-    transition: transform 0.95s cubic-bezier(.55,0,.75,.35), opacity .275s ease .75s;
+    transition: transform 0.63s cubic-bezier(.55,0,.75,.35), opacity .18s ease .5s;
   }
   [data-phase="asp2"] .half-bot{
     transform: translate(0,8px) rotate(0deg) scale(0.02); opacity:0;
-    transition: transform 0.95s cubic-bezier(.55,0,.75,.35), opacity .275s ease .75s;
+    transition: transform 0.63s cubic-bezier(.55,0,.75,.35), opacity .18s ease .5s;
   }
 
   .capsule path{
     fill:none; stroke:var(--capsule); stroke-width:2.6; stroke-linecap:round;
-    transition: d 1.6s cubic-bezier(.4,.05,.3,1);
+    transition: d 1.07s cubic-bezier(.4,.05,.3,1);
   }
-  .capsule{ opacity:0.7; transition:opacity .8s ease; }
+  .capsule{ opacity:0.7; transition:opacity .53s ease; }
   .cap-fill{
     fill:var(--accent-light); opacity:0.5; cx:463px; rx:170px;
-    transition: cx 1.6s cubic-bezier(.4,.05,.3,1), rx 1.6s cubic-bezier(.4,.05,.3,1);
+    transition: cx 1.07s cubic-bezier(.4,.05,.3,1), rx 1.07s cubic-bezier(.4,.05,.3,1);
   }
   [data-cap="collapsed"] .cap-fill{ cx:345px; rx:52px; }
   [data-lens="gone"] .capsule, [data-lens="iol"] .capsule{ opacity:1; }
@@ -203,7 +203,7 @@
 
   .zonules path{
     fill:none; stroke:var(--accent); stroke-width:1.3; opacity:0.75;
-    transition: d 1.6s cubic-bezier(.4,.05,.3,1);
+    transition: d 1.07s cubic-bezier(.4,.05,.3,1);
   }
   .z1{ d: path("M 558 218 L 510 324"); }
   .z2{ d: path("M 568 233 L 519 326"); }
@@ -220,7 +220,7 @@
 
   /* ---------- the new intraocular lens ---------- */
   .iol{ opacity:0; transform-box:view-box; transform-origin:330px 560px; }
-  [data-phase="inject"] .iol{ animation: iolIn 2s cubic-bezier(.3,.6,.25,1) 1.5s forwards; }
+  [data-phase="inject"] .iol{ animation: iolIn 1.3s cubic-bezier(.3,.6,.25,1) 0.5s forwards; }
   [data-lens="iol"] .iol{ opacity:1; }
   @keyframes iolIn{
     0%   { opacity:0; transform: translate(302px,0) scale(0.10,0.42); }
@@ -234,40 +234,40 @@
   .probe, .injector{
     transform-box:view-box; transform-origin:0 0;
     transform: translate(838px,-1200px);
-    transition: transform 1.3s cubic-bezier(.4,.05,.35,1);
+    transition: transform 0.87s cubic-bezier(.4,.05,.35,1);
   }
   .instr-body{ transform-box:view-box; transform-origin:0 0; transform: rotate(109deg); }
   [data-phase="incision"] .probe{
     transform: translate(636px,516px);
-    transition: transform 3.8s cubic-bezier(.35,0,.8,.72);   /* still moving at the hand-off */
+    transition: transform 0.5s cubic-bezier(.35,0,.8,.72);   /* introduced immediately, not a slow drift-in */
   }
   [data-phase="chop"] .probe{
     transform: translate(611px,586px);
-    transition: transform .45s cubic-bezier(0,.35,.35,1);      /* picks the speed straight back up */
+    transition: transform .3s cubic-bezier(0,.35,.35,1);
   }
   [data-phase="asp1"]     .probe{ transform: translate(611px,586px); }
   [data-phase="asp2"]     .probe{ transform: translate(611px,586px); }
-  [data-phase="empty"]    .probe{ transition-duration:1.5s; }
+  [data-phase="empty"]    .probe{ transition-duration:1s; }
   [data-phase="chop"] .probe .instr-body{ animation: phaco .1s linear infinite; }
   @keyframes phaco{
     0%,100%{ transform: rotate(109deg) translateX(0); }
     50%    { transform: rotate(109deg) translateX(-8px); }
   }
-  [data-phase="inject"] .injector{ transform: translate(629px,534px); transition-duration:1.5s; }
-  [data-phase="settle"] .injector{ transition-duration:1.5s; }
+  [data-phase="inject"] .injector{ transform: translate(629px,534px); transition-duration:0.5s; } /* introduced immediately */
+  [data-phase="settle"] .injector{ transition-duration:1s; }
 
   .incision-mark{
     stroke:var(--warn); stroke-width:2.6; stroke-linecap:round; fill:none;
-    opacity:0; transition:opacity .5s ease;
+    opacity:0; transition:opacity .33s ease;
   }
   .scene:not([data-phase="closed"]) .incision-mark{ opacity:0.7; }
 
   /* ---------- once the new lens is seated: straight rays bend at it and converge on the retina ---------- */
-  .rays-focus{ opacity:0; transition:opacity .7s ease; }
+  .rays-focus{ opacity:0; transition:opacity .47s ease; }
   [data-rays="focus"] .rays-focus{ opacity:1; }
 
   /* ---------- what is sitting in the capsular bag right now ---------- */
-  .lab{ opacity:0; transition:opacity .7s ease; }
+  .lab{ opacity:0; transition:opacity .47s ease; }
   [data-lens="cataract"] .lab-cataract{ opacity:1; }
   [data-lens="iol"] .lab-iol{ opacity:1; }
 
@@ -735,15 +735,15 @@
   // the surgery scene's own sequence: starts with the phaco probe entering the eye,
   // ends with the new lens seated and light re-focusing on the retina
   const surgerySteps = [
-    { name:'closed',   ms:2400, lens:'cataract', angle:'closed', bag:'intact',    rays:'none'  },
-    { name:'incision', ms:3800, lens:'cataract', angle:'closed', bag:'open',      rays:'none'  },
-    { name:'chop',     ms:1600, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
-    { name:'asp1',     ms:1300, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
-    { name:'asp2',     ms:1300, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
-    { name:'empty',    ms:3600, lens:'gone',     angle:'open',   bag:'collapsed', rays:'none'  },
-    { name:'inject',   ms:3600, lens:'gone',     angle:'open',   bag:'collapsed', rays:'none'  },
-    { name:'settle',   ms:2600, lens:'iol',      angle:'open',   bag:'collapsed', rays:'none'  },
-    { name:'rays',     ms:7500, lens:'iol',      angle:'open',   bag:'collapsed', rays:'focus' }
+    { name:'closed',   ms:1600, lens:'cataract', angle:'closed', bag:'intact',    rays:'none'  },
+    { name:'incision', ms:1400, lens:'cataract', angle:'closed', bag:'open',      rays:'none'  },
+    { name:'chop',     ms:1100, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
+    { name:'asp1',     ms:900,  lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
+    { name:'asp2',     ms:900,  lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
+    { name:'empty',    ms:2400, lens:'gone',     angle:'open',   bag:'collapsed', rays:'none'  },
+    { name:'inject',   ms:2000, lens:'gone',     angle:'open',   bag:'collapsed', rays:'none'  },
+    { name:'settle',   ms:1700, lens:'iol',      angle:'open',   bag:'collapsed', rays:'none'  },
+    { name:'rays',     ms:5000, lens:'iol',      angle:'open',   bag:'collapsed', rays:'focus' }
   ];
   const pipForStep = ['incision','chop','chop','chop','empty','inject','inject','rays'];
   // ^ index i+1 (the step AFTER 'closed') maps to the pip that should be lit
@@ -779,8 +779,8 @@
     }
   }
 
-  const NORMAL_MS   = 4200;
-  const CATARACT_MS = 4600;
+  const NORMAL_MS   = 2800;
+  const CATARACT_MS = 3100;
 
   async function runShow(entry){
     const mine = ++token;
