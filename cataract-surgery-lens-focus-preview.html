@@ -50,6 +50,9 @@
 
   .rf-vitreous{ fill: var(--bg-mid); opacity: 0.55; }
   .rf-sclera{ fill: none; stroke: var(--ink-light); stroke-width: 28; stroke-linecap: round; }
+  /* in the surgery scene the round cap's bulge pokes into the anterior chamber at top and bottom; the
+     other two scenes are unaffected and keep the round cap */
+  #wrapSurgery .rf-sclera{ stroke-linecap: butt; }
   .rf-retina{ fill: none; stroke: var(--warn); stroke-width: 9; opacity: 0.45; stroke-linecap: butt; }
   .rf-fovea{ fill: none; stroke: var(--warn); stroke-width: 9; opacity: 0.8; stroke-linecap: butt; }
 
@@ -552,10 +555,6 @@
             <path d="M 560 222 L 566 236"/><path d="M 571 233 L 576 246"/><path d="M 584 238 L 588 250"/>
             <path d="M 560 898 L 566 884"/><path d="M 571 887 L 576 874"/><path d="M 584 882 L 588 870"/>
           </g>
-
-          <!-- scleral spur -->
-          <path d="M 613 233 L 630 243 L 611 252 Z" fill="var(--ink-light)" opacity="0.9"/>
-          <path d="M 613 887 L 630 877 L 611 868 Z" fill="var(--ink-light)" opacity="0.9"/>
 
           <!-- iris -->
           <g>
