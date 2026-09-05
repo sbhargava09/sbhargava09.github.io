@@ -144,6 +144,19 @@
     }
     .flow-dot, .trapped-dot{ opacity:0 !important; }
   }
+
+  .anim-restart{
+    position:absolute; right:10px; bottom:10px; z-index:5;
+    width:15px; height:15px; display:flex; align-items:center; justify-content:center;
+    background:var(--bg); border:1px solid var(--rule); border-radius:50%;
+    color:var(--ink-light); opacity:0.5;
+    transition:opacity .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .anim-restart:hover{ opacity:1; color:var(--accent); border-color:var(--accent); }
+  .anim-restart:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; opacity:1; }
+  .anim-restart:active{ transform:scale(0.9); }
+  .anim-restart svg{ display:block; }
+  .anim-reset, .anim-reset *{ animation:none !important; }
 </style>
 
 <div class="wrap">
@@ -287,6 +300,9 @@
         </g>
       </g>
     </svg>
+    <button type="button" class="anim-restart" id="restartBtn" aria-label="Restart animation" title="Restart animation">
+      <svg viewBox="0 0 24 24" width="8" height="8" fill="currentColor" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+    </button>
   </div>
 
   <div class="caption">
@@ -300,16 +316,29 @@
 <script>
   const captions = [...document.querySelectorAll('.caption span')];
   const durations = [4200, 3800, 3800, 4200];
+  const stage = document.querySelector('.stage');
   let idx = 0;
+  let epoch = 0;
 
   function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
 
   async function cycleCaptions(){
-    while (true){
+    const my = ++epoch;
+    const alive = () => my === epoch;
+    while (alive()){
       captions.forEach((s,i) => s.classList.toggle('active', i === idx));
       await wait(durations[idx]);
+      if (!alive()) return;
       idx = (idx + 1) % captions.length;
     }
   }
   cycleCaptions();
+
+  document.getElementById('restartBtn').addEventListener('click', () => {
+    idx = 0;
+    stage.classList.add('anim-reset');
+    void stage.offsetWidth;
+    stage.classList.remove('anim-reset');
+    cycleCaptions();
+  });
 </script>

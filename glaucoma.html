@@ -139,6 +139,20 @@
     .eye-sub { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.85rem; }
     .eye-note { font-size: 0.87rem; color: var(--ink-mid); margin-top: 0.6rem; line-height: 1.6; text-align: left; }
 
+    /* ---------- Restart control (shared by all three drainage animations) ---------- */
+    .anim-restart{
+      position: absolute; right: 10px; bottom: 10px; z-index: 5;
+      width: 15px; height: 15px; display: flex; align-items: center; justify-content: center;
+      background: var(--bg); border: 1px solid var(--rule); border-radius: 50%;
+      color: var(--ink-light); opacity: 0.5;
+      transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .anim-restart:hover { opacity: 1; color: var(--accent); border-color: var(--accent); }
+    .anim-restart:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; opacity: 1; }
+    .anim-restart:active { transform: scale(0.9); }
+    .anim-restart svg { display: block; }
+    .anim-reset, .anim-reset * { animation: none !important; }
+
     /* ---------- Normal aqueous flow animation ---------- */
     .flow-stage{ position: relative; width: 100%; aspect-ratio: 1000/1160; overflow: hidden; background: var(--bg-mid); border: 1px solid var(--rule); margin: 0 auto 1rem; }
     .flow-stage svg{ position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -229,7 +243,7 @@
 
     /* ---------- Angle-closure animation (embedded beside its subtype card) ---------- */
     .lens-card.has-visual { grid-template-columns: 56px 1fr 440px; }
-    .ac-visual, .oa-visual { width: 100%; max-width: 440px; aspect-ratio: 1000/1160; background: var(--bg-mid); border: 1px solid var(--rule); overflow: hidden; }
+    .ac-visual, .oa-visual { position: relative; width: 100%; max-width: 440px; aspect-ratio: 1000/1160; background: var(--bg-mid); border: 1px solid var(--rule); overflow: hidden; }
     .ac-visual svg, .oa-visual svg { display: block; width: 100%; height: 100%; }
 
     .ac-label-group{ opacity:0; animation: acFadeInUp .6s ease forwards; }
@@ -771,6 +785,9 @@
               </g>
             </g>
           </svg>
+          <button type="button" class="anim-restart" id="flowRestartBtn" aria-label="Restart animation" title="Restart animation">
+            <svg viewBox="0 0 24 24" width="8" height="8" fill="currentColor" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+          </button>
         </div>
         <h3>Open Angle</h3>
         <p class="eye-sub">Normal drainage angle</p>
@@ -955,6 +972,9 @@
               </g>
             </g>
           </svg>
+          <button type="button" class="anim-restart" aria-label="Restart animation" title="Restart animation">
+            <svg viewBox="0 0 24 24" width="8" height="8" fill="currentColor" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+          </button>
         </div>
       </article>
       <article class="lens-card has-visual">
@@ -1102,6 +1122,9 @@
               </g>
             </g>
           </svg>
+          <button type="button" class="anim-restart" aria-label="Restart animation" title="Restart animation">
+            <svg viewBox="0 0 24 24" width="8" height="8" fill="currentColor" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+          </button>
         </div>
       </article>
       <article class="lens-card">
@@ -1243,7 +1266,7 @@
               </ul>
               </div>
               <figure class="surgery-anim">
-                <iframe src="angle-closure-cataract-surgery-animation.html#embed" loading="lazy"
+                <iframe src="angle-closure-cataract-surgery-animation.html#embed"
                         title="Animation: cataract surgery reopening a closed drainage angle"></iframe>
                 <figcaption>In angle closure, a thickened cataract crowds the iris forward until it
                 seals the drainage angle. Exchanging it for a much thinner lens implant lets the iris
@@ -1288,7 +1311,7 @@
               </div>
               </div>
               <figure class="surgery-anim">
-                <iframe src="migs-goniotomy.html#embed" loading="lazy"
+                <iframe src="migs-goniotomy.html#embed"
                         title="Animation: a goniotomy opening the drainage angle"></iframe>
                 <figcaption>Goniotomy, an angle-based MIGS procedure: a fine blade opens the
                 trabecular meshwork so fluid can leave the eye again.</figcaption>
@@ -1317,7 +1340,7 @@
               </div>
               </div>
               <figure class="surgery-anim">
-                <iframe src="tube-shunt-surgery-animation.html#embed" loading="lazy"
+                <iframe src="tube-shunt-surgery-animation.html#embed"
                         title="Animation: tube shunt surgery creating a new drainage pathway"></iframe>
                 <figcaption>Tube shunt surgery: a plate is secured to the sclera well behind the
                 limbus and a fine silicone tube is guided into the anterior chamber, giving
@@ -1477,8 +1500,20 @@
       runFlowSequence();
     }
 
+    const flowRestartBtn = document.getElementById('flowRestartBtn');
+    if (flowRestartBtn) flowRestartBtn.addEventListener('click', runFlowSequence);
+
     runFlowSequence();
   })();
+
+  document.querySelectorAll('.oa-visual .anim-restart, .ac-visual .anim-restart').forEach((btn) => {
+    const scope = btn.parentElement;
+    btn.addEventListener('click', () => {
+      scope.classList.add('anim-reset');
+      void scope.offsetWidth;
+      scope.classList.remove('anim-reset');
+    });
+  });
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
