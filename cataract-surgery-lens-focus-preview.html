@@ -134,24 +134,24 @@
   /* ---------- anterior chamber deepens once the bulky lens is replaced ---------- */
   .ac-tint{
     fill:var(--accent-light); opacity:0.4;
-    d: path("M 622 469 Q 696 300 570 132 L 605 150 Q 845 260 860 560 Q 845 860 605 970 L 570 988 Q 696 820 622 651 L 622 469 Z");
+    d: path("M 622 469 Q 696 300 570 232 L 605 250 Q 845 260 860 560 Q 845 860 605 870 L 570 888 Q 696 820 622 651 L 622 469 Z");
     transition: d 1.6s cubic-bezier(.4,.05,.3,1);
   }
   [data-angle="open"] .ac-tint{
-    d: path("M 530 469 Q 556 300 570 132 L 605 150 Q 845 260 860 560 Q 845 860 605 970 L 570 988 Q 556 820 530 651 L 530 469 Z");
+    d: path("M 530 469 Q 556 300 570 232 L 605 250 Q 845 260 860 560 Q 845 860 605 870 L 570 888 Q 556 820 530 651 L 530 469 Z");
   }
 
   /* ---------- iris: bowed forward against the cornea while the cataract fills the eye, then falls back once it's replaced ---------- */
   .iris-body{ fill:var(--accent); opacity:0.94; transition: d 1.6s cubic-bezier(.4,.05,.3,1); }
   .iris-line{ fill:none; stroke:var(--accent-dark); stroke-width:1; opacity:0.35; transition: d 1.6s cubic-bezier(.4,.05,.3,1); }
-  .iris-top{ d: path("M 570 132 Q 605 136 612 148 Q 696 300 622 469 Q 631 300 570 132 Z"); }
-  .iris-bot{ d: path("M 570 988 Q 605 984 612 972 Q 696 820 622 651 Q 631 820 570 988 Z"); }
-  .iris-line-top{ d: path("M 610 200 Q 675 300 630 420"); }
-  .iris-line-bot{ d: path("M 610 920 Q 675 820 630 700"); }
-  [data-angle="open"] .iris-top{ d: path("M 570 132 Q 572 136 571 147 Q 556 300 530 469 Q 492 300 570 132 Z"); }
-  [data-angle="open"] .iris-bot{ d: path("M 570 988 Q 572 984 571 973 Q 556 820 530 651 Q 492 820 570 988 Z"); }
-  [data-angle="open"] .iris-line-top{ d: path("M 566 200 Q 558 300 540 420"); }
-  [data-angle="open"] .iris-line-bot{ d: path("M 566 920 Q 558 820 540 700"); }
+  .iris-top{ d: path("M 570 232 Q 605 236 612 248 Q 696 300 622 469 Q 631 300 570 232 Z"); }
+  .iris-bot{ d: path("M 570 888 Q 605 884 612 872 Q 696 820 622 651 Q 631 820 570 888 Z"); }
+  .iris-line-top{ d: path("M 610 300 Q 675 300 630 420"); }
+  .iris-line-bot{ d: path("M 610 820 Q 675 820 630 700"); }
+  [data-angle="open"] .iris-top{ d: path("M 570 232 Q 572 236 571 247 Q 556 300 530 469 Q 492 300 570 232 Z"); }
+  [data-angle="open"] .iris-bot{ d: path("M 570 888 Q 572 884 571 873 Q 556 820 530 651 Q 492 820 570 888 Z"); }
+  [data-angle="open"] .iris-line-top{ d: path("M 566 300 Q 558 300 540 420"); }
+  [data-angle="open"] .iris-line-bot{ d: path("M 566 820 Q 558 820 540 700"); }
 
   /* ---------- the cataract lens ---------- */
   .lens-whole{ opacity:1; transition:opacity .8s ease; }
@@ -202,22 +202,22 @@
     fill:none; stroke:var(--accent); stroke-width:1.3; opacity:0.75;
     transition: d 1.6s cubic-bezier(.4,.05,.3,1);
   }
-  .z1{ d: path("M 558 118 L 510 324"); }
-  .z2{ d: path("M 568 133 L 519 326"); }
-  .z3{ d: path("M 580 142 L 529 330"); }
-  .z4{ d: path("M 558 1002 L 510 796"); }
-  .z5{ d: path("M 568 987 L 519 794"); }
-  .z6{ d: path("M 580 978 L 529 790"); }
-  [data-cap="collapsed"] .z1{ d: path("M 558 118 L 382 324"); }
-  [data-cap="collapsed"] .z2{ d: path("M 568 133 L 390 326"); }
-  [data-cap="collapsed"] .z3{ d: path("M 580 142 L 399 330"); }
-  [data-cap="collapsed"] .z4{ d: path("M 558 1002 L 382 796"); }
-  [data-cap="collapsed"] .z5{ d: path("M 568 987 L 390 794"); }
-  [data-cap="collapsed"] .z6{ d: path("M 580 978 L 399 790"); }
+  .z1{ d: path("M 558 218 L 510 324"); }
+  .z2{ d: path("M 568 233 L 519 326"); }
+  .z3{ d: path("M 580 242 L 529 330"); }
+  .z4{ d: path("M 558 902 L 510 796"); }
+  .z5{ d: path("M 568 887 L 519 794"); }
+  .z6{ d: path("M 580 878 L 529 790"); }
+  [data-cap="collapsed"] .z1{ d: path("M 558 218 L 382 324"); }
+  [data-cap="collapsed"] .z2{ d: path("M 568 233 L 390 326"); }
+  [data-cap="collapsed"] .z3{ d: path("M 580 242 L 399 330"); }
+  [data-cap="collapsed"] .z4{ d: path("M 558 902 L 382 796"); }
+  [data-cap="collapsed"] .z5{ d: path("M 568 887 L 390 794"); }
+  [data-cap="collapsed"] .z6{ d: path("M 580 878 L 399 790"); }
 
   /* ---------- the new intraocular lens ---------- */
   .iol{ opacity:0; transform-box:view-box; transform-origin:330px 560px; }
-  [data-phase="inject"] .iol{ animation: iolIn 3s cubic-bezier(.3,.6,.25,1) 1.5s forwards; }
+  [data-phase="inject"] .iol{ animation: iolIn 2s cubic-bezier(.3,.6,.25,1) 1.5s forwards; }
   [data-lens="iol"] .iol{ opacity:1; }
   @keyframes iolIn{
     0%   { opacity:0; transform: translate(302px,0) scale(0.10,0.42); }
@@ -344,6 +344,7 @@
         <path d="M 872 722 Q 828 652 816 580 Q 854 648 866 720 Z" fill="var(--accent)" opacity="0.94"/>
         <path d="M 876 266 Q 972 296 970 500 Q 972 704 876 734 Q 950 704 948 500 Q 950 296 876 266 Z" fill="var(--accent-light)" fill-opacity="0.5" stroke="var(--accent-dark)" stroke-width="2.5"/>
         <circle cx="99" cy="500" r="5" fill="var(--accent-dark)"/>
+        <line x1="671" y1="633" x2="626" y2="712" stroke="var(--ink-light)" stroke-width="1"/>
         <text x="620" y="730" text-anchor="end" font-size="32" font-family="var(--f-sans)" fill="var(--ink-mid)">Lens</text>
         <g>
           <path class="rf-ray" pathLength="100" d="M 1460 428 L 734 428 L 99 500"/>
@@ -398,6 +399,7 @@
         <path d="M 872 722 Q 828 652 816 580 Q 854 648 866 720 Z" fill="var(--accent)" opacity="0.94"/>
         <path d="M 876 266 Q 972 296 970 500 Q 972 704 876 734 Q 950 704 948 500 Q 950 296 876 266 Z" fill="var(--accent-light)" fill-opacity="0.5" stroke="var(--accent-dark)" stroke-width="2.5"/>
         <circle cx="99" cy="500" r="5" fill="var(--ink-light)"/>
+        <line x1="671" y1="633" x2="626" y2="712" stroke="var(--ink-light)" stroke-width="1"/>
         <text x="620" y="730" text-anchor="end" font-size="32" font-family="var(--f-sans)" fill="var(--ink-mid)">Cataract</text>
         <g>
           <path class="rf-ray-in" pathLength="100" d="M 1460 428 L 734 428"/>
@@ -501,11 +503,11 @@
 
           <!-- cornea -->
           <path class="cornea-shape"
-                d="M 615 137 Q 880 250 900 560 Q 880 870 615 983
-                   L 605 970 Q 845 860 860 560 Q 845 260 605 150 Z"/>
+                d="M 615 237 Q 880 250 900 560 Q 880 870 615 883
+                   L 605 870 Q 845 860 860 560 Q 845 260 605 250 Z"/>
 
           <!-- anterior chamber -->
-          <path class="ac-tint" d="M 622 469 Q 696 300 570 132 L 605 150 Q 845 260 860 560 Q 845 860 605 970 L 570 988 Q 696 820 622 651 L 622 469 Z"/>
+          <path class="ac-tint" d="M 622 469 Q 696 300 570 232 L 605 250 Q 845 260 860 560 Q 845 860 605 870 L 570 888 Q 696 820 622 651 L 622 469 Z"/>
 
           <!-- capsular bag: stays in the eye for the whole operation -->
           <ellipse class="cap-fill" cx="463" cy="560" rx="170" ry="238"/>
@@ -533,38 +535,38 @@
 
           <!-- zonules -->
           <g class="zonules">
-            <path class="z1" d="M 558 118 L 510 324"/><path class="z2" d="M 568 133 L 519 326"/><path class="z3" d="M 580 142 L 529 330"/>
-            <path class="z4" d="M 558 1002 L 510 796"/><path class="z5" d="M 568 987 L 519 794"/><path class="z6" d="M 580 978 L 529 790"/>
+            <path class="z1" d="M 558 218 L 510 324"/><path class="z2" d="M 568 233 L 519 326"/><path class="z3" d="M 580 242 L 529 330"/>
+            <path class="z4" d="M 558 902 L 510 796"/><path class="z5" d="M 568 887 L 519 794"/><path class="z6" d="M 580 878 L 529 790"/>
           </g>
 
-          <!-- ciliary body -->
-          <path d="M 617 140 C 600 118, 575 108, 558 118
-                   Q 550 124 557 134 Q 547 140 557 149
-                   Q 566 156 578 148 Q 594 154 604 142 Z"
+          <!-- ciliary body: just inside the limbus, not beyond the sclera -->
+          <path d="M 617 240 C 600 218, 575 208, 558 218
+                   Q 550 224 557 234 Q 547 240 557 249
+                   Q 566 256 578 248 Q 594 254 604 242 Z"
                 fill="var(--accent)" opacity="0.85"/>
-          <path d="M 617 980 C 600 1002, 575 1012, 558 1002
-                   Q 550 996 557 986 Q 547 980 557 971
-                   Q 566 964 578 972 Q 594 966 604 978 Z"
+          <path d="M 617 880 C 600 902, 575 912, 558 902
+                   Q 550 896 557 886 Q 547 880 557 871
+                   Q 566 864 578 872 Q 594 866 604 878 Z"
                 fill="var(--accent)" opacity="0.85"/>
           <g stroke="var(--accent-dark)" stroke-width="1" opacity="0.55">
-            <path d="M 560 122 L 566 136"/><path d="M 571 133 L 576 146"/><path d="M 584 138 L 588 150"/>
-            <path d="M 560 998 L 566 984"/><path d="M 571 987 L 576 974"/><path d="M 584 982 L 588 970"/>
+            <path d="M 560 222 L 566 236"/><path d="M 571 233 L 576 246"/><path d="M 584 238 L 588 250"/>
+            <path d="M 560 898 L 566 884"/><path d="M 571 887 L 576 874"/><path d="M 584 882 L 588 870"/>
           </g>
 
           <!-- scleral spur -->
-          <path d="M 613 133 L 630 143 L 611 152 Z" fill="var(--ink-light)" opacity="0.9"/>
-          <path d="M 613 987 L 630 977 L 611 968 Z" fill="var(--ink-light)" opacity="0.9"/>
+          <path d="M 613 233 L 630 243 L 611 252 Z" fill="var(--ink-light)" opacity="0.9"/>
+          <path d="M 613 887 L 630 877 L 611 868 Z" fill="var(--ink-light)" opacity="0.9"/>
 
           <!-- iris -->
           <g>
-            <path class="iris-body iris-top" d="M 570 132 Q 605 136 612 148 Q 696 300 622 469 Q 631 300 570 132 Z"/>
-            <path class="iris-line iris-line-top" d="M 610 200 Q 675 300 630 420"/>
-            <path class="iris-body iris-bot" d="M 570 988 Q 605 984 612 972 Q 696 820 622 651 Q 631 820 570 988 Z"/>
-            <path class="iris-line iris-line-bot" d="M 610 920 Q 675 820 630 700"/>
+            <path class="iris-body iris-top" d="M 570 232 Q 605 236 612 248 Q 696 300 622 469 Q 631 300 570 232 Z"/>
+            <path class="iris-line iris-line-top" d="M 610 300 Q 675 300 630 420"/>
+            <path class="iris-body iris-bot" d="M 570 888 Q 605 884 612 872 Q 696 820 622 651 Q 631 820 570 888 Z"/>
+            <path class="iris-line iris-line-bot" d="M 610 820 Q 675 820 630 700"/>
           </g>
 
           <!-- self-sealing clear corneal incision -->
-          <path class="incision-mark" d="M 752 217 L 744 241 M 728 209 L 720 233"/>
+          <path class="incision-mark" d="M 752 317 L 744 341 M 728 309 L 720 333"/>
 
           <!-- phacoemulsification probe -->
           <g class="probe">
@@ -689,23 +691,23 @@
   };
 
   const geo = {
-    acTint:      { def:'M 622 469 Q 696 300 570 132 L 605 150 Q 845 260 860 560 Q 845 860 605 970 L 570 988 Q 696 820 622 651 L 622 469 Z',
-                   open:'M 530 469 Q 556 300 570 132 L 605 150 Q 845 260 860 560 Q 845 860 605 970 L 570 988 Q 556 820 530 651 L 530 469 Z' },
-    irisTop:     { def:'M 570 132 Q 605 136 612 148 Q 696 300 622 469 Q 631 300 570 132 Z',
-                   open:'M 570 132 Q 572 136 571 147 Q 556 300 530 469 Q 492 300 570 132 Z' },
-    irisBot:     { def:'M 570 988 Q 605 984 612 972 Q 696 820 622 651 Q 631 820 570 988 Z',
-                   open:'M 570 988 Q 572 984 571 973 Q 556 820 530 651 Q 492 820 570 988 Z' },
-    irisLineTop: { def:'M 610 200 Q 675 300 630 420', open:'M 566 200 Q 558 300 540 420' },
-    irisLineBot: { def:'M 610 920 Q 675 820 630 700', open:'M 566 920 Q 558 820 540 700' },
+    acTint:      { def:'M 622 469 Q 696 300 570 232 L 605 250 Q 845 260 860 560 Q 845 860 605 870 L 570 888 Q 696 820 622 651 L 622 469 Z',
+                   open:'M 530 469 Q 556 300 570 232 L 605 250 Q 845 260 860 560 Q 845 860 605 870 L 570 888 Q 556 820 530 651 L 530 469 Z' },
+    irisTop:     { def:'M 570 232 Q 605 236 612 248 Q 696 300 622 469 Q 631 300 570 232 Z',
+                   open:'M 570 232 Q 572 236 571 247 Q 556 300 530 469 Q 492 300 570 232 Z' },
+    irisBot:     { def:'M 570 888 Q 605 884 612 872 Q 696 820 622 651 Q 631 820 570 888 Z',
+                   open:'M 570 888 Q 572 884 571 873 Q 556 820 530 651 Q 492 820 570 888 Z' },
+    irisLineTop: { def:'M 610 300 Q 675 300 630 420', open:'M 566 300 Q 558 300 540 420' },
+    irisLineBot: { def:'M 610 820 Q 675 820 630 700', open:'M 566 820 Q 558 820 540 700' },
     capPost:     { def:'M 463 322 A 170 238 0 0 0 463 798', collapsed:'M 345 322 A 52 238 0 0 0 345 798' },
     capAntTop:   { def:'M 463 322 A 170 238 0 0 1 633 560', open:'M 463 322 A 170 238 0 0 1 605 429', collapsed:'M 345 322 A 52 238 0 0 1 388 429' },
     capAntBot:   { def:'M 463 798 A 170 238 0 0 0 633 560', open:'M 463 798 A 170 238 0 0 0 605 691', collapsed:'M 345 798 A 52 238 0 0 0 388 691' },
-    z1: { def:'M 558 118 L 510 324',  collapsed:'M 558 118 L 382 324' },
-    z2: { def:'M 568 133 L 519 326',  collapsed:'M 568 133 L 390 326' },
-    z3: { def:'M 580 142 L 529 330',  collapsed:'M 580 142 L 399 330' },
-    z4: { def:'M 558 1002 L 510 796', collapsed:'M 558 1002 L 382 796' },
-    z5: { def:'M 568 987 L 519 794',  collapsed:'M 568 987 L 390 794' },
-    z6: { def:'M 580 978 L 529 790',  collapsed:'M 580 978 L 399 790' }
+    z1: { def:'M 558 218 L 510 324',  collapsed:'M 558 218 L 382 324' },
+    z2: { def:'M 568 233 L 519 326',  collapsed:'M 568 233 L 390 326' },
+    z3: { def:'M 580 242 L 529 330',  collapsed:'M 580 242 L 399 330' },
+    z4: { def:'M 558 902 L 510 796', collapsed:'M 558 902 L 382 796' },
+    z5: { def:'M 568 887 L 519 794',  collapsed:'M 568 887 L 390 794' },
+    z6: { def:'M 580 878 L 529 790',  collapsed:'M 580 878 L 399 790' }
   };
 
   function applyGeometry(s){
@@ -740,7 +742,7 @@
     { name:'asp1',     ms:1300, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
     { name:'asp2',     ms:1300, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
     { name:'empty',    ms:3600, lens:'gone',     angle:'open',   bag:'collapsed', rays:'none'  },
-    { name:'inject',   ms:4600, lens:'gone',     angle:'open',   bag:'collapsed', rays:'none'  },
+    { name:'inject',   ms:3600, lens:'gone',     angle:'open',   bag:'collapsed', rays:'none'  },
     { name:'settle',   ms:2600, lens:'iol',      angle:'open',   bag:'collapsed', rays:'none'  },
     { name:'rays',     ms:7500, lens:'iol',      angle:'open',   bag:'collapsed', rays:'focus' }
   ];
