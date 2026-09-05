@@ -162,7 +162,7 @@
   .half{
     fill:url(#gCataract); stroke:var(--cataract-core); stroke-width:2;
     transform-box:view-box; transform-origin:611px 586px;
-    opacity:0; transition: opacity 0s linear, transform 1.1s cubic-bezier(.35,0,.5,1) .7s;
+    opacity:0; transition: opacity 0s linear, transform 0.55s cubic-bezier(.35,0,.5,1) .35s;
   }
   [data-lens="split"] .half{ opacity:1; }
   [data-phase="chop"] .half-top{ transform: translate(0,-34px) rotate(-2.5deg) scale(1); }
@@ -171,11 +171,11 @@
   [data-phase="asp1"] .half-top,
   [data-phase="asp2"] .half-top{
     transform: translate(0,-8px) rotate(0deg) scale(0.02); opacity:0;
-    transition: transform 1.9s cubic-bezier(.55,0,.75,.35), opacity .55s ease 1.5s;
+    transition: transform 0.95s cubic-bezier(.55,0,.75,.35), opacity .275s ease .75s;
   }
   [data-phase="asp2"] .half-bot{
     transform: translate(0,8px) rotate(0deg) scale(0.02); opacity:0;
-    transition: transform 1.9s cubic-bezier(.55,0,.75,.35), opacity .55s ease 1.5s;
+    transition: transform 0.95s cubic-bezier(.55,0,.75,.35), opacity .275s ease .75s;
   }
 
   .capsule path{
@@ -217,7 +217,7 @@
 
   /* ---------- the new intraocular lens ---------- */
   .iol{ opacity:0; transform-box:view-box; transform-origin:330px 560px; }
-  [data-phase="inject"] .iol{ animation: iolIn 3.4s cubic-bezier(.3,.6,.25,1) forwards; }
+  [data-phase="inject"] .iol{ animation: iolIn 3s cubic-bezier(.3,.6,.25,1) 1.5s forwards; }
   [data-lens="iol"] .iol{ opacity:1; }
   @keyframes iolIn{
     0%   { opacity:0; transform: translate(302px,0) scale(0.10,0.42); }
@@ -240,7 +240,7 @@
   }
   [data-phase="chop"] .probe{
     transform: translate(611px,586px);
-    transition: transform .9s cubic-bezier(0,.35,.35,1);      /* picks the speed straight back up */
+    transition: transform .45s cubic-bezier(0,.35,.35,1);      /* picks the speed straight back up */
   }
   [data-phase="asp1"]     .probe{ transform: translate(611px,586px); }
   [data-phase="asp2"]     .probe{ transform: translate(611px,586px); }
@@ -344,6 +344,7 @@
         <path d="M 872 722 Q 828 652 816 580 Q 854 648 866 720 Z" fill="var(--accent)" opacity="0.94"/>
         <path d="M 876 266 Q 972 296 970 500 Q 972 704 876 734 Q 950 704 948 500 Q 950 296 876 266 Z" fill="var(--accent-light)" fill-opacity="0.5" stroke="var(--accent-dark)" stroke-width="2.5"/>
         <circle cx="99" cy="500" r="5" fill="var(--accent-dark)"/>
+        <text x="620" y="730" text-anchor="end" font-size="32" font-family="var(--f-sans)" fill="var(--ink-mid)">Lens</text>
         <g>
           <path class="rf-ray" pathLength="100" d="M 1460 428 L 734 428 L 99 500"/>
           <path class="rf-ray" pathLength="100" d="M 1460 464 L 734 464 L 99 500"/>
@@ -397,6 +398,7 @@
         <path d="M 872 722 Q 828 652 816 580 Q 854 648 866 720 Z" fill="var(--accent)" opacity="0.94"/>
         <path d="M 876 266 Q 972 296 970 500 Q 972 704 876 734 Q 950 704 948 500 Q 950 296 876 266 Z" fill="var(--accent-light)" fill-opacity="0.5" stroke="var(--accent-dark)" stroke-width="2.5"/>
         <circle cx="99" cy="500" r="5" fill="var(--ink-light)"/>
+        <text x="620" y="730" text-anchor="end" font-size="32" font-family="var(--f-sans)" fill="var(--ink-mid)">Cataract</text>
         <g>
           <path class="rf-ray-in" pathLength="100" d="M 1460 428 L 734 428"/>
           <path class="rf-ray-in" pathLength="100" d="M 1460 452 L 734 452"/>
@@ -489,12 +491,13 @@
         <path class="rf-sclera" d="M 876 266 A 434 434 0 1 0 876 734"/>
         <circle cx="99" cy="500" r="6" fill="var(--accent-dark)"/>
 
+        <!-- front-of-eye tissue, bridging the round globe to the cornea/iris below: same shape and
+             style as the transition on the "cataract forms" ray diagram, so the limbus reads as one
+             continuous eye wall instead of a seam -->
+        <path d="M 876 266 Q 950 296 948 500 Q 950 704 876 734 L 866 720 Q 828 650 816 580 Q 826 500 816 420 Q 828 350 866 280 Z" fill="var(--accent-light)" opacity="0.55"/>
+
         <!-- cornea / iris / lens / instruments, scaled and positioned so the lens sits exactly where the ray diagrams put it -->
         <g transform="translate(352.65,38.82) scale(0.8235)">
-
-          <!-- sclera (near the limbus) -->
-          <path d="M 615 137 C 520 90, 380 60, 250 70" fill="none" stroke="var(--ink-light)" stroke-width="7" stroke-linecap="round"/>
-          <path d="M 615 983 C 520 1030, 380 1060, 250 1050" fill="none" stroke="var(--ink-light)" stroke-width="7" stroke-linecap="round"/>
 
           <!-- cornea -->
           <path class="cornea-shape"
@@ -733,11 +736,11 @@
   const surgerySteps = [
     { name:'closed',   ms:2400, lens:'cataract', angle:'closed', bag:'intact',    rays:'none'  },
     { name:'incision', ms:3800, lens:'cataract', angle:'closed', bag:'open',      rays:'none'  },
-    { name:'chop',     ms:3200, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
-    { name:'asp1',     ms:2600, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
-    { name:'asp2',     ms:2600, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
+    { name:'chop',     ms:1600, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
+    { name:'asp1',     ms:1300, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
+    { name:'asp2',     ms:1300, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
     { name:'empty',    ms:3600, lens:'gone',     angle:'open',   bag:'collapsed', rays:'none'  },
-    { name:'inject',   ms:3800, lens:'gone',     angle:'open',   bag:'collapsed', rays:'none'  },
+    { name:'inject',   ms:4600, lens:'gone',     angle:'open',   bag:'collapsed', rays:'none'  },
     { name:'settle',   ms:2600, lens:'iol',      angle:'open',   bag:'collapsed', rays:'none'  },
     { name:'rays',     ms:7500, lens:'iol',      angle:'open',   bag:'collapsed', rays:'focus' }
   ];
