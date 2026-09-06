@@ -546,10 +546,11 @@
             <path d="M 560 898 L 566 884"/><path d="M 571 887 L 576 874"/><path d="M 584 882 L 588 870"/>
           </g>
 
-          <!-- scleral spur: fixed landmark capping the ciliary body at the limbus, so the angle
-               has a clean edge to open against once the iris retracts -->
-          <path d="M 613 233 L 630 243 L 611 252 Z" fill="var(--ink-light)" opacity="0.9"/>
-          <path d="M 613 887 L 630 877 L 611 868 Z" fill="var(--ink-light)" opacity="0.9"/>
+          <!-- limbal tissue: fills the notch next to the ciliary body so nothing shows through
+               there once the iris retracts and the angle opens; colored as ciliary tissue
+               (not sclera) so it reads as part of the eye wall, not a stray fragment -->
+          <path d="M 613 233 L 630 243 L 611 252 Z" fill="var(--accent)" opacity="0.85"/>
+          <path d="M 613 887 L 630 877 L 611 868 Z" fill="var(--accent)" opacity="0.85"/>
 
           <!-- iris -->
           <g>
