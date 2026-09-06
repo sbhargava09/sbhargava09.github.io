@@ -237,13 +237,9 @@
     transition: transform 0.87s cubic-bezier(.4,.05,.35,1);
   }
   .instr-body{ transform-box:view-box; transform-origin:0 0; transform: rotate(109deg); }
-  [data-phase="incision"] .probe{
-    transform: translate(636px,516px);
-    transition: transform 0.5s cubic-bezier(.35,0,.8,.72);   /* introduced immediately, not a slow drift-in */
-  }
   [data-phase="chop"] .probe{
     transform: translate(611px,586px);
-    transition: transform .3s cubic-bezier(0,.35,.35,1);
+    transition: transform 0.5s cubic-bezier(.35,0,.8,.72);   /* introduced immediately, not a slow drift-in */
   }
   [data-phase="asp1"]     .probe{ transform: translate(611px,586px); }
   [data-phase="asp2"]     .probe{ transform: translate(611px,586px); }
@@ -255,12 +251,6 @@
   }
   [data-phase="inject"] .injector{ transform: translate(629px,534px); transition-duration:0.5s; } /* introduced immediately */
   [data-phase="settle"] .injector{ transition-duration:1s; }
-
-  .incision-mark{
-    stroke:var(--warn); stroke-width:2.6; stroke-linecap:round; fill:none;
-    opacity:0; transition:opacity .33s ease;
-  }
-  .scene:not([data-phase="closed"]) .incision-mark{ opacity:0.7; }
 
   /* ---------- once the new lens is seated: straight rays bend at it and converge on the retina ---------- */
   .rays-focus{ opacity:0; transition:opacity .47s ease; }
@@ -564,9 +554,6 @@
             <path class="iris-line iris-line-bot" d="M 610 820 Q 675 820 630 700"/>
           </g>
 
-          <!-- self-sealing clear corneal incision -->
-          <path class="incision-mark" d="M 752 317 L 744 341 M 728 309 L 720 333"/>
-
           <!-- phacoemulsification probe -->
           <g class="probe">
             <g class="instr-body">
@@ -645,7 +632,6 @@
   <div class="pips">
     <button class="pip on" data-target="normal">Clean lens</button>
     <button class="pip" data-target="cataract">Cataract forms</button>
-    <button class="pip" data-target="incision">Incision</button>
     <button class="pip" data-target="chop">Removing cataract</button>
     <button class="pip" data-target="empty">Cataract out</button>
     <button class="pip" data-target="inject">New lens placed</button>
@@ -736,7 +722,6 @@
   // ends with the new lens seated and light re-focusing on the retina
   const surgerySteps = [
     { name:'closed',   ms:1600, lens:'cataract', angle:'closed', bag:'intact',    rays:'none'  },
-    { name:'incision', ms:1400, lens:'cataract', angle:'closed', bag:'open',      rays:'none'  },
     { name:'chop',     ms:1100, lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
     { name:'asp1',     ms:900,  lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
     { name:'asp2',     ms:900,  lens:'split',    angle:'closed', bag:'open',      rays:'none'  },
@@ -745,7 +730,7 @@
     { name:'settle',   ms:1700, lens:'iol',      angle:'open',   bag:'collapsed', rays:'none'  },
     { name:'rays',     ms:5000, lens:'iol',      angle:'open',   bag:'collapsed', rays:'focus' }
   ];
-  const pipForStep = ['incision','chop','chop','chop','empty','inject','inject','rays'];
+  const pipForStep = ['chop','chop','chop','empty','inject','inject','rays'];
   // ^ index i+1 (the step AFTER 'closed') maps to the pip that should be lit
 
   function applySurgery(step){
